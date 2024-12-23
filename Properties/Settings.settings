@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)">
+  <Profiles>
+    <Profile Name="(Default)" />
+  </Profiles>
+  <Settings>
+    <Setting Name="Prg_Ver" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Ver 2.00</Value>
+    </Setting>
+    <Setting Name="Prg_Mode" Type="System.String" Scope="User">
+      <Value Profile="(Default)">MUKAISHIMA</Value>
+    </Setting>
+    <Setting Name="End_Time" Type="System.String" Scope="User">
+      <Value Profile="(Default)">22:20:00</Value>
+    </Setting>
+    <Setting Name="Server_Ip" Type="System.String" Scope="User">
+      <Value Profile="(Default)">192.168.200.4</Value>
+    </Setting>
+    <Setting Name="MC_Protocol" Type="System.String" Scope="User">
+      <Value Profile="(Default)">1E</Value>
+    </Setting>
+    <Setting Name="PLC_Host" Type="System.String" Scope="User">
+      <Value Profile="(Default)">192.168.11.99</Value>
+    </Setting>
+    <Setting Name="PLC_Port" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)">8192</Value>
+    </Setting>
+    <Setting Name="PLC_Timeout" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)">3000</Value>
+    </Setting>
+    <Setting Name="DB_Host" Type="System.String" Scope="User">
+      <Value Profile="(Default)">10.211.55.2</Value>
+    </Setting>
+    <Setting Name="DB_Port" Type="System.String" Scope="User">
+      <Value Profile="(Default)">5432</Value>
+    </Setting>
+    <Setting Name="DB_Name" Type="System.String" Scope="User">
+      <Value Profile="(Default)">onozo_202409</Value>
+    </Setting>
+    <Setting Name="DB_User" Type="System.String" Scope="User">
+      <Value Profile="(Default)">postgres</Value>
+    </Setting>
+    <Setting Name="DB_Pass" Type="System.String" Scope="User">
+      <Value Profile="(Default)">postgres</Value>
+    </Setting>
+    <Setting Name="Log_Write" Type="System.Int16" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="Log_Path" Type="System.String" Scope="User">
+      <Value Profile="(Default)">//Mac/Home/Documents/ONOZO/RiderProjects/Log</Value>
+    </Setting>
+    <Setting Name="Log_File_Path" Type="System.String" Scope="User">
+      <Value Profile="(Default)">//Mac/Home/Documents/ONOZO/RiderProjects/Log/TanbanLog.txt</Value>
+    </Setting>
+    <Setting Name="Dev_Path" Type="System.String" Scope="User">
+      <Value Profile="(Default)">//Mac/Home/Documents/ONOZO/RiderProjects/Debug/BackendMonitor</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
+
