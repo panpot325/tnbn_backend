@@ -9,7 +9,7 @@ namespace BackendMonitor.share {
         public const string REQ_SPI = "00000100"; //@c回転要求
         public const string REQ_STA = "00000010"; //@c稼動開始
         public const string REQ_STP = "00000001"; //@c稼動終了
-        public const string REQ_NOP = "00000001"; //@SKIP
+        public const string REQ_NOP = "00000000"; //@SKIP
 
         //-- リクエストコマンド種別
         public const string REQ_RD_B = "00"; //@cSH読出ビット // ﾃﾞﾊﾞｲｽﾒﾓﾘの一括読出し(ﾋﾞｯﾄ単位)
