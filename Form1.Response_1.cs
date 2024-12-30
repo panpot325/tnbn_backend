@@ -19,12 +19,10 @@ public partial class Form1 {
 
         Command1.Enabled = false;
 
-        //'稼動終了、稼動終了時の時間と稼働時間の算出
         workState.End_Count++;
         workState.EndTime = DateTime.Now.ToString("HH:mm:ss");
 
-        //稼動実績WKを更新終了
-        workState.Update_End();
+        workState.Update_End(); //稼動実績WKを更新終了
         ReadLogFile(_unit); //ログファイル読込
         WriteLogFile(_unit); //ログファイル出力
 
