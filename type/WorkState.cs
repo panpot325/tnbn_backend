@@ -199,7 +199,7 @@ public partial class WorkState(int unit) {
     public void Update_StrTime2() {
         var sb = new StringBuilder();
         sb.Append("UPDATE tnbn_kadojisseki_wk SET");
-        sb.Append($" str_time2 = '{StrTime2}',");
+        sb.Append($" str_time2 = '{StrTime2}'");
         sb.Append($" WHERE taisyo = '{Unit}'");
         PgConnect.Update(sb.ToString());
         PgConnect.Close();
