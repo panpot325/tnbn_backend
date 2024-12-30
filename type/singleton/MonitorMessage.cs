@@ -18,7 +18,7 @@ public class MonitorMessage : RCmd {
     /// Set
     /// </summary>
     public static MonitorMessage Set(int unit) {
-        var readData = GetReadData(ResponseMessage.ReadData, unit); //読込データ
+        var readData = MapReadData(ResponseMessage.ReadData, unit); //読込データ
         G.LogWrite($"編集後 監視用受信Cmd.読込データ: {readData}");
 
         var requestBit = GetRequestBit(readData, unit); //要求ビット
@@ -47,7 +47,7 @@ public class MonitorMessage : RCmd {
     /// <param name="readData"></param>
     /// <param name="unit"></param>
     /// <returns></returns>
-    private static string GetReadData(string readData, int unit) {
+    private static string MapReadData(string readData, int unit) {
         return unit switch {
             //B110-B115 B63 B66
             C.UNIT_2 => G.Mid(readData, 177, 6) +
