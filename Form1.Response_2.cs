@@ -31,6 +31,11 @@ public partial class Form1 {
             Log.Clear();
         }
 
+        //同一材料でログ出力が2回目以降は書き換える
+        if (workState.CNT > 1) {
+            Log.RemoveLast();
+        }
+
         var min0 = workState.Ttl_TIME / 60;
         var sec0 = workState.Ttl_TIME - min0 * 60;
 
@@ -40,6 +45,7 @@ public partial class Form1 {
         var min2 = workState.Stp_Time / 60;
         var sec2 = workState.Stp_Time - min2 * 60;
 
+        //新しいログを追加行に書き込む
         Log.Add(
             new Log {
                 SNO = workState.SNO,
