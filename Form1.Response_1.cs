@@ -17,8 +17,6 @@ public partial class Form1 {
         var unit = _unit;
         var workState = WorkStates.List[unit];
 
-        Command1.Enabled = false;
-
         workState.End_Count++;
         workState.EndTime = DateTime.Now.ToString("HH:mm:ss");
 

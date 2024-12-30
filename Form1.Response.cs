@@ -30,14 +30,17 @@ public partial class Form1 {
         switch (MonitorMessage.RequestBit) {
             //稼動終了
             case C.REQ_STP:
+                Command1.Enabled = false;
                 Process_Stop(); //稼動終了
                 break;
             //稼動開始
             case C.REQ_STA:
+                Command1.Enabled = false;
                 WorkKeyRequest(); //稼動データキー取得
                 break;
             //船番要求
             case C.REQ_SNO:
+                Command1.Enabled = false;
                 SnoIndexWrite();
                 break;
             //ブロック要求、部材要求、データ要求、ミラー要求
@@ -45,6 +48,7 @@ public partial class Form1 {
             case C.REQ_BZI:
             case C.REQ_DAT:
             case C.REQ_MIR:
+                Command1.Enabled = false;
                 DataKeyRequest(); //要求データキー取得
                 break;
             //回転要求

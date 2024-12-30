@@ -20,9 +20,7 @@ public partial class Form1 {
     public void SnoIndexWrite() {
         G.LogWrite(@"【船番一覧から抽出】");
 
-        Command1.Enabled = false;
         _finish = false;
-
         _itrnCnt = SnoIndex.Exist ? 0 : -1;
         SendData(
             _itrnCnt == -1
@@ -68,7 +66,6 @@ public partial class Form1 {
     /// @稼動データキー取得
     /// </summary>
     public void WorkKeyRequest() {
-        Command1.Enabled = false;
         var workState = WorkStates.List[_unit];
         workState.Clear();
 
@@ -96,7 +93,6 @@ public partial class Form1 {
     /// </summary>
     public void DataKeyRequest() {
         _sendCnt = 0;
-        Command1.Enabled = false;
         //要求データキーの取得コマンド
         SendData(RequestDataKeyCmd(_unit), false);
     }
