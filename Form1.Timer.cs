@@ -1,7 +1,6 @@
 using System;
 using BackendMonitor.Properties;
 using BackendMonitor.type;
-using BackendMonitor.type.singleton;
 using G = BackendMonitor.share.Globals;
 using C = BackendMonitor.share.Constants;
 
@@ -15,10 +14,10 @@ public partial class Form1 {
     /// Timer2_Timer
     /// </summary>
     private void Timer2_Timer() {
-        G.LogWrite("【Timer2_Timer】");
+        Log.Sub_LogWrite("【Timer2_Timer】");
 
         if (!G.IsUsableTime(Settings.Default.End_Time)) {
-            G.LogWrite($"処理終了時間の為、プログラムを終了:{DateTime.Now:HH:mm:ss}");
+            Log.Sub_LogWrite($"処理終了時間の為、プログラムを終了:{DateTime.Now:HH:mm:ss}");
             Close();
         }
 
@@ -27,13 +26,8 @@ public partial class Form1 {
         Timer2.Enabled = false;
 
         SetText($@"{Settings.Default.Prg_Ver} 単板ライン 接続処理実施中...", @"単板ラインに接続処理開始");
-        G.LogWrite(
-            $"Winsock Protocol:{KanshiSettei.Protocol} " +
-            $"RemoteHost:{KanshiSettei.RemoteHost} " +
-            $"RemotePort:{KanshiSettei.RemotePort} " +
-            $"W_LocalPort:{KanshiSettei.LocalPort}"
-        );
-
+        Log.Sub_LogWrite("Timer2 単板ライン 監視中...");
+        
         //Ethernetインタフェースユニットと接続
         if (!_melsecPort.Start()) {
             Timer2.Enabled = true;
@@ -48,12 +42,12 @@ public partial class Form1 {
     /// Timer1_Timer
     /// </summary>
     private void Timer1_Timer() {
-        G.LogWrite("【Timer1_Timer】");
+        Log.Sub_LogWrite("【Timer1_Timer】");
 
         string cmd;
         if (_clrFinish) {
             SetText($@"{Settings.Default.Prg_Ver} 単板ライン 監視中...", $@"単板ライン 監視中...  装置No:{_unit}");
-            G.LogWrite(@"Timer1 単板ライン 監視中...");
+            Log.Sub_LogWrite("【Timer1 単板ライン 監視中...】");
             Command1.Enabled = true;
 
             _unit = _unit switch {
@@ -68,7 +62,7 @@ public partial class Form1 {
         }
         else {
             SetText(@"単板ライン 一覧ｸﾘｱを開始します...", @"単板ライン 一覧ｸﾘｱを開始します...");
-            G.LogWrite(@"Timer1 単板ライン 一覧ｸﾘｱを開始します...");
+            Log.Sub_LogWrite(@"Timer1 単板ライン 一覧ｸﾘｱを開始します...");
 
             _itrnClrCnt = C.SNO_MAX;
             _unit = C.UNIT_2;

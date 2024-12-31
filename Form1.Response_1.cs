@@ -71,14 +71,14 @@ public partial class Form1 {
     /// </summary>
     /// <param name="unit"></param>
     public void RevertRecvKey(int unit) {
-        G.LogWrite($@"【要求データキーの戻し作業】受信Cmd.読込データ:{ResponseMessage.ReadData}】");
+       Log.Sub_LogWrite($@"【要求データキーの戻し作業】受信Cmd.読込データ:{ResponseMessage.ReadData}】");
 
         var ascString = G.AscToString(ResponseMessage.ReadData);
-        G.LogWrite(ascString);
+        Log.Sub_LogWrite(ascString);
 
         var reverseString = G.ReverseString(ascString, 32);
-        G.LogWrite("変換した文字を2文字ずつ配列に代入し");
-        G.LogWrite($@"配列単位で文字を並び替え正しい文字列に並びかえ後: {reverseString}");
+        Log.Sub_LogWrite("変換した文字を2文字ずつ配列に代入し");
+        Log.Sub_LogWrite($@"配列単位で文字を並び替え正しい文字列に並びかえ後: {reverseString}");
 
 
         if (MonitorMessage.RequestBit == C.REQ_STA) {
@@ -88,7 +88,7 @@ public partial class Form1 {
                 G.Mid(reverseString, 15, 16),
                 G.Mid(reverseString, 31, 2)
             );
-            G.LogWrite(
+            Log.Sub_LogWrite(
                 $"装置({unit})." +
                 $"SNO:{WorkStates.List[unit].SNO}." +
                 $"BLK:{WorkStates.List[unit].BLK}." +
@@ -103,7 +103,7 @@ public partial class Form1 {
                 G.Mid(reverseString, 15, 16),
                 G.Mid(reverseString, 31, 2)
             );
-            G.LogWrite(
+            Log.Sub_LogWrite(
                 $"要求データKey." +
                 $"SNO:{RequestKey.Sno}." +
                 $"BLK:{RequestKey.Blk}." +

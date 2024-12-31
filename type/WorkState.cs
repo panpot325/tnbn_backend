@@ -1,7 +1,6 @@
 using System;
 using System.Text;
 using BackendMonitor.share;
-using G = BackendMonitor.share.Globals;
 
 namespace BackendMonitor.type;
 
@@ -190,7 +189,7 @@ public partial class WorkState(int unit) {
         sb.Append($" WHERE taisyo = '{Unit}'");
         PgConnect.Update(sb.ToString());
         PgConnect.Close();
-        G.LogWrite($@"【稼動実績WKを初期化】{sb.ToString()}");
+        Log.Sub_LogWrite($@"【稼動実績WKを初期化】{sb.ToString()}");
     }
 
     /// <summary>
@@ -203,7 +202,7 @@ public partial class WorkState(int unit) {
         sb.Append($" WHERE taisyo = '{Unit}'");
         PgConnect.Update(sb.ToString());
         PgConnect.Close();
-        G.LogWrite($@"【稼動実績WKを更新】{sb.ToString()}");
+        Log.Sub_LogWrite($@"【稼動実績WKを更新】{sb.ToString()}");
     }
 
     /// <summary>

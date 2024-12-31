@@ -3,6 +3,7 @@ using System.Timers;
 using System.Windows.Forms;
 using BackendMonitor.model;
 using BackendMonitor.Properties;
+using BackendMonitor.type;
 
 // ReSharper disable MemberCanBeMadeStatic.Local
 namespace BackendMonitor;
@@ -41,6 +42,7 @@ public partial class Form1 : Form {
     /// <param name="sender"></param>
     /// <param name="e"></param>
     private void Form1_Load(object sender, EventArgs e) {
+        Log.Sub_LogWrite("【Form_Load】");
         Form_Load();
     }
 
@@ -50,6 +52,7 @@ public partial class Form1 : Form {
     /// <param name="sender"></param>
     /// <param name="e"></param>
     private void Command1_Click(object sender, EventArgs e) {
+        Log.Sub_LogWrite("【Command1_Click】");
         Abort();
     }
 
@@ -85,6 +88,7 @@ public partial class Form1 : Form {
     /// <param name="sender"></param>
     /// <param name="e"></param>
     private void Form1_FormClosing(object sender, FormClosingEventArgs e) {
+        Log.Sub_LogWrite("【Form_Unload】");
         if (_melsecPort.IsStop()) {
             return;
         }

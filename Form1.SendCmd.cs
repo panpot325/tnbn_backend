@@ -27,7 +27,7 @@ public partial class Form1 {
     /// <param name="unit"></param>
     /// <returns></returns>
     public string RecvBitCmd(int unit) {
-        G.LogWrite($@"【読出ビットコマンド】装置No:{unit}");
+        Log.Sub_LogWrite($@"【読出ビットコマンド】装置No:{unit}");
 
         return SCmd.GetCmd(
             C.REQ_RD_B,
@@ -60,7 +60,7 @@ public partial class Form1 {
     /// <param name="unit"></param>
     /// <returns></returns>
     public string RequestDataKeyCmd(int unit) {
-        G.LogWrite(@"【要求データキーの取得コマンド】");
+        Log.Sub_LogWrite(@"【要求データキーの取得コマンド】");
 
         return SCmd.GetCmd(
             C.REQ_RD_W,
@@ -88,7 +88,7 @@ public partial class Form1 {
     /// <param name="unit"></param>
     /// <returns></returns>
     public string WorkDataKeyCmd(int unit) {
-        G.LogWrite(@"【稼動データキーの取得コマンド】");
+        Log.Sub_LogWrite(@"【稼動データキーの取得コマンド】");
 
         return SCmd.GetCmd(
             C.REQ_RD_W,
@@ -116,7 +116,7 @@ public partial class Form1 {
     /// <param name="unit"></param>
     /// <returns></returns>
     public string SnoIndexEmptyCmd(int unit) {
-        G.LogWrite(@"【船番一覧無し書込コマンド】");
+        Log.Sub_LogWrite(@"【船番一覧無し書込コマンド】");
         SetText(
             $@"{G.UnitShortName(unit)} 船番一覧なし 送信中...",
             $@"{G.UnitName(unit)}\船番一覧なし\n送信中..."
@@ -149,7 +149,7 @@ public partial class Form1 {
     /// <param name="unit"></param>
     /// <returns></returns>
     public string BlkIndexEmptyCmd(int unit) {
-        G.LogWrite(@"【ブロック名一覧無し書込コマンド】");
+        Log.Sub_LogWrite(@"【ブロック名一覧無し書込コマンド】");
         SetText(
             $@"{G.UnitShortName(unit)} ブロック名一覧なし 送信中...",
             $@"{G.UnitName(unit)}\ブロック名一覧なし\n送信中..."
@@ -182,7 +182,7 @@ public partial class Form1 {
     /// <param name="unit"></param>
     /// <returns></returns>
     public string BziIndexEmptyCmd(int unit) {
-        G.LogWrite(@"【部材名一覧無し書込コマンド】");
+        Log.Sub_LogWrite(@"【部材名一覧無し書込コマンド】");
         SetText(
             $@"{G.UnitShortName(unit)} 部材＋舷一覧なし 送信中...",
             $@"{G.UnitName(unit)}\部材＋舷一覧なし\n送信中..."
@@ -215,7 +215,7 @@ public partial class Form1 {
     /// <param name="unit"></param>
     /// <returns></returns>
     public string WorkDataEmptyCmd(int unit) {
-        G.LogWrite(@"【加工ワークデータ無し書込コマンド】");
+        Log.Sub_LogWrite(@"【加工ワークデータ無し書込コマンド】");
         SetText(
             $@"{G.UnitShortName(unit)} 加工ワークデータなし 送信中...",
             $@"{G.UnitName(unit)}\加工ワークデータなし\n送信中..."
@@ -248,7 +248,7 @@ public partial class Form1 {
     /// <param name="unit"></param>
     /// <returns></returns>
     public string SnoIndexDoneCmd(int unit) {
-        G.LogWrite(@"【船番一覧書込完了コマンド】");
+        Log.Sub_LogWrite(@"【船番一覧書込完了コマンド】");
 
         return SCmd.GetCmd(
             C.REQ_WR_B,
@@ -277,7 +277,7 @@ public partial class Form1 {
     /// <param name="unit"></param>
     /// <returns></returns>
     public string BlkIndexDoneCmd(int unit) {
-        G.LogWrite(@"【ブロック名一覧書込完了コマンド】");
+        Log.Sub_LogWrite(@"【ブロック名一覧書込完了コマンド】");
 
         return SCmd.GetCmd(
             C.REQ_WR_B,
@@ -306,7 +306,7 @@ public partial class Form1 {
     /// <param name="unit"></param>
     /// <returns></returns>
     public string BziIndexDoneCmd(int unit) {
-        G.LogWrite(@"【部材名一覧書込完了コマンド】");
+        Log.Sub_LogWrite(@"【部材名一覧書込完了コマンド】");
 
         return SCmd.GetCmd(
             C.REQ_WR_B,
@@ -335,7 +335,7 @@ public partial class Form1 {
     /// <param name="unit"></param>
     /// <returns></returns>
     public string WorkDataDoneCmd(int unit) {
-        G.LogWrite(@"【加工ワークデータ書込完了コマンド】");
+        Log.Sub_LogWrite(@"【加工ワークデータ書込完了コマンド】");
 
         return SCmd.GetCmd(
             C.REQ_WR_B,
@@ -364,7 +364,7 @@ public partial class Form1 {
     /// <param name="unit"></param>
     /// <returns></returns>
     public string SnoIndexClearCmd(int unit) {
-        G.LogWrite(@"【船番一覧クリアコマンド】");
+        Log.Sub_LogWrite(@"【船番一覧クリアコマンド】");
         SetText(
             $@"{G.UnitShortName(unit)} 船番一覧 クリア中...",
             $@"{G.UnitName(unit)}\船番一覧\nクリア中..."
@@ -413,7 +413,7 @@ public partial class Form1 {
     /// <param name="unit"></param>
     /// <returns></returns>
     public string BlkIndexClearCmd(int unit) {
-        G.LogWrite(@"【ブロック名一覧クリアコマンド】");
+        Log.Sub_LogWrite(@"【ブロック名一覧クリアコマンド】");
         SetText(
             $@"{G.UnitShortName(unit)} ブロック名一覧 クリア中...",
             $@"{G.UnitName(unit)}\ブロック名一覧\nクリア中..."
@@ -463,7 +463,7 @@ public partial class Form1 {
     /// <param name="unit"></param>
     /// <returns></returns>
     public string SnoIndexWriteCmd(int unit) {
-        G.LogWrite(@"【船番一覧書込コマンド】");
+        Log.Sub_LogWrite(@"【船番一覧書込コマンド】");
         SetText(
             $@"{G.UnitShortName(_unit)} 船番一覧 送信中...",
             $@"{G.UnitName(_unit)}\船番一覧\n送信中..."
@@ -497,7 +497,7 @@ public partial class Form1 {
     /// <param name="unit"></param>
     /// <returns></returns>
     public string BlkIndexWriteCmd(int unit) {
-        G.LogWrite(@"【ブロック名一覧書込コマンド】");
+        Log.Sub_LogWrite(@"【ブロック名一覧書込コマンド】");
         SetText(
             $@"{G.UnitShortName(unit)} ﾌﾞﾛｯｸ名一覧 送信中...",
             $@"{G.UnitName(unit)}\ﾌﾞﾛｯｸ名一覧\n送信中..."
@@ -531,7 +531,7 @@ public partial class Form1 {
     /// <param name="unit"></param>
     /// <returns></returns>
     public string BziIndexWriteCmd(int unit) {
-        G.LogWrite(@"【部材名一覧書込コマンド】");
+        Log.Sub_LogWrite(@"【部材名一覧書込コマンド】");
         SetText($@"{G.UnitShortName(unit)} 部材＋舷一覧 送信中...",
             $@"{G.UnitName(unit)}\部材＋舷一覧\n送信中..."
         );
@@ -563,7 +563,7 @@ public partial class Form1 {
     /// <param name="unit"></param>
     /// <returns></returns>
     public string WorkDataWriteCmd(int unit) {
-        G.LogWrite(@"【加工ワークデータ書込コマンド】");
+        Log.Sub_LogWrite(@"【加工ワークデータ書込コマンド】");
         SetText(
             $@"{G.UnitShortName(unit)} 加工ﾜｰｸﾃﾞｰﾀ 送信中...",
             $@"{G.UnitName(unit)}\加工ワークデータ\n送信中..."

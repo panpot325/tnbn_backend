@@ -1,5 +1,5 @@
+using BackendMonitor.type;
 using BackendMonitor.type.singleton;
-using G = BackendMonitor.share.Globals;
 using C = BackendMonitor.share.Constants;
 
 // ReSharper disable ConvertIfStatementToSwitchStatement
@@ -15,8 +15,8 @@ public partial class Form1 {
     /// @読出ビット_レスポンス処理
     /// </summary>
     public void ReadBitResponse() {
-        G.LogWrite(@"【読出ビット_レスポンス処理】");
-        G.LogWrite($"受信Cmd.読込データ: {ResponseMessage.ReadData}");
+        Log.Sub_LogWrite(@"【読出ビット_レスポンス処理】");
+        Log.Sub_LogWrite($"受信Cmd.読込データ: {ResponseMessage.ReadData}");
 
         //監視用受信Cmd
         MonitorMessage.Set(_unit);
@@ -61,7 +61,7 @@ public partial class Form1 {
     /// @書込ビット_レスポンス処理
     /// </summary>
     public void WriteBitResponse() {
-        G.LogWrite(@"【書込ビット_レスポンス処理】");
+        Log.Sub_LogWrite(@"【書込ビット_レスポンス処理】");
         Timer1.Enabled = true;
     }
 
@@ -69,7 +69,7 @@ public partial class Form1 {
     /// @読出ワード_レスポンス処理
     /// </summary>
     public void ReadWordResponse() {
-        G.LogWrite(@"【読出ワード_レスポンス処理】");
+        Log.Sub_LogWrite(@"【読出ワード_レスポンス処理】");
         KeyMessage.Set();
 
         RevertRecvKey(_unit); //要求データキーの戻し作業
@@ -98,7 +98,7 @@ public partial class Form1 {
     /// @書込ワード_レスポンス処理
     /// </summary>
     public void WriteWordResponse() {
-        G.LogWrite(@"【書込ワード_レスポンス処理】");
+        Log.Sub_LogWrite(@"【書込ワード_レスポンス処理】");
         if (_finish) {
             switch (MonitorMessage.RequestBit) {
                 case C.REQ_DAT:
@@ -135,7 +135,7 @@ public partial class Form1 {
     /// @書込ワード_レスポンス処理_クリア
     /// </summary>
     public void ClearWordResponse() {
-        G.LogWrite(@"【書込ワード_レスポンス処理_クリア】");
+        Log.Sub_LogWrite(@"【書込ワード_レスポンス処理_クリア】");
 
         if (_gListClrState == 1) {
             SendData(SnoIndexClearCmd(_unit)); //船番一覧クリアコマンド

@@ -14,15 +14,6 @@ namespace BackendMonitor.share;
 /// </summary>
 public partial class Globals {
     /// <summary>
-    /// LogWrite
-    /// </summary>
-    /// <param name="message"></param>
-    public static void LogWrite(string message) {
-        using var sw = new StreamWriter($"{Settings.Default.Dev_Path}/Logs.txt", true, Encoding.UTF8);
-        sw.WriteLine(message);
-    }
-
-    /// <summary>
     /// ファイルの内容をクリアする
     /// </summary>
     public static void ClearDebugFile() {

@@ -18,7 +18,7 @@ public partial class Form1 {
     /// @船番一覧書込
     /// </summary>
     public void SnoIndexWrite() {
-        G.LogWrite(@"【船番一覧から抽出】");
+        Log.Sub_LogWrite(@"【船番一覧から抽出】");
 
         _finish = false;
         _itrnCnt = SnoIndex.Exist ? 0 : -1;
@@ -33,7 +33,7 @@ public partial class Form1 {
     /// @ブロック名一覧書込
     /// </summary>
     public void BlkIndexWrite() {
-        G.LogWrite(@"【ブロック一覧から抽出】");
+        Log.Sub_LogWrite(@"【ブロック一覧から抽出】");
 
         _finish = false;
         BlkIndex.Fetch(RequestKey.Sno, true);
@@ -50,7 +50,7 @@ public partial class Form1 {
     /// @部材名一覧書込
     /// </summary>
     public void BziIndexWrite() {
-        G.LogWrite(@"【部材一覧データ作成】");
+        Log.Sub_LogWrite(@"【部材一覧データ作成】");
 
         _finish = false;
         BziIndex.Fetch(RequestKey.Sno, RequestKey.Blk, true);
@@ -82,7 +82,7 @@ public partial class Form1 {
             }
             else {
                 SetText(@"単板ライン 接続処理実施中...", "単板ライン\n続処理実施中...");
-                G.LogWrite(@"接続処理Msg設定 単板ライン 接続処理実施中...");
+                Log.Sub_LogWrite(@"接続処理Msg設定 単板ライン 接続処理実施中...");
                 Timer2.Enabled = true;
             }
         }

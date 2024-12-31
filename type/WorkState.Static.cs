@@ -36,6 +36,6 @@ public partial class WorkState {
 
         PgConnect.Update(sb.ToString());
         PgConnect.Close();
-        G.LogWrite($@"【稼動実績WKをクリア】{sb.ToString()}");
+        Log.Sub_LogWrite($@"【稼動実績WKをクリア】{sb.ToString()}");
     }
 }

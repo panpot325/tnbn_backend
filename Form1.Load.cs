@@ -2,7 +2,7 @@ using System;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
-using G = BackendMonitor.share.Globals;
+using BackendMonitor.type;
 
 namespace BackendMonitor;
 
@@ -23,9 +23,9 @@ public partial class Form1 {
     /// Form_Load
     /// </summary>
     private void Form_Load() {
-        G.LogWrite("【Form_Load】");
-        G.LogWrite($"Timer1.Interval : {Timer1.Interval}");
-        G.LogWrite($"Timer2.Interval : {Timer2.Interval}");
+        Log.Sub_LogWrite("【Form_Load】");
+        Log.Sub_LogWrite($"Timer1.Interval : {Timer1.Interval}");
+        Log.Sub_LogWrite($"Timer2.Interval : {Timer2.Interval}");
         RemoveSystemMenu();
         Timer2_Timer();
     }
@@ -34,7 +34,7 @@ public partial class Form1 {
     /// Abort
     /// </summary>
     private void Abort() {
-        G.LogWrite("【Command1_Click】");
+        Log.Sub_LogWrite("【Command1_Click】");
         Timer1.Enabled = false;
         _melsecPort.Stop();
 
@@ -58,7 +58,7 @@ public partial class Form1 {
     /// RemoveSystemMenu
     /// </summary>
     private void RemoveSystemMenu() {
-        G.LogWrite("【Remove System Menu】");
+        Log.Sub_LogWrite("【Remove System Menu】");
         var hMenu = GetSystemMenu(this.Handle, false);
         if (hMenu != IntPtr.Zero) {
             EnableMenuItem(hMenu, SC_CLOSE, MF_GRAYED);

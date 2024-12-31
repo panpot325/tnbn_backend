@@ -19,10 +19,10 @@ public class MonitorMessage : RCmd {
     /// </summary>
     public static MonitorMessage Set(int unit) {
         var readData = MapReadData(ResponseMessage.ReadData, unit); //読込データ
-        G.LogWrite($"編集後 監視用受信Cmd.読込データ: {readData}");
+        Log.Sub_LogWrite($"編集後 監視用受信Cmd.読込データ: {readData}");
 
         var requestBit = GetRequestBit(readData, unit); //要求ビット
-        G.LogWrite($"監視用受信Cmd.要求ビット: {requestBit}");
+        Log.Sub_LogWrite($"監視用受信Cmd.要求ビット: {requestBit}");
 
         _instance.Set(
             ResponseMessage.Sh,
