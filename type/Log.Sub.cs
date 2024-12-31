@@ -18,4 +18,12 @@ public partial class Log {
         using var sw = new StreamWriter(Settings.Default.Log_File_Path, true, Encoding.UTF8);
         sw.WriteLine($"{DateTime.Now:yyyy/MM/dd HH:mm:ss}\t{message}");
     }
+
+    /// <summary>
+    /// WriteLine
+    /// </summary>
+    /// <param name="message"></param>
+    public static void WriteLine(string message) {
+        Console.WriteLine(message);
+    }
 }

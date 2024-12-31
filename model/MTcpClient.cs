@@ -3,6 +3,7 @@ using System.IO;
 using System.Net.Sockets;
 using System.Text;
 using BackendMonitor.share;
+using BackendMonitor.type;
 using BackendMonitor.type.singleton;
 
 namespace BackendMonitor.model;
@@ -50,10 +51,10 @@ public class MTcpClient {
         try {
             // サーバーと接続
             // 接続完了するまでブロッキングする
-            Console.WriteLine(
+            Log.WriteLine(
                 $@"{DateTime.Now:[yyyy/MM/dd HH:mm:ss]}【TCPClient】Connect() : [{_mServerAddress}:{_mServerPort}] に接続します ...");
             _mClient = new TcpClient(_mServerAddress, _mServerPort);
-            Console.WriteLine(@$"{DateTime.Now:[yyyy/MM/dd HH:mm:ss]}【TCPClient】Connect() : 接続しました");
+            Log.WriteLine(@$"{DateTime.Now:[yyyy/MM/dd HH:mm:ss]}【TCPClient】Connect() : 接続しました");
             // 接続完了
             result = true;
             // 「接続」状態に更新
@@ -66,7 +67,7 @@ public class MTcpClient {
         }
         catch (Exception ex) {
             // 接続失敗
-            Console.WriteLine($@"{DateTime.Now:[yyyy/MM/dd HH:mm:ss]}【TCPClient】Connect() : ERROR !!! {ex.Message}");
+            Log.WriteLine($@"{DateTime.Now:[yyyy/MM/dd HH:mm:ss]}【TCPClient】Connect() : ERROR !!! {ex.Message}");
         }
 
         return result;
@@ -91,12 +92,12 @@ public class MTcpClient {
             _mTcpStream.Write(data, 0, data.Length);
 
             // 送信成功
-            //Console.WriteLine(@"送信データ：" + new ASCIIEncoding().GetString(data));
+            //Log.WriteLine(@"送信データ：" + new ASCIIEncoding().GetString(data));
             Globals.ConsoleWriteData("W", new ASCIIEncoding().GetString(data));
         }
         catch (Exception ex) {
             // 送信失敗
-            Console.WriteLine(@$"{DateTime.Now:[yyyy/MM/dd HH:mm:ss]}【TCPClient】Send() : ERROR !!! {ex.Message}");
+            Log.WriteLine(@$"{DateTime.Now:[yyyy/MM/dd HH:mm:ss]}【TCPClient】Send() : ERROR !!! {ex.Message}");
             // 「切断」状態に更新
             m_connected = false;
             // クライアント初期化
@@ -120,16 +121,16 @@ public class MTcpClient {
 
             // 受信成功
             if (receiveSize > 0) {
-                //Console.WriteLine(@"受信データ：" + new ASCIIEncoding().GetString(data));
+                //Log.WriteLine(@"受信データ：" + new ASCIIEncoding().GetString(data));
                 Globals.ConsoleWriteData("R", new ASCIIEncoding().GetString(data));
             }
         }
         catch (IOException) {
             // タイムアウト
-            Console.WriteLine(@$"{DateTime.Now:[yyyy/MM/dd HH:mm:ss]}【TCPClient】Receive() : 受信タイムアウト");
+            Log.WriteLine(@$"{DateTime.Now:[yyyy/MM/dd HH:mm:ss]}【TCPClient】Receive() : 受信タイムアウト");
         }
         catch (Exception ex) {
-            Console.WriteLine(
+            Log.WriteLine(
                 @$"{DateTime.Now:[yyyy/MM/dd HH:mm:ss]}【TCPClient】Receive() : ERROR !!! {ex.Message}");
             // 「切断」状態に更新
             m_connected = false;
@@ -138,7 +139,7 @@ public class MTcpClient {
             _mClient?.Close();
             throw;
         }
-        //Console.WriteLine(@" 受信バイト数：" + receiveSize);
+        //Log.WriteLine(@" 受信バイト数：" + receiveSize);
 
         return receiveSize;
     }

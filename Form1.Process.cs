@@ -20,7 +20,7 @@ public partial class Form1 {
         // *** Debug ***
         G.StreamWriteData("R", buff);
         G.LogWrite($@"GetData:{buff}");
-        //Console.WriteLine(
+        // Log.WriteLine(
         //  @$"Unit: {_unit} ClrFinish: {_clrFinish} GListClrState: {_gListClrState} ItrnClrCnt: {_itrnClrCnt} Finish :{_finish} ItrnCnt :{_itrnCnt}");
 
         ResponseMessage.Set(buff);

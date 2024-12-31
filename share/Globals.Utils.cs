@@ -20,7 +20,6 @@ public partial class Globals {
     public static void LogWrite(string message) {
         using var sw = new StreamWriter($"{Settings.Default.Dev_Path}/Logs.txt", true, Encoding.UTF8);
         sw.WriteLine(message);
-        //Console.WriteLine(message);
     }
 
     /// <summary>

@@ -115,8 +115,8 @@ public class MelsecPort(Control mWindowHandle, string serverIpAddress, int serve
 
         // 受信通知
         if (mWindowHandle != null && MOnRecv != null) {
-            //Console.WriteLine("受信データ　" + recvData);
-            //Console.WriteLine(@"受信データ　" + new ASCIIEncoding().GetString(recvData));
+            //Log.WriteLine("受信データ　" + recvData);
+            //Log.WriteLine(@"受信データ　" + new ASCIIEncoding().GetString(recvData));
             mWindowHandle.Invoke(MOnRecv, new object[1] { new ASCIIEncoding().GetString(recvData, 0 ,recvSize) });
         }
     }

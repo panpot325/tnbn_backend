@@ -2,6 +2,7 @@ using System;
 using System.Data;
 using System.Windows.Forms;
 using BackendMonitor.Properties;
+using BackendMonitor.type;
 using Npgsql;
 
 namespace BackendMonitor.share;
@@ -25,12 +26,12 @@ public class PgOpen {
             return true;
         }
         catch (Exception e) {
-            Console.WriteLine(e.Message);
+            Log.WriteLine(e.Message);
             return false;
         }
         finally {
             _instance.Close();
-            Console.WriteLine(@"データベースに接続しました。");
+            Log.WriteLine(@"データベースに接続しました。");
         }
     }
 

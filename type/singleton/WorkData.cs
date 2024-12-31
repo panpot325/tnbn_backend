@@ -272,6 +272,6 @@ public class WorkData {
         sb.Append($" AND pcs = '{pcs}'");
 
         var rowsAffected = PgConnect.Update(sb.ToString());
-        Console.WriteLine(@"rowsAffected = " + rowsAffected);
+        Log.WriteLine(@"rowsAffected = " + rowsAffected);
     }
 }

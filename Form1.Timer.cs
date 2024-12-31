@@ -1,5 +1,6 @@
 using System;
 using BackendMonitor.Properties;
+using BackendMonitor.type;
 using BackendMonitor.type.singleton;
 using G = BackendMonitor.share.Globals;
 using C = BackendMonitor.share.Constants;
@@ -62,7 +63,7 @@ public partial class Form1 {
                 _ => C.UNIT_2
             };
             cmd = RecvBitCmd(_unit);
-            Console.WriteLine(@$"【読出ビットコマンド】:{_unit}】 :{cmd}");
+            Log.WriteLine(@$"【読出ビットコマンド】:{_unit}】 :{cmd}");
             _gCmd = "";
         }
         else {
@@ -71,7 +72,7 @@ public partial class Form1 {
 
             _itrnClrCnt = C.SNO_MAX;
             _unit = C.UNIT_2;
-            
+
             //船番一覧クリアコマンド(装置No)
             cmd = SnoIndexClearCmd(_unit);
             _gCmd = cmd;

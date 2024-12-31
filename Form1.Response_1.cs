@@ -34,7 +34,7 @@ public partial class Form1 {
     /// @稼動開始
     /// </summary>
     public void Process_Start() {
-        Console.WriteLine(@"稼動開始");
+        Log.WriteLine(@"稼動開始");
         WorkStates.List[_unit].Fetch_WorkData(); // 加工ワークデータから取得
         WorkStates.List[0].Fetch_Record(_unit); // 稼動実績WKから取得
 
