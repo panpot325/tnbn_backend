@@ -73,7 +73,7 @@ public partial class Form1 {
         // button1
         // 
         button1.Name = @"button1";
-        button1.Text = @"終了";
+        button1.Text = @"テスト";
         button1.Location = new Point(409, 28);
         button1.Size = new Size(288, 99);
         button1.TabIndex = 2;

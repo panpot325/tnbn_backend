@@ -3,7 +3,6 @@ using System.Timers;
 using System.Windows.Forms;
 using BackendMonitor.model;
 using BackendMonitor.Properties;
-using G = BackendMonitor.share.Globals;
 
 // ReSharper disable MemberCanBeMadeStatic.Local
 namespace BackendMonitor;
@@ -78,7 +77,6 @@ public partial class Form1 : Form {
     /// <param name="sender"></param>
     /// <param name="e"></param>
     private void button1_Click_1(object sender, EventArgs e) {
-        Stop();
     }
 
     /// <summary>
@@ -87,6 +85,17 @@ public partial class Form1 : Form {
     /// <param name="sender"></param>
     /// <param name="e"></param>
     private void Form1_FormClosing(object sender, FormClosingEventArgs e) {
+        if (_melsecPort.IsStop()) {
+            return;
+        }
+
+        _melsecPort.Stop();
+        MessageBox.Show(
+            @"終了します",
+            @"確認",
+            MessageBoxButtons.OK,
+            MessageBoxIcon.Exclamation,
+            MessageBoxDefaultButton.Button2);
     }
 
     /// <summary>
@@ -95,8 +104,6 @@ public partial class Form1 : Form {
     /// <param name="sender"></param>
     /// <param name="e"></param>
     private void Form1_FormClosed(object sender, FormClosedEventArgs e) {
-        G.LogWrite("【Form_Unload】");
-        _melsecPort.Stop();
     }
 
     /// <summary>

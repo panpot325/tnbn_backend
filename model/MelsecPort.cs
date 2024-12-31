@@ -54,6 +54,18 @@ public class MelsecPort(Control mWindowHandle, string serverIpAddress, int serve
         _mIsStopCommand = true;
     }
 
+    /// <summary>
+    /// IsStop
+    /// </summary>
+    /// <returns></returns>
+    public bool IsStop() {
+        return _mIsStopCommand;
+    }
+
+    /// <summary>
+    /// Send
+    /// </summary>
+    /// <param name="cmd"></param>
     public void Send(string cmd) {
         _mMelsecComm.Send(Encoding.ASCII.GetBytes(cmd));
     }
