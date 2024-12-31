@@ -101,38 +101,50 @@ public partial class Form1 {
     /// @加工ワークデータ書込
     /// </summary>
     public void WorkDataWrite() {
-        if (_sendCnt == 0
-            || RequestKey.Sno != CheckKey.Sno
-            || RequestKey.Blk != CheckKey.Blk
-            || RequestKey.Bzi != CheckKey.Bzi
-            || RequestKey.Pcs != CheckKey.Pcs) {
-            _finish = false;
-
-            //加工ワークデータ作成
-            WorkData.I.Fetch(RequestKey.Sno, RequestKey.Blk, RequestKey.Bzi, RequestKey.Pcs);
-            _itrnCnt = WorkData.Exist ? 0 : -1;
-            if (_itrnCnt == -1) {
-                SendData(WorkDataEmptyCmd(_unit)); //加工ワークデータ無し書込コマンド
-            }
-            else {
-                WorkData.UpdateStatus(1, _unit, RequestKey.Sno, RequestKey.Blk, RequestKey.Bzi, RequestKey.Pcs);
-                switch (MonitorMessage.RequestBit) {
-                    case C.REQ_MIR:
-                        Invert(); //ミラー反転処理
-                        break;
-                    case C.REQ_SPI:
-                        Rotate(); //回転処理
-                        break;
-                }
-
-                //加工ワークデータ書込コマンド
-                SendData(WorkDataWriteCmd(_unit)); //加工ワークデータ書込コマンド
-            }
+        if (_sendCnt == 0) {
+            WorkDataWriteUpdate();
         }
         else {
-            _sendCnt = 0;
-            WorkData.UpdateStatus(2, _unit, RequestKey.Sno, RequestKey.Blk, RequestKey.Bzi, RequestKey.Pcs);
-            SendData(WorkDataDoneCmd(_unit)); //加工ワークデータ書込完了コマンド
+            if (RequestKey.Sno != CheckKey.Sno
+                || RequestKey.Blk != CheckKey.Blk
+                || RequestKey.Bzi != CheckKey.Bzi
+                || RequestKey.Pcs != CheckKey.Pcs) {
+                //送信したKEYと完了後のKEYが何れかが異なれば再度、送信する
+                WorkDataWriteUpdate();
+            }
+            else {
+                _sendCnt = 0;
+                WorkData.UpdateStatus(2, _unit, RequestKey.Sno, RequestKey.Blk, RequestKey.Bzi, RequestKey.Pcs);
+                SendData(WorkDataDoneCmd(_unit)); //加工ワークデータ書込完了コマンド
+            }
+        }
+    }
+
+    /// <summary>
+    /// @加工ワークデータ書込
+    /// </summary>
+    public void WorkDataWriteUpdate() {
+        _finish = false;
+
+        //加工ワークデータ作成
+        WorkData.I.Fetch(RequestKey.Sno, RequestKey.Blk, RequestKey.Bzi, RequestKey.Pcs);
+        _itrnCnt = WorkData.Exist ? 0 : -1;
+        if (_itrnCnt == -1) {
+            SendData(WorkDataEmptyCmd(_unit)); //加工ワークデータ無し書込コマンド
+        }
+        else {
+            WorkData.UpdateStatus(1, _unit, RequestKey.Sno, RequestKey.Blk, RequestKey.Bzi, RequestKey.Pcs);
+            switch (MonitorMessage.RequestBit) {
+                case C.REQ_MIR:
+                    Invert(); //ミラー反転処理
+                    break;
+                case C.REQ_SPI:
+                    Rotate(); //回転処理
+                    break;
+            }
+
+            //加工ワークデータ書込コマンド
+            SendData(WorkDataWriteCmd(_unit)); //加工ワークデータ書込コマンド
         }
     }
 }

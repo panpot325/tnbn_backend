@@ -23,9 +23,6 @@ public partial class Form1 {
 
         //テスト用
         ReadBitResponseTest();
-        //Timer1.Enabled = true;
-        //Command1.Enabled = true;
-        //return;
         
         switch (MonitorMessage.RequestBit) {
             //稼動終了
