@@ -93,7 +93,7 @@ public class MTcpClient {
 
             // 送信成功
             //Log.WriteLine(@"送信データ：" + new ASCIIEncoding().GetString(data));
-            Globals.ConsoleWriteData("W", new ASCIIEncoding().GetString(data));
+            //Globals.ConsoleWriteMcProtocolData("W", new ASCIIEncoding().GetString(data));
         }
         catch (Exception ex) {
             // 送信失敗
@@ -122,7 +122,7 @@ public class MTcpClient {
             // 受信成功
             if (receiveSize > 0) {
                 //Log.WriteLine(@"受信データ：" + new ASCIIEncoding().GetString(data));
-                Globals.ConsoleWriteData("R", new ASCIIEncoding().GetString(data));
+                //Globals.ConsoleWriteMcProtocolData("R", new ASCIIEncoding().GetString(data));
             }
         }
         catch (IOException) {

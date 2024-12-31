@@ -91,11 +91,11 @@ public partial class Globals {
     }
 
     /// <summary>
-    /// ConsoleWriteData
+    /// 3EMcProtocolDataのデバッグ
     /// </summary>
     /// <param name="mode"></param>
     /// <param name="sData"></param>
-    public static void ConsoleWriteData(string mode, string sData) {
+    public static void ConsoleWriteMcProtocolData(string mode, string sData) {
         if (mode == "W") {
             if (Settings.Default.MC_Protocol == "3E") {
                 Console.WriteLine(@"----------------------------------------------------------");
