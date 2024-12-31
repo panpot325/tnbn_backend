@@ -34,9 +34,6 @@ internal static class Program {
             return;
         }
 
-        var isSucceeded = G.PingCheck(Settings.Default.PLC_Host, 5);
-        Console.WriteLine(@$"PingCheck: {isSucceeded}");
-
         G.Sub_LogWrite(@$"【Sel_監視設定】 {KanshiSettei.SQL}");
         KanshiSettei.Dump();
 

@@ -62,15 +62,6 @@ public partial class Globals {
     }
 
     /// <summary>
-    /// PingCheck
-    /// Todo Implements
-    /// </summary>
-    /// <returns></returns>
-    public static bool PingCheck() {
-        return true;
-    }
-
-    /// <summary>
     /// ホスト名取得
     /// </summary>
     /// <returns></returns>

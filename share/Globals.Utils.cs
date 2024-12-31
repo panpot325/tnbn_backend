@@ -80,17 +80,27 @@ public partial class Globals {
     /// <summary>
     /// PingCheck
     /// </summary>
+    /// <returns></returns>
+    public static bool PingCheck() {
+        return PingCheck(Settings.Default.PLC_Host, 5);
+    }
+
+    /// <summary>
+    /// PingCheck
+    /// </summary>
     /// <param name="target"></param>
     /// <param name="count"></param>
     /// <returns></returns>
     public static bool PingCheck(string target, int count) {
         var ping = new Ping();
-        var replies = new List<PingReply>();
         for (var i = 0; i < count; i++) {
-            replies.Add(ping.Send(target, 100));
+            var reply = ping.Send(target, 500);
+            if (reply is { Status: IPStatus.Success }) {
+                return true;
+            }
         }
 
-        return replies.Any(reply => reply.Status == IPStatus.Success);
+        return false;
     }
 
     /// <summary>
