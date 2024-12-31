@@ -11,7 +11,7 @@ namespace BackendMonitor;
 /// </summary>
 public partial class Form1 {
     [DllImport("user32.dll")]
-    private static extern bool EnableMenuItem(IntPtr hMenu, uint uIDEnableItem, uint uEnable);
+    private static extern bool EnableMenuItem(IntPtr hMenu, uint uIdEnableItem, uint uEnable);
 
     [DllImport("user32.dll")]
     public static extern IntPtr GetSystemMenu(IntPtr hWnd, bool bRevert);

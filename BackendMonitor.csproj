@@ -152,6 +152,9 @@
         <Compile Include="type\index\BziIndex.cs" />
         <Compile Include="type\index\SnoIndex.cs" />
         <Compile Include="type\Log.cs" />
+        <Compile Include="type\Log.Sub.cs">
+          <DependentUpon>Log.cs</DependentUpon>
+        </Compile>
         <Compile Include="type\singleton\CheckKey.cs">
           <DependentUpon>PKey.cs</DependentUpon>
         </Compile>

@@ -9,7 +9,7 @@ namespace BackendMonitor.type;
 /// <summary>
 /// Logクラス
 /// </summary>
-public class Log {
+public partial class Log {
     public string SNO { get; set; } //
     public string BLK { get; set; } //
     public string BZI { get; set; } //
