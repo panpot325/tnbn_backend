@@ -105,13 +105,13 @@ public partial class Form1 {
         //現物を180度回転した値を計算
 
         //--- データタイプのLK1の配列番号を取得 -----
-        var lk = DataTypesIndex("W715");
+        var lk = WorkDataTypes.DmIndex("W715");
 
         //--- データタイプのWL1の配列番号を取得 -----
-        var wl = DataTypesIndex("W745");
+        var wl = WorkDataTypes.DmIndex("W745");
 
         //--- データタイプのSP1の配列番号を取得 -----
-        var sp = DataTypesIndex("W72C");
+        var sp = WorkDataTypes.DmIndex("W72C");
 
         //データタイプのSP1〜SP5より最大のデフォルト値を取得
         var defMax = DataTypesDefMax(sp);
@@ -774,22 +774,6 @@ public partial class Form1 {
 
         //--- SP1により基準を変更 -----
         workData.Org = workData.Sp1 < types[sp].Hani_Min2 ? (byte)1 : (byte)0;
-    }
-
-    /// <summary>
-    /// データタイプの配列番号を取得
-    /// </summary>
-    /// <param name="type"></param>
-    /// <returns></returns>
-    private int DataTypesIndex(string type) {
-        var types = WorkDataTypes.List;
-        for (var i = 0; i < WorkDataTypes.Count; i++) {
-            if (types[i].DM == type) {
-                return i;
-            }
-        }
-
-        return 0;
     }
 
     /// <summary>

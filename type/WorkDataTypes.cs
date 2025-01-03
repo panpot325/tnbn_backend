@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
+using System.Linq;
 using System.Text;
 using BackendMonitor.Properties;
 using BackendMonitor.share;
@@ -70,6 +71,18 @@ public class WorkDataTypes {
         }
 
         return table;
+    }
+
+    /// <summary>
+    /// 配列番号を取得
+    /// </summary>
+    /// <param name="dm"></param>
+    /// <returns></returns>
+    public static int DmIndex(string dm) {
+        return (
+            from data in List.Select((value, index) => new { value, index })
+            where data.value.DM == dm
+            select data.index).FirstOrDefault();
     }
 
     /// <summary>
