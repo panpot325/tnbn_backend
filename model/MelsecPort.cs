@@ -1,7 +1,6 @@
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
-using BackendMonitor.type.singleton;
 
 // ReSharper disable InvertIf
 // ReSharper disable ConvertIfStatementToReturnStatement
@@ -117,7 +116,7 @@ public class MelsecPort(Control mWindowHandle, string serverIpAddress, int serve
         if (mWindowHandle != null && MOnRecv != null) {
             //Log.WriteLine("受信データ　" + recvData);
             //Log.WriteLine(@"受信データ　" + new ASCIIEncoding().GetString(recvData));
-            mWindowHandle.Invoke(MOnRecv, new object[1] { new ASCIIEncoding().GetString(recvData, 0 ,recvSize) });
+            mWindowHandle.Invoke(MOnRecv, new object[1] { new ASCIIEncoding().GetString(recvData, 0, recvSize) });
         }
     }
 }

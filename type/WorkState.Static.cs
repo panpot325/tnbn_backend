@@ -1,6 +1,5 @@
 using System.Text;
 using BackendMonitor.share;
-using G = BackendMonitor.share.Globals;
 
 namespace BackendMonitor.type;
 

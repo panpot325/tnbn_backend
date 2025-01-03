@@ -71,7 +71,7 @@ public partial class Form1 {
     /// </summary>
     /// <param name="unit"></param>
     public void RevertRecvKey(int unit) {
-       Log.Sub_LogWrite($@"【要求データキーの戻し作業】受信Cmd.読込データ:{ResponseMessage.ReadData}】");
+        Log.Sub_LogWrite($@"【要求データキーの戻し作業】受信Cmd.読込データ:{ResponseMessage.ReadData}】");
 
         var ascString = G.AscToString(ResponseMessage.ReadData);
         Log.Sub_LogWrite(ascString);

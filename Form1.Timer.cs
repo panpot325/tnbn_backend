@@ -27,7 +27,7 @@ public partial class Form1 {
 
         SetText($@"{Settings.Default.Prg_Ver} 単板ライン 接続処理実施中...", @"単板ラインに接続処理開始");
         Log.Sub_LogWrite("Timer2 単板ライン 監視中...");
-        
+
         //Ethernetインタフェースユニットと接続
         if (!_melsecPort.Start()) {
             Timer2.Enabled = true;

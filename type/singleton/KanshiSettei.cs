@@ -10,7 +10,7 @@ namespace BackendMonitor.type.singleton;
 /// </summary>
 public class KanshiSettei {
     public const string SQL = "SELECT * FROM tnbn_kanshi_settei";
-    
+
     /// Static Instance
     private static readonly KanshiSettei _instance = new();
 

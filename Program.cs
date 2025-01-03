@@ -46,6 +46,5 @@ internal static class Program {
 
         Application.Run(new Form1());
         Log.Sub_LogWrite(@"Main終了");
-        
     }
 }

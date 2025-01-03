@@ -17,6 +17,7 @@ public class WorkDataTypes {
 
     /// Static Members
     private readonly List<WorkDataType> _list;
+
     private readonly DataTable _table;
 
     // Static Property
@@ -27,8 +28,8 @@ public class WorkDataTypes {
 
     /// Constants
     public const string SQL = "SELECT * FROM tnbn_kakowk_data_type" +
-                               " WHERE dm like 'W%'" +
-                               " ORDER BY dm";
+                              " WHERE dm like 'W%'" +
+                              " ORDER BY dm";
 
     /// <summary>
     /// Private Constructor

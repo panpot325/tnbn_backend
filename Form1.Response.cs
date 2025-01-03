@@ -23,7 +23,7 @@ public partial class Form1 {
 
         //テスト用
         ReadBitResponseTest();
-        
+
         switch (MonitorMessage.RequestBit) {
             //稼動終了
             case C.REQ_STP:

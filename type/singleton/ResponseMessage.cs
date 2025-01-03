@@ -12,6 +12,7 @@ public class ResponseMessage : RCmd {
 
     /// Static Property
     public static string Sh => _instance.SH;
+
     public static string FinishCode => _instance.Finish_Code;
     public static string IllegalCode => _instance.Illegal_Code;
     public static string ReadData => _instance.Read_Data;
