@@ -114,7 +114,7 @@ public partial class Form1 {
         var sp = WorkDataTypes.DmIndex("W72C");
 
         //データタイプのSP1〜SP5より最大のデフォルト値を取得
-        var defMax = DataTypesDefMax(sp);
+        var defMax = WorkDataTypes.DefMax(sp);
 
         //加工ワークデータを一時退避
         var workData = WorkData.I;
@@ -774,34 +774,6 @@ public partial class Form1 {
 
         //--- SP1により基準を変更 -----
         workData.Org = workData.Sp1 < types[sp].Hani_Min2 ? (byte)1 : (byte)0;
-    }
-
-    /// <summary>
-    /// データタイプのSP1〜SP5より最大のデフォルト値を取得
-    /// </summary>
-    /// <param name="sp"></param>
-    /// <returns></returns>
-    private string DataTypesDefMax(int sp) {
-        var types = WorkDataTypes.List;
-        var defMax = types[sp].Def;
-
-        if (string.Compare(defMax, types[sp + 1].Def, StringComparison.Ordinal) == -1) {
-            defMax = types[sp + 1].Def;
-        }
-
-        if (string.Compare(defMax, types[sp + 2].Def, StringComparison.Ordinal) == -1) {
-            defMax = types[sp + 2].Def;
-        }
-
-        if (string.Compare(defMax, types[sp + 3].Def, StringComparison.Ordinal) == -1) {
-            defMax = types[sp + 3].Def;
-        }
-
-        if (string.Compare(defMax, types[sp + 4].Def, StringComparison.Ordinal) == -1) {
-            defMax = types[sp + 4].Def;
-        }
-
-        return defMax;
     }
 
     /// <summary>

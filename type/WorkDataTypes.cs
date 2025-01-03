@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
@@ -83,6 +84,34 @@ public class WorkDataTypes {
             from data in List.Select((value, index) => new { value, index })
             where data.value.DM == dm
             select data.index).FirstOrDefault();
+    }
+
+    /// <summary>
+    /// データタイプのSP1〜SP5より最大のデフォルト値を取得
+    /// </summary>
+    /// <param name="sp"></param>
+    /// <returns></returns>
+    public static string DefMax(int sp) {
+        var types = List;
+        var defMax = List[sp].Def;
+
+        if (string.Compare(defMax, List[sp + 1].Def, StringComparison.Ordinal) < 0) {
+            defMax = types[sp + 1].Def;
+        }
+
+        if (string.Compare(defMax, types[sp + 2].Def, StringComparison.Ordinal) < 0) {
+            defMax = types[sp + 2].Def;
+        }
+
+        if (string.Compare(defMax, types[sp + 3].Def, StringComparison.Ordinal) < 0) {
+            defMax = types[sp + 3].Def;
+        }
+
+        if (string.Compare(defMax, types[sp + 4].Def, StringComparison.Ordinal) < 0) {
+            defMax = types[sp + 4].Def;
+        }
+
+        return defMax;
     }
 
     /// <summary>
