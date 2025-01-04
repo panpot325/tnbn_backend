@@ -1,7 +1,5 @@
 *.xml
 bin/
 obj/
-packages
 .idea
 App.config
-Properties
