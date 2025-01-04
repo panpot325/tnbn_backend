@@ -1,6 +1,6 @@
 *.xml
-bin
-obj
+bin/
+obj/
 packages
 .idea
 App.config
