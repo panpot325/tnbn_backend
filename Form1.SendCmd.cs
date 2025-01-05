@@ -6,7 +6,6 @@ using G = BackendMonitor.share.Globals;
 using C = BackendMonitor.share.Constants;
 
 // ReSharper disable InvertIf
-
 // ReSharper disable MemberCanBeMadeStatic.Local
 
 namespace BackendMonitor;

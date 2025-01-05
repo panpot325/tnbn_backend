@@ -81,41 +81,5 @@ namespace BackendMonitor.share {
         public const string MODE_ONO = "ONOMICHI";
         public const string MODE_MUK = "MUKAISHIMA";
         public const string MODE_SAI = "SAIKI";
-
-        public const long IP_SUCCESS = 0;
-        public const long IP_STATUS_BASE = 11000;
-        public const long IP_BUF_TOO_SMALL = (11000 + 1);
-        public const long IP_DEST_NET_UNREACHABLE = (11000 + 2);
-        public const long IP_DEST_HOST_UNREACHABLE = (11000 + 3);
-        public const long IP_DEST_PROT_UNREACHABLE = (11000 + 4);
-        public const long IP_DEST_PORT_UNREACHABLE = (11000 + 5);
-        public const long IP_NO_RESOURCES = (11000 + 6);
-        public const long IP_BAD_OPTION = (11000 + 7);
-        public const long IP_HW_ERROR = (11000 + 8);
-        public const long IP_PACKET_TOO_BIG = (11000 + 9);
-        public const long IP_REQ_TIMED_OUT = (11000 + 10);
-        public const long IP_BAD_REQ = (11000 + 11);
-        public const long IP_BAD_ROUTE = (11000 + 12);
-        public const long IP_TTL_EXPIRED_TRANSIT = (11000 + 13);
-        public const long IP_TTL_EXPIRED_REASSEM = (11000 + 14);
-        public const long IP_PARAM_PROBLEM = (11000 + 15);
-        public const long IP_SOURCE_QUENCH = (11000 + 16);
-        public const long IP_OPTION_TOO_BIG = (11000 + 17);
-        public const long IP_BAD_DESTINATION = (11000 + 18);
-        public const long IP_ADDR_DELETED = (11000 + 19);
-        public const long IP_SPEC_MTU_CHANGE = (11000 + 20);
-        public const long IP_MTU_CHANGE = (11000 + 21);
-        public const long IP_UNLOAD = (11000 + 22);
-        public const long IP_ADDR_ADDED = (11000 + 23);
-        public const long IP_GENERAL_FAILURE = (11000 + 50);
-        public const long MAX_IP_STATUS = (11000 + 50);
-        public const long IP_PENDING = (11000 + 255);
-        public const long PING_TIMEOUT = 500;
-        public const long WS_VERSION_REQD = 0x101;
-        public const long MIN_SOCKETS_REQD = 1;
-        public const long SOCKET_ERROR = -1;
-        public const long INADDR_NONE = 0xFFFFFFFF;
-        public const long MAX_WSA_DESCRIPTION = 256; //@MAX_WSADescription
-        public const long MAX_WSA_SYS_STATUS = 128; //@MAX_WSASYSStatus
     }
 }
