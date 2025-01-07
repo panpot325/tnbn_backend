@@ -35,11 +35,12 @@ public partial class Form1 {
     /// </summary>
     public void Process_Start() {
         Log.WriteLine(@"稼動開始");
-        WorkStates.List[_unit].Fetch_WorkData(); // 加工ワークデータから取得
-        WorkStates.List[0].Fetch_Record(_unit); // 稼動実績WKから取得
+        //WorkStates.List[_unit].Fetch_WorkData(); // 加工ワークデータから取得
+        //WorkStates.List[0].Fetch_Record(_unit); // 稼動実績WKから取得
+        //var recState = WorkStates.List[0]; // 稼動実績WKから取得
 
-        var workState = WorkStates.List[_unit]; // 加工ワークデータから取得
-        var recState = WorkStates.List[0]; // 稼動実績WKから取得
+        var workState = WorkStates.List[_unit].Fetch_WorkData(); // 加工ワークデータから取得
+        var recState = WorkState.Fetch(_unit); // 稼動実績WKから取得
 
         if (workState.YMD == recState.YMD
             && workState.SNO.Trim() == recState.SNO.Trim()

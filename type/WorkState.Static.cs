@@ -37,4 +37,38 @@ public partial class WorkState {
         PgConnect.Close();
         Log.Sub_LogWrite($@"【稼動実績WKをクリア】{sb.ToString()}");
     }
+
+    /// <summary>
+    /// Fetch
+    /// </summary>
+    /// <param name="unit"></param>
+    /// <returns></returns>
+    public static WorkState Fetch(int unit) {
+        var sb = new StringBuilder();
+        sb.Append(" SElECT sno, blk, bzi, pcs, l, b, tmax, honsu, ymd,");
+        sb.Append(" str_time, str_time2, end_time, kad_time, ttl_time, stp_time, cnt");
+        sb.Append(" FROM tnbn_kadojisseki_wk");
+        sb.Append($" WHERE taisyo = '{unit}'");
+        var row = PgOpen.PgSelect(sb.ToString()).Rows[0];
+
+        return new WorkState(unit) {
+            Unit = unit,
+            SNO = ((string)row["sno"]).Trim(),
+            BLK = ((string)row["blk"]).Trim(),
+            BZI = ((string)row["bzi"]).Trim(),
+            PCS = ((string)row["pcs"]).Trim(),
+            L = (decimal)row["l"],
+            B = (decimal)row["b"],
+            Tmax = (decimal)row["tmax"],
+            Count = (short)row["honsu"],
+            YMD = (string)row["ymd"],
+            StrTime = (string)row["str_time"],
+            StrTime2 = (string)row["str_time2"],
+            EndTime = (string)row["end_time"],
+            KAD_TIME = (int)row["kad_time"],
+            Ttl_TIME = (int)row["ttl_time"],
+            Stp_Time = (int)row["stp_time"],
+            CNT = (short)row["cnt"],
+        };
+    }
 }

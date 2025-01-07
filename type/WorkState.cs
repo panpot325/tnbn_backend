@@ -25,7 +25,7 @@ public partial class WorkState(int unit) {
     public int KAD_TIME; //
     public int Ttl_TIME; //
     public int Stp_Time; //
-    public byte CNT; //
+    public int CNT; //
     public bool EndState; //終了判定
     public int Unit = unit; //装置番号
 
