@@ -20,7 +20,7 @@ internal static class Program {
     /// </summary>
     [STAThread]
     private static void Main() {
-        AppConfig();
+        AppSetting();
         Log.Sub_LogWrite(@$"プログラム起動開始 {Settings.Default.Prg_Ver}");
         using var mutex = new Mutex(false, Application.ProductName);
         if (!mutex.WaitOne(0, false)) {
@@ -54,7 +54,7 @@ internal static class Program {
     /// <summary>
     /// ConfigurationManager.AppSettings
     /// </summary>
-    private static void AppConfig() {
+    private static void AppSetting() {
         var keys = ConfigurationManager.AppSettings.AllKeys;
         foreach (SettingsProperty property in Settings.Default.Properties) {
             if (keys.Contains(property.Name)) {
