@@ -50,16 +50,16 @@
       <Value Profile="(Default)">//Mac/Home/Documents/ONOZO/RiderProjects/Log</Value>
     </Setting>
     <Setting Name="Dev_Path" Type="System.String" Scope="User">
-      <Value Profile="(Default)">//Mac/Home/Documents/ONOZO/RiderProjects/Debug</Value>
+      <Value Profile="(Default)">//Mac/Home/Documents/ONOZO/RiderProjects/Dev</Value>
     </Setting>
     <Setting Name="Csv_Path" Type="System.String" Scope="User">
       <Value Profile="(Default)">//Mac/Home/Documents/ONOZO/RiderProjects/Csv</Value>
     </Setting>
     <Setting Name="Log_File" Type="System.String" Scope="User">
-      <Value Profile="(Default)">TanbanLog.txt</Value>
+      <Value Profile="(Default)">TnbnLog.txt</Value>
     </Setting>
     <Setting Name="Dev_File" Type="System.String" Scope="User">
-      <Value Profile="(Default)">TanbanDev.txt</Value>
+      <Value Profile="(Default)">TnbnDev.txt</Value>
     </Setting>
   </Settings>
 </SettingsFile>
