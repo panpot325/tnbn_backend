@@ -74,7 +74,7 @@ public partial class Form1 {
     public void WriteLogFile(int unit) {
         var fileName = GetFilePath();
         if (string.IsNullOrEmpty(fileName)) return;
-        Log.CreateDir(Settings.Default.Log_Path);
+        Log.CreateDir(Settings.Default.Csv_Path);
         Log.Write(fileName);
     }
 
@@ -85,9 +85,9 @@ public partial class Form1 {
     private string GetFilePath() {
         var workState = WorkStates.List[_unit];
         return _unit switch {
-            C.UNIT_2 => $"{Settings.Default.Log_Path}\\{workState.SNO.Trim()}-{DateTime.Now:yyyy-MM}-仮付.csv",
-            C.UNIT_3 => $"{Settings.Default.Log_Path}\\{workState.SNO.Trim()}-{DateTime.Now:yyyy-MM}-本付.csv",
-            C.UNIT_5 => $"{Settings.Default.Log_Path}\\{workState.SNO.Trim()}-{DateTime.Now:yyyy-MM}-矯正.csv",
+            C.UNIT_2 => $"{Settings.Default.Csv_Path}\\{workState.SNO.Trim()}-{DateTime.Now:yyyy-MM}-仮付.csv",
+            C.UNIT_3 => $"{Settings.Default.Csv_Path}\\{workState.SNO.Trim()}-{DateTime.Now:yyyy-MM}-本付.csv",
+            C.UNIT_5 => $"{Settings.Default.Csv_Path}\\{workState.SNO.Trim()}-{DateTime.Now:yyyy-MM}-矯正.csv",
             _ => ""
         };
     }

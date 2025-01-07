@@ -56,33 +56,10 @@ internal static class Program {
     /// </summary>
     private static void AppConfig() {
         var keys = ConfigurationManager.AppSettings.AllKeys;
-
-        if (keys.Contains("DB_Host")) {
-            Settings.Default.DB_Host = ConfigurationManager.AppSettings["DB_Host"];
-        }
-
-        if (keys.Contains("DB_Name")) {
-            Settings.Default.DB_Name = ConfigurationManager.AppSettings["DB_Name"];
-        }
-
-        if (keys.Contains("DB_User")) {
-            Settings.Default.DB_User = ConfigurationManager.AppSettings["DB_User"];
-        }
-
-        if (keys.Contains("DB_Pass")) {
-            Settings.Default.DB_Pass = ConfigurationManager.AppSettings["DB_Pass"];
-        }
-
-        if (keys.Contains("Log_Path")) {
-            Settings.Default.Log_Path = ConfigurationManager.AppSettings["Log_Path"];
-        }
-
-        if (keys.Contains("Dev_Path")) {
-            Settings.Default.Dev_Path = ConfigurationManager.AppSettings["Dev_Path"];
-        }
-
-        if (keys.Contains("Log_File_Path")) {
-            Settings.Default.Log_File_Path = ConfigurationManager.AppSettings["Log_File_Path"];
+        foreach (SettingsProperty property in Settings.Default.Properties) {
+            if (keys.Contains(property.Name)) {
+                Settings.Default[property.Name] = ConfigurationManager.AppSettings[property.Name];
+            }
         }
     }
 }

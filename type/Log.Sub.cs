@@ -15,7 +15,8 @@ public partial class Log {
     /// <param name="message"></param>
     public static void Sub_LogWrite(string message) {
         if (Settings.Default.Log_Write != 1) return;
-        using var sw = new StreamWriter(Settings.Default.Log_File_Path, true, Encoding.UTF8);
+        using var sw = new StreamWriter($"{Settings.Default.Log_Path}/{Settings.Default.Log_File}", true,
+            Encoding.UTF8);
         sw.WriteLine($"{DateTime.Now:yyyy/MM/dd HH:mm:ss}\t{message}");
     }
 

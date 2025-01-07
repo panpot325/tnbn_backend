@@ -204,25 +204,49 @@ namespace BackendMonitor.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("//Mac/Home/Documents/ONOZO/RiderProjects/Log/TanbanLog.txt")]
-        public string Log_File_Path {
-            get {
-                return ((string)(this["Log_File_Path"]));
-            }
-            set {
-                this["Log_File_Path"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("//Mac/Home/Documents/ONOZO/RiderProjects/Debug/BackendMonitor")]
+        [global::System.Configuration.DefaultSettingValueAttribute("//Mac/Home/Documents/ONOZO/RiderProjects/Debug")]
         public string Dev_Path {
             get {
                 return ((string)(this["Dev_Path"]));
             }
             set {
                 this["Dev_Path"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("//Mac/Home/Documents/ONOZO/RiderProjects/Csv")]
+        public string Csv_Path {
+            get {
+                return ((string)(this["Csv_Path"]));
+            }
+            set {
+                this["Csv_Path"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("TanbanLog.txt")]
+        public string Log_File {
+            get {
+                return ((string)(this["Log_File"]));
+            }
+            set {
+                this["Log_File"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("TanbanDev.txt")]
+        public string Dev_File {
+            get {
+                return ((string)(this["Dev_File"]));
+            }
+            set {
+                this["Dev_File"] = value;
             }
         }
     }

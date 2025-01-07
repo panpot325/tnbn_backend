@@ -14,16 +14,26 @@ namespace BackendMonitor.share;
 /// </summary>
 public partial class Globals {
     /// <summary>
+    /// DebugWrite
+    /// </summary>
+    /// <param name="message"></param>
+    public static void DebugWrite(string message) {
+        using var sw = new StreamWriter($"{Settings.Default.Dev_Path}/{Settings.Default.Dev_File}", true,
+            Encoding.UTF8);
+        sw.WriteLine(message);
+    }
+
+    /// <summary>
     /// ファイルの内容をクリアする
     /// </summary>
     public static void ClearDebugFile() {
-        var fileName = $"{Settings.Default.Dev_Path}/Data.txt";
+        var fileName = $"{Settings.Default.Dev_Path}/{Settings.Default.Dev_File}";
         if (!File.Exists(fileName)) {
             using (File.Create(fileName)) {
             }
         }
 
-        using var fs = new FileStream($"{Settings.Default.Dev_Path}/Data.txt", FileMode.Open);
+        using var fs = new FileStream(fileName, FileMode.Open);
         fs.SetLength(0);
     }
 
@@ -119,7 +129,7 @@ public partial class Globals {
     /// <param name="data"></param>
     public static void StreamWriteData(string mode, string data) {
         // ReSharper disable once ConvertToUsingDeclaration
-        using (var sw = new StreamWriter($"{Settings.Default.Dev_Path}/Data.txt", true, Encoding.UTF8)) {
+        using (var sw = new StreamWriter($"{Settings.Default.Dev_Path}/{Settings.Default.Dev_File}", true, Encoding.UTF8)) {
             if (mode == "W") {
                 if (Settings.Default.MC_Protocol == "3E") {
                     sw.WriteLine("Send Data: " + data);
