@@ -80,7 +80,11 @@ public class MonitorMessage : RCmd {
             return C.REQ_NOP;
         }
 
-        if (WorkStates.List[unit].Start_Count > 0 || !GetEndState(unit)) {
+        if (WorkStates.List[unit].Start_Count > 0) {
+            return C.REQ_STP;
+        }
+
+        if (WorkStates.List[unit].End_Count == 0 && !GetEndState(unit)) {
             return C.REQ_STP;
         }
 
