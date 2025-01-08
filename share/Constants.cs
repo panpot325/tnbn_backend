@@ -27,16 +27,11 @@ namespace BackendMonitor.share {
         public const int UNIT_1 = 1;
         public const int UNIT_2 = 2;
         public const int UNIT_3 = 3;
-        public const int UNIT_4 = 4;
-
         public const int UNIT_5 = 5;
 
-        //public const string UNIT_CODE_2 = "02"; //@cPc名仮付 // PC番号(パネル組立仮付け装置)
-        //public const string UNIT_CODE_3 = "03"; //@cPc名本付 // PC番号(２０電極溶接装置)
-        //public const string UNIT_CODE_5 = "05"; //@cPc名矯正 // PC番号(単板歪み矯正機)
-        public const string UNIT_CODE_2 = "01"; //@cPc名仮付 // PC番号(パネル組立仮付け装置)
-        public const string UNIT_CODE_3 = "01"; //@cPc名本付 // PC番号(２０電極溶接装置)
-        public const string UNIT_CODE_5 = "01"; //@cPc名矯正 // PC番号(単板歪み矯正機)
+        public const string UNIT_CODE_2 = "01"; //*02 @cPc名仮付 // PC番号(パネル組立仮付け装置)
+        public const string UNIT_CODE_3 = "01"; //*03 @cPc名本付 // PC番号(２０電極溶接装置)
+        public const string UNIT_CODE_5 = "01"; //*05 @cPc名矯正 // PC番号(単板歪み矯正機)
 
         //-- デバイス名
         public const string DEVICE_B = "4220"; //@cデバイス名B // ﾃﾞﾊﾞｲｽｺｰﾄﾞ B0(42h,20h)
