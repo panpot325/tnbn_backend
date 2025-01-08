@@ -422,7 +422,6 @@ public partial class Form1 {
 
         _itrnClrCnt += 1;
         if (_itrnClrCnt >= C.BLK_MAX_PLC) {
-            _gCmd = "";
             switch (_unit) {
                 case C.UNIT_2:
                     _unit = C.UNIT_3;

@@ -17,7 +17,6 @@ public partial class Form1 : Form {
     private bool _finish; //@Finish
     private bool _clrFinish; //@ClrFinish
     private byte _gListClrState; //@gListClrState 0:一覧ｸﾘｱ完了、1:船番一覧ｸﾘｱ、2:ﾌﾞﾛｯｸ一覧ｸﾘｱ
-    private string _gCmd; //@gCmd --書込コマンドの履歴書込み用変数
     private int _sendCnt; //@送信完了Cnt
 
     /// <summary>

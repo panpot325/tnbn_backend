@@ -55,12 +55,13 @@ public partial class Form1 {
     /// <summary>
     /// SendData
     /// </summary>
-    private void SendData(string cmd, bool gCmd = true, bool pingCheck = true) {
+    /// <param name="cmd"></param>
+    /// <param name="pingCheck"></param>
+    private void SendData(string cmd, bool pingCheck = true) {
         if (string.IsNullOrEmpty(cmd)) {
             return;
         }
 
-        _gCmd = gCmd ? cmd : "";
         if (!pingCheck || G.PingCheck()) {
             Log.Sub_LogWrite($"SendData: {cmd}");
             _melsecPort.Send(cmd);

@@ -58,7 +58,6 @@ public partial class Form1 {
             };
             cmd = RecvBitCmd(_unit);
             Log.WriteLine(@$"【読出ビットコマンド】:{_unit}】 :{cmd}");
-            _gCmd = "";
         }
         else {
             SetText(@"単板ライン 一覧ｸﾘｱを開始します...", @"単板ライン 一覧ｸﾘｱを開始します...");
@@ -69,7 +68,6 @@ public partial class Form1 {
 
             //船番一覧クリアコマンド(装置No)
             cmd = SnoIndexClearCmd(_unit);
-            _gCmd = cmd;
         }
 
         if (string.IsNullOrEmpty(cmd)) {

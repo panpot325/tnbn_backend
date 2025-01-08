@@ -72,13 +72,12 @@ public partial class Form1 {
         //稼動データキーの取得コマンド
         var cmd = WorkDataKeyCmd(_unit);
         if (cmd != "") {
-            _gCmd = "";
             if (G.PingCheck()) {
                 workState.Start_Count++;
                 workState.YMD = DateTime.Now.ToString("yyyy/MM/dd");
                 workState.StrTime = DateTime.Now.ToString("HH:mm:ss");
                 workState.StrTime2 = workState.StrTime;
-                SendData(cmd, false, false);
+                SendData(cmd, false);
             }
             else {
                 SetText(@"単板ライン 接続処理実施中...", "単板ライン\n続処理実施中...");
@@ -94,7 +93,7 @@ public partial class Form1 {
     public void DataKeyRequest() {
         _sendCnt = 0;
         //要求データキーの取得コマンド
-        SendData(RequestDataKeyCmd(_unit), false);
+        SendData(RequestDataKeyCmd(_unit));
     }
 
     /// <summary>
