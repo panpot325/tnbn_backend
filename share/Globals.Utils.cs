@@ -5,8 +5,6 @@ using System.Text;
 using BackendMonitor.Properties;
 using BackendMonitor.type.singleton;
 
-// ReSharper disable InvertIf
-// ReSharper disable ConvertIfStatementToSwitchStatement
 namespace BackendMonitor.share;
 
 /// <summary>
@@ -35,60 +33,6 @@ public partial class Globals {
 
         using var fs = new FileStream(fileName, FileMode.Open);
         fs.SetLength(0);
-    }
-
-    /// <summary>
-    /// Mid
-    /// </summary>
-    /// <param name="str"></param>
-    /// <param name="start"></param>
-    /// <param name="len"></param>
-    /// <returns></returns>
-    /// <exception cref="ArgumentException"></exception>
-    public static string Mid(string str, int start, int len = 0) {
-        if (start <= 0) {
-            throw new ArgumentException("引数'start'は1以上でなければなりません。");
-        }
-
-        if (len < 0) {
-            throw new ArgumentException("引数'len'は0以上でなければなりません。");
-        }
-
-        if (len == 0) {
-            len = str.Length;
-        }
-
-        if (str == null || str.Length < start) {
-            return "";
-        }
-
-        return str.Length < (start + len) ? str.Substring(start - 1) : str.Substring(start - 1, len);
-    }
-
-    /// <summary>
-    /// PingCheck
-    /// </summary>
-    /// <returns></returns>
-    public static bool PingCheck() {
-        return PingCheck(Settings.Default.PLC_Host, 5);
-    }
-
-    /// <summary>
-    /// PingCheck
-    /// </summary>
-    /// <param name="target"></param>
-    /// <param name="count"></param>
-    /// <returns></returns>
-    public static bool PingCheck(string target, int count) {
-        var ping = new Ping();
-        for (var i = 0; i < count; i++) {
-            var reply = ping.Send(target, 500);
-            if (reply is { Status: IPStatus.Success }) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     /// <summary>
@@ -129,7 +73,8 @@ public partial class Globals {
     /// <param name="data"></param>
     public static void StreamWriteData(string mode, string data) {
         // ReSharper disable once ConvertToUsingDeclaration
-        using (var sw = new StreamWriter($"{Settings.Default.Dev_Path}/{Settings.Default.Dev_File}", true, Encoding.UTF8)) {
+        using (var sw = new StreamWriter($"{Settings.Default.Dev_Path}/{Settings.Default.Dev_File}", true,
+                   Encoding.UTF8)) {
             if (mode == "W") {
                 if (Settings.Default.MC_Protocol == "3E") {
                     sw.WriteLine("Send Data: " + data);

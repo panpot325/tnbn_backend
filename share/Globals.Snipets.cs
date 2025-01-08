@@ -1,8 +1,6 @@
 using System;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
 using BackendMonitor.Properties;
 using C = BackendMonitor.share.Constants;
 
@@ -81,42 +79,5 @@ public partial class Globals {
         }
 
         return "";
-    }
-
-    /// <summary>
-    /// ASCII → 文字 に変換
-    /// </summary>
-    /// <param name="dataString"></param>
-    /// <returns></returns>
-    public static string AscToString(string dataString) {
-        var sb = new StringBuilder();
-        for (var i = 0; i < dataString.Length - 1; i += 2) {
-            var hex = dataString.Substring(i, 2);
-            if (hex != "00") {
-                sb.Append(
-                    ((char)Convert.ToInt32(hex, 16)).ToString()
-                );
-            }
-        }
-
-        return sb.ToString();
-    }
-
-    /// <summary>
-    /// 文字を2文字ずつ並びかえる
-    /// </summary>
-    /// <param name="dataString"></param>
-    /// <param name="max"></param>
-    /// <returns></returns>
-    public static string ReverseString(string dataString, int max = 0) {
-        var sb = new StringBuilder();
-        for (var i = 0; i < dataString.Length - 1; i += 2) {
-            var hex = dataString.Substring(i, 2);
-            if (max > 0 && i < max) {
-                sb.Append(string.Concat(hex.Reverse()));
-            }
-        }
-
-        return sb.ToString();
     }
 }
