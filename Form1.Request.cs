@@ -1,13 +1,9 @@
-using System;
 using BackendMonitor.type;
 using BackendMonitor.type.index;
 using BackendMonitor.type.singleton;
-using G = BackendMonitor.share.Globals;
 using C = BackendMonitor.share.Constants;
 
 // ReSharper disable InvertIf
-
-
 namespace BackendMonitor;
 
 /// <summary>
@@ -66,25 +62,9 @@ public partial class Form1 {
     /// @稼動データキー取得
     /// </summary>
     public void WorkKeyRequest() {
-        var workState = WorkStates.List[_unit];
-        workState.Clear();
-
+        WorkStates.List[_unit].Clear();
         //稼動データキーの取得コマンド
-        var cmd = WorkDataKeyCmd(_unit);
-        if (cmd != "") {
-            if (G.PingCheck()) {
-                workState.Start_Count++;
-                workState.YMD = DateTime.Now.ToString("yyyy/MM/dd");
-                workState.StrTime = DateTime.Now.ToString("HH:mm:ss");
-                workState.StrTime2 = workState.StrTime;
-                SendData(cmd, false);
-            }
-            else {
-                SetText(@"単板ライン 接続処理実施中...", "単板ライン\n続処理実施中...");
-                Log.Sub_LogWrite(@"接続処理Msg設定 単板ライン 接続処理実施中...");
-                Timer2.Enabled = true;
-            }
-        }
+        SendData(WorkDataKeyCmd(_unit));
     }
 
     /// <summary>

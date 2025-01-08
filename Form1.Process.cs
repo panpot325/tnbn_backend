@@ -21,8 +21,6 @@ public partial class Form1 {
         // *** Debug ***
         G.StreamWriteData("R", buff);
         Log.Sub_LogWrite($@"GetData:{buff}");
-        // Log.WriteLine(
-        // @$"Unit: {_unit} ClrFinish: {_clrFinish} GListClrState: {_gListClrState} ItrnClrCnt: {_itrnClrCnt} Finish :{_finish} ItrnCnt :{_itrnCnt}");
 
         ResponseMessage.Set(buff);
         if (ResponseMessage.FinishCode != "00") {

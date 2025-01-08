@@ -72,7 +72,7 @@ public partial class Form1 {
         Log.Sub_LogWrite(@"【読出ワード_レスポンス処理】");
         KeyMessage.Set();
 
-        RevertRecvKey(_unit); //要求データキーの戻し作業
+        SetRequestKey(_unit); //要求データキーの戻し作業
 
         switch (MonitorMessage.RequestBit) {
             //稼動開始
