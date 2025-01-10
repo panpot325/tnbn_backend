@@ -30,7 +30,7 @@ public partial class Form1 : Form {
             Settings.Default.PLC_Timeout);
         _melsecPort.MOnRecv += OnRecv;
         _melsecPort.MOnConnect += OnDisconnect;
-        _clrFinish = true;
+        _clrFinish = false; //起動時にクリア処理を行う
         _gListClrState = 1;
         _unit = 1; // 装置No = 1
     }
