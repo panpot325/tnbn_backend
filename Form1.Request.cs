@@ -17,9 +17,9 @@ public partial class Form1 {
         Log.Sub_LogWrite(@"【船番一覧から抽出】");
 
         _finish = false;
-        _itrnCnt = SnoIndex.Exist ? 0 : -1;
+        _iter = SnoIndex.Exist ? 0 : -1;
         SendData(
-            _itrnCnt == -1
+            _iter == -1
                 ? SnoIndexEmptyCmd(_unit) //船番一覧無し書込
                 : SnoIndexWriteCmd(_unit) //船番一覧書込
         );
@@ -33,10 +33,10 @@ public partial class Form1 {
 
         _finish = false;
         BlkIndex.Fetch(RequestKey.Sno, true);
-        _itrnCnt = BlkIndex.Exist ? 0 : -1;
+        _iter = BlkIndex.Exist ? 0 : -1;
 
         SendData(
-            _itrnCnt == -1
+            _iter == -1
                 ? BlkIndexEmptyCmd(_unit) //ブロック名一覧無し書込コマンド
                 : BlkIndexWriteCmd(_unit) //ブロック名一覧書込コマンド
         );
@@ -50,9 +50,9 @@ public partial class Form1 {
 
         _finish = false;
         BziIndex.Fetch(RequestKey.Sno, RequestKey.Blk, true);
-        _itrnCnt = BziIndex.Exist ? 0 : -1;
+        _iter = BziIndex.Exist ? 0 : -1;
         SendData(
-            _itrnCnt == -1
+            _iter == -1
                 ? BziIndexEmptyCmd(_unit) //部材名一覧無し書込コマンド
                 : BziIndexWriteCmd(_unit) //部材名一覧書込コマンド
         );
@@ -107,8 +107,8 @@ public partial class Form1 {
 
         //加工ワークデータ作成
         WorkData.I.Fetch(RequestKey.Sno, RequestKey.Blk, RequestKey.Bzi, RequestKey.Pcs);
-        _itrnCnt = WorkData.Exist ? 0 : -1;
-        if (_itrnCnt == -1) {
+        _iter = WorkData.Exist ? 0 : -1;
+        if (_iter == -1) {
             SendData(WorkDataEmptyCmd(_unit)); //加工ワークデータ無し書込コマンド
         }
         else {

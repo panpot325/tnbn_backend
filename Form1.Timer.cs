@@ -63,7 +63,7 @@ public partial class Form1 {
             SetText(@"単板ライン 一覧ｸﾘｱを開始します...", @"単板ライン 一覧ｸﾘｱを開始します...");
             Log.Sub_LogWrite(@"Timer1 単板ライン 一覧ｸﾘｱを開始します...");
 
-            _itrnClrCnt = C.SNO_MAX;
+            _clrIter = C.SNO_MAX;
             _unit = C.UNIT_2;
 
             //船番一覧クリアコマンド(装置No)

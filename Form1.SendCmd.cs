@@ -369,23 +369,23 @@ public partial class Form1 {
             $@"{G.UnitName(unit)}\船番一覧\nクリア中..."
         );
 
-        var deviceNumber = 768 + _itrnClrCnt * 3;
+        var deviceNumber = 768 + _clrIter * 3;
 
-        _itrnClrCnt++;
-        if (_itrnClrCnt >= C.SNO_MAX_PLC) {
+        _clrIter++;
+        if (_clrIter >= C.SNO_MAX_PLC) {
             switch (_unit) {
                 case C.UNIT_2:
                     _unit = C.UNIT_3;
-                    _itrnClrCnt = C.SNO_MAX;
+                    _clrIter = C.SNO_MAX;
                     break;
                 case C.UNIT_3:
                     _unit = C.UNIT_5;
-                    _itrnClrCnt = C.SNO_MAX;
+                    _clrIter = C.SNO_MAX;
                     break;
                 default:
                     _unit = C.UNIT_2;
-                    _itrnClrCnt = C.BLK_MAX;
-                    _gListClrState = 2; //船番一覧ｸﾘｱ完了、ﾌﾞﾛｯｸ一覧ｸﾘｱへ進む
+                    _clrIter = C.BLK_MAX;
+                    _clrState = 2; //船番一覧ｸﾘｱ完了、ﾌﾞﾛｯｸ一覧ｸﾘｱへ進む
                     break;
             }
         }
@@ -418,23 +418,23 @@ public partial class Form1 {
             $@"{G.UnitName(unit)}\ブロック名一覧\nクリア中..."
         );
 
-        var deviceNumber = 928 + _itrnClrCnt * 4;
+        var deviceNumber = 928 + _clrIter * 4;
 
-        _itrnClrCnt += 1;
-        if (_itrnClrCnt >= C.BLK_MAX_PLC) {
+        _clrIter += 1;
+        if (_clrIter >= C.BLK_MAX_PLC) {
             switch (_unit) {
                 case C.UNIT_2:
                     _unit = C.UNIT_3;
-                    _itrnClrCnt = C.BLK_MAX;
+                    _clrIter = C.BLK_MAX;
                     break;
                 case C.UNIT_3:
                     _unit = C.UNIT_5;
-                    _itrnClrCnt = C.BLK_MAX;
+                    _clrIter = C.BLK_MAX;
                     break;
                 default:
                     _unit = C.UNIT_1;
                     //ItrnClrCnt = C.C_BLK_MAX;
-                    _gListClrState = 0; //船番&ﾌﾞﾛｯｸ一覧ｸﾘｱ完了
+                    _clrState = 0; //船番&ﾌﾞﾛｯｸ一覧ｸﾘｱ完了
                     break;
             }
         }
@@ -467,11 +467,11 @@ public partial class Form1 {
             $@"{G.UnitName(_unit)}\船番一覧\n送信中..."
         );
 
-        var writeData = SnoIndex.List[_itrnCnt].ToUpper();
-        var deviceNumber = 768 + _itrnCnt * 3;
+        var writeData = SnoIndex.List[_iter].ToUpper();
+        var deviceNumber = 768 + _iter * 3;
 
-        _itrnCnt++;
-        _finish = _itrnCnt >= C.SNO_MAX;
+        _iter++;
+        _finish = _iter >= C.SNO_MAX;
 
         return SCmd.GetCmd(
             C.REQ_WR_W,
@@ -501,11 +501,11 @@ public partial class Form1 {
             $@"{G.UnitName(unit)}\ﾌﾞﾛｯｸ名一覧\n送信中..."
         );
 
-        var writeData = BlkIndex.List[_itrnCnt].ToUpper();
-        var deviceNumber = 928 + _itrnCnt * 4;
+        var writeData = BlkIndex.List[_iter].ToUpper();
+        var deviceNumber = 928 + _iter * 4;
 
-        _itrnCnt++;
-        _finish = _itrnCnt >= C.BLK_MAX;
+        _iter++;
+        _finish = _iter >= C.BLK_MAX;
 
         return SCmd.GetCmd(
             C.REQ_WR_W,
@@ -534,11 +534,11 @@ public partial class Form1 {
             $@"{G.UnitName(unit)}\部材＋舷一覧\n送信中..."
         );
 
-        var writeData = BziIndex.BziList[_itrnCnt].ToUpper() + BziIndex.PcsList[_itrnCnt].ToUpper();
-        var deviceNumber = 1328 + _itrnCnt * 9;
+        var writeData = BziIndex.BziList[_iter].ToUpper() + BziIndex.PcsList[_iter].ToUpper();
+        var deviceNumber = 1328 + _iter * 9;
 
-        _itrnCnt++;
-        _finish = _itrnCnt >= C.BZI_MAX;
+        _iter++;
+        _finish = _iter >= C.BZI_MAX;
 
         return SCmd.GetCmd(C.REQ_WR_W,
             G.UnitCode(unit),
@@ -567,10 +567,10 @@ public partial class Form1 {
             $@"{G.UnitName(unit)}\加工ワークデータ\n送信中..."
         );
 
-        var workDataType = WorkDataTypes.List[_itrnCnt];
+        var workDataType = WorkDataTypes.List[_iter];
 
-        _itrnCnt += 1;
-        _finish = _itrnCnt >= WorkDataTypes.Count;
+        _iter += 1;
+        _finish = _iter >= WorkDataTypes.Count;
 
         return SCmd.GetCmd(
             C.REQ_WR_W,

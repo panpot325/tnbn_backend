@@ -137,10 +137,10 @@ public partial class Form1 {
     public void ClearWordResponse() {
         Log.Sub_LogWrite(@"【書込ワード_レスポンス処理_クリア】");
 
-        if (_gListClrState == 1) {
+        if (_clrState == 1) {
             SendData(SnoIndexClearCmd(_unit)); //船番一覧クリアコマンド
         }
-        else if (_gListClrState == 2) {
+        else if (_clrState == 2) {
             SendData(BlkIndexClearCmd(_unit)); //ブロック名一覧クリアコマンド
         }
         else {

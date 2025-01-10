@@ -12,11 +12,11 @@ public partial class Form1 : Form {
     private readonly MelsecPort _melsecPort;
 
     private int _unit; //装置No どの装置を監視しているか判断するための変数
-    private int _itrnCnt; //@itrnCnt
-    private int _itrnClrCnt; //@itrnClrCnt
+    private int _iter; //@itrnCnt
     private bool _finish; //@Finish
+    private int _clrIter; //@itrnClrCnt
     private bool _clrFinish; //@ClrFinish
-    private byte _gListClrState; //@gListClrState 0:一覧ｸﾘｱ完了、1:船番一覧ｸﾘｱ、2:ﾌﾞﾛｯｸ一覧ｸﾘｱ
+    private int _clrState; //@gListClrState 0:一覧ｸﾘｱ完了、1:船番一覧ｸﾘｱ、2:ﾌﾞﾛｯｸ一覧ｸﾘｱ
     private int _sendCnt; //@送信完了Cnt
 
     /// <summary>
@@ -31,7 +31,7 @@ public partial class Form1 : Form {
         _melsecPort.MOnRecv += OnRecv;
         _melsecPort.MOnConnect += OnDisconnect;
         _clrFinish = false; //起動時にクリア処理を行う
-        _gListClrState = 1;
+        _clrState = 1;
         _unit = 1; // 装置No = 1
     }
 
