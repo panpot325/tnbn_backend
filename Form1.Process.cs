@@ -1,3 +1,4 @@
+using System;
 using BackendMonitor.type;
 using BackendMonitor.type.singleton;
 using G = BackendMonitor.share.Globals;
@@ -68,7 +69,7 @@ public partial class Form1 {
             G.StreamWriteData("W", cmd);
         }
         else {
-            SetText(@"単板ライン 接続処理実施中...", "単板ライン\n続処理実施中...");
+            SetText(@"単板ライン 接続処理実施中...", $"単板ライン{Environment.NewLine}続処理実施中...");
             Log.Sub_LogWrite(@"接続処理Msg設定 単板ライン 接続処理実施中...");
 
             Timer2.Enabled = true;

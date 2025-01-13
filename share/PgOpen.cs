@@ -48,7 +48,7 @@ public class PgOpen {
             return dataTable;
         }
         catch (Exception exception) {
-            MessageBox.Show(@"DB_select_table_view:\n" + exception.Message, @"error");
+            MessageBox.Show(@$"DB_select_table_view:{Environment.NewLine}" + exception.Message, @"error");
             return null;
         }
         finally {

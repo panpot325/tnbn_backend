@@ -1,3 +1,4 @@
+using System;
 using BackendMonitor.Properties;
 using BackendMonitor.type;
 using BackendMonitor.type.index;
@@ -118,7 +119,7 @@ public partial class Form1 {
         Log.Sub_LogWrite(@"【船番一覧無し書込コマンド】");
         SetText(
             $@"{G.UnitShortName(unit)} 船番一覧なし 送信中...",
-            $@"{G.UnitName(unit)}\船番一覧なし\n送信中..."
+            $@"{G.UnitName(unit)}\船番一覧なし{Environment.NewLine}送信中..."
         );
 
         return SCmd.GetCmd(
@@ -151,7 +152,7 @@ public partial class Form1 {
         Log.Sub_LogWrite(@"【ブロック名一覧無し書込コマンド】");
         SetText(
             $@"{G.UnitShortName(unit)} ブロック名一覧なし 送信中...",
-            $@"{G.UnitName(unit)}\ブロック名一覧なし\n送信中..."
+            $@"{G.UnitName(unit)}\ブロック名一覧なし{Environment.NewLine}送信中..."
         );
 
         return SCmd.GetCmd(
@@ -184,7 +185,7 @@ public partial class Form1 {
         Log.Sub_LogWrite(@"【部材名一覧無し書込コマンド】");
         SetText(
             $@"{G.UnitShortName(unit)} 部材＋舷一覧なし 送信中...",
-            $@"{G.UnitName(unit)}\部材＋舷一覧なし\n送信中..."
+            $@"{G.UnitName(unit)}\部材＋舷一覧なし{Environment.NewLine}送信中..."
         );
 
         return SCmd.GetCmd(
@@ -217,7 +218,7 @@ public partial class Form1 {
         Log.Sub_LogWrite(@"【加工ワークデータ無し書込コマンド】");
         SetText(
             $@"{G.UnitShortName(unit)} 加工ワークデータなし 送信中...",
-            $@"{G.UnitName(unit)}\加工ワークデータなし\n送信中..."
+            $@"{G.UnitName(unit)}\加工ワークデータなし{Environment.NewLine}送信中..."
         );
 
         return SCmd.GetCmd(
@@ -366,7 +367,7 @@ public partial class Form1 {
         Log.Sub_LogWrite(@"【船番一覧クリアコマンド】");
         SetText(
             $@"{G.UnitShortName(unit)} 船番一覧 クリア中...",
-            $@"{G.UnitName(unit)}\船番一覧\nクリア中..."
+            $@"{G.UnitName(unit)}\船番一覧{Environment.NewLine}クリア中..."
         );
 
         var deviceNumber = 768 + _clrIter * 3;
@@ -415,7 +416,7 @@ public partial class Form1 {
         Log.Sub_LogWrite(@"【ブロック名一覧クリアコマンド】");
         SetText(
             $@"{G.UnitShortName(unit)} ブロック名一覧 クリア中...",
-            $@"{G.UnitName(unit)}\ブロック名一覧\nクリア中..."
+            $@"{G.UnitName(unit)}\ブロック名一覧{Environment.NewLine}クリア中..."
         );
 
         var deviceNumber = 928 + _clrIter * 4;
@@ -464,7 +465,7 @@ public partial class Form1 {
         Log.Sub_LogWrite(@"【船番一覧書込コマンド】");
         SetText(
             $@"{G.UnitShortName(_unit)} 船番一覧 送信中...",
-            $@"{G.UnitName(_unit)}\船番一覧\n送信中..."
+            $@"{G.UnitName(_unit)}\船番一覧{Environment.NewLine}送信中..."
         );
 
         var writeData = SnoIndex.List[_iter].ToUpper();
@@ -498,7 +499,7 @@ public partial class Form1 {
         Log.Sub_LogWrite(@"【ブロック名一覧書込コマンド】");
         SetText(
             $@"{G.UnitShortName(unit)} ﾌﾞﾛｯｸ名一覧 送信中...",
-            $@"{G.UnitName(unit)}\ﾌﾞﾛｯｸ名一覧\n送信中..."
+            $@"{G.UnitName(unit)}\ﾌﾞﾛｯｸ名一覧{Environment.NewLine}送信中..."
         );
 
         var writeData = BlkIndex.List[_iter].ToUpper();
@@ -531,7 +532,7 @@ public partial class Form1 {
     public string BziIndexWriteCmd(int unit) {
         Log.Sub_LogWrite(@"【部材名一覧書込コマンド】");
         SetText($@"{G.UnitShortName(unit)} 部材＋舷一覧 送信中...",
-            $@"{G.UnitName(unit)}\部材＋舷一覧\n送信中..."
+            $@"{G.UnitName(unit)}\部材＋舷一覧{Environment.NewLine}送信中..."
         );
 
         var writeData = BziIndex.BziList[_iter].ToUpper() + BziIndex.PcsList[_iter].ToUpper();
@@ -564,7 +565,7 @@ public partial class Form1 {
         Log.Sub_LogWrite(@"【加工ワークデータ書込コマンド】");
         SetText(
             $@"{G.UnitShortName(unit)} 加工ﾜｰｸﾃﾞｰﾀ 送信中...",
-            $@"{G.UnitName(unit)}\加工ワークデータ\n送信中..."
+            $@"{G.UnitName(unit)}\加工ワークデータ{Environment.NewLine}送信中..."
         );
 
         var workDataType = WorkDataTypes.List[_iter];
