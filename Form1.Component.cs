@@ -157,6 +157,8 @@ public partial class Form1 {
         Controls.Add(button5);
         Controls.Add(button6);
         Controls.Add(button7);
+        ControlBox = false;
+        
         Load += Form1_Load;
         FormClosed += Form1_FormClosed;
         FormClosing += Form1_FormClosing;
