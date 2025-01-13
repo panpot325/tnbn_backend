@@ -11,7 +11,8 @@ namespace BackendMonitor;
 public partial class Form1 {
     public Timer Timer1;
     public Timer Timer2;
-    public TextBox Text1;
+    public Label Text1;
+    //public TextBox Text1;
     public Button Command1;
     private Button button1;
     private Button button2;
@@ -24,7 +25,7 @@ public partial class Form1 {
     private void InitComponent() {
         Timer1 = new Timer();
         Timer2 = new Timer();
-        Text1 = new TextBox();
+        Text1 = new Label();
         Command1 = new Button();
         button1 = new Button();
         button2 = new Button();
@@ -56,8 +57,10 @@ public partial class Form1 {
         Text1.Name = @"Text1";
         Text1.Text = "";
         Text1.Location = new Point(48, 214);
-        Text1.Size = new Size(663, 31);
+        Text1.Size = new Size(680, 100);
         Text1.TabIndex = 1;
+        Text1.Font = new Font("ＭＳ Ｐゴシック", 10.875F, FontStyle.Bold,
+            GraphicsUnit.Point, 128);
         // 
         // Command1
         // 
