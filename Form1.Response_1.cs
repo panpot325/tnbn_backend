@@ -37,13 +37,13 @@ public partial class Form1 {
         Log.WriteLine(@"稼動開始");
         var workState = WorkStates.List[_unit]; // 加工ワークデータから取得
         var recState = WorkState.Fetch(_unit); // 稼動実績WKから取得
-        
+
         workState.Fetch_WorkData();
         workState.Start_Count++;
         workState.YMD = DateTime.Now.ToString("yyyy/MM/dd");
         workState.StrTime = DateTime.Now.ToString("HH:mm:ss");
         workState.StrTime2 = workState.StrTime;
-        
+
 
         if (workState.YMD == recState.YMD
             && workState.SNO.Trim() == recState.SNO.Trim()

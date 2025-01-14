@@ -11,7 +11,9 @@ namespace BackendMonitor;
 public partial class Form1 {
     public Timer Timer1;
     public Timer Timer2;
+
     public Label Text1;
+
     //public TextBox Text1;
     public Button Command1;
     private Button button1;
@@ -161,7 +163,7 @@ public partial class Form1 {
         Controls.Add(button6);
         Controls.Add(button7);
         ControlBox = false;
-        
+
         Load += Form1_Load;
         FormClosed += Form1_FormClosed;
         FormClosing += Form1_FormClosing;
