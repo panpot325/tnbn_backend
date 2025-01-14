@@ -39,11 +39,7 @@ internal static class Program {
         }
 
         Log.Sub_LogWrite(@$"【Sel_監視設定】 {KanshiSettei.SQL}");
-        KanshiSettei.Dump();
-
         Log.Sub_LogWrite(@$"【Sel_加工ワークデータタイプ】 {WorkDataTypes.SQL}");
-        WorkDataTypes.Dump();
-
         Log.Sub_LogWrite(@"【船番一覧データ作成】（省略）");
         Log.Sub_LogWrite(@"【ブロック一覧データ作成】（省略）");
         Log.Sub_LogWrite(@"【部材舷一覧データ作成】（省略）");

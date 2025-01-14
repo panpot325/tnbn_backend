@@ -1,6 +1,5 @@
 using System;
 using System.IO;
-using System.Net.NetworkInformation;
 using System.Text;
 using BackendMonitor.Properties;
 using BackendMonitor.type.singleton;
