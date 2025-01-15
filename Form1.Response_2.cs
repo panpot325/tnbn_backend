@@ -186,8 +186,16 @@ public partial class Form1 {
                 workData.Lh4 = lh2;
                 workData.Lh5 = lh1;
 
-                //--- ロンジ全長を入替 -----
+                //--- ロンジウェブ板厚を入替 -----
                 workData.Lt1 = lt5;
+                workData.Lt2 = lt4;
+                workData.Lt3 = lt3;
+                workData.Lt4 = lt2;
+                workData.Lt5 = lt1;
+
+
+                //--- ロンジ全長を入替 -----
+                workData.Ll1 = ll5;
                 workData.Ll2 = ll4;
                 workData.Ll3 = ll3;
                 workData.Ll4 = ll2;
@@ -202,8 +210,8 @@ public partial class Form1 {
                 break;
             case 4:
                 var wsp1 = b - (sp1 + sp2 + sp3 + sp4 + lt4);
-                var wsu = (int)(Math.Truncate(wsp1));
-                var wsp = wsp1 / wsu;
+                var wsu = (int)(Math.Truncate(wsp1 / decimal.Parse(defMax) + 1));
+                var wsp = Math.Truncate(wsp1 / wsu);
 
                 switch (wsu) {
                     case 1:
@@ -249,13 +257,13 @@ public partial class Form1 {
                         workData.Lk3 = lk3;
                         workData.Lk4 = lk2;
                         workData.Lk5 = lk1;
-                        if ((wsp1 - (wsp * 1)) < types[sp + 1].Hani_Min2) {
+                        if (wsp1 - wsp * 1 < types[sp + 1].Hani_Min2) {
                             workData.Sp1 = decimal.Parse(types[sp].Def);
                             workData.Sp2 = wsp1 - workData.Sp1;
                         }
                         else {
                             workData.Sp1 = wsp;
-                            workData.Sp2 = wsp1 - (wsp * 1);
+                            workData.Sp2 = wsp1 - wsp * 1;
                         }
 
                         workData.Sp3 = sp4 - lt3 + lt4;
@@ -292,9 +300,9 @@ public partial class Form1 {
                 break;
             case 3:
                 //--- LH3入力有り(LH4=0,LH5=0) -----
-                wsp1 = (decimal)(b - (sp1 + sp2 + sp3 + lt3));
+                wsp1 = b - (sp1 + sp2 + sp3 + lt3);
                 wsu = (int)(Math.Truncate(wsp1 / decimal.Parse(defMax) + 1));
-                wsp = wsp1 / wsu;
+                wsp = Math.Truncate(wsp1 / wsu);
                 switch (wsu) {
                     case 1:
                         workData.Lk1 = lk3;
@@ -339,13 +347,13 @@ public partial class Form1 {
                         workData.Lk4 = lk1;
                         workData.Lk5 = byte.Parse(types[lk + 4].Def);
 
-                        if ((wsp1 - (wsp * 1)) < types[sp + 1].Hani_Min2) {
+                        if (wsp1 - wsp * 1 < types[sp + 1].Hani_Min2) {
                             workData.Sp1 = decimal.Parse(types[sp].Def);
                             workData.Sp2 = wsp1 - workData.Sp1;
                         }
                         else {
                             workData.Sp1 = wsp;
-                            workData.Sp2 = wsp1 - (wsp * 1);
+                            workData.Sp2 = wsp1 - wsp * 1;
                         }
 
                         workData.Sp3 = sp3 - lt2 + lt3;
@@ -382,8 +390,8 @@ public partial class Form1 {
                         workData.Lk4 = lk2;
                         workData.Lk5 = lk1;
 
-                        if (wsp1 < types[sp + 1].Hani_Min2
-                            || wsp1 - (wsp * 2) < types[sp + 2].Hani_Min2) {
+                        if (wsp < types[sp + 1].Hani_Min2
+                            || wsp1 - wsp * 2 < types[sp + 2].Hani_Min2) {
                             workData.Sp1 = decimal.Parse(types[sp].Def);
                             workData.Sp2 = decimal.Parse(types[sp + 1].Def);
                             workData.Sp3 = wsp1 - (workData.Sp1 + workData.Sp2);
@@ -391,7 +399,7 @@ public partial class Form1 {
                         else {
                             workData.Sp1 = wsp;
                             workData.Sp2 = wsp;
-                            workData.Sp3 = (wsp1 - (wsp * 2));
+                            workData.Sp3 = wsp1 - wsp * 2;
                         }
 
                         workData.Sp4 = sp3 - lt2 + lt3;
@@ -427,9 +435,9 @@ public partial class Form1 {
                 break;
             case 2:
                 //--- LH2入力有り(LH3=0,LH4=0,LH5=0) -----
-                wsp1 = (decimal)(b - (sp1 + sp2 + lt2));
-                wsu = (int)(Math.Truncate(wsp1 / decimal.Parse(defMax) + 1));
-                wsp = wsp1 / wsu;
+                wsp1 = b - (sp1 + sp2 + lt2);
+                wsu = (int)Math.Truncate(wsp1 / decimal.Parse(defMax) + 1);
+                wsp = Math.Truncate(wsp1 / wsu);
 
                 switch (wsu) {
                     case 1:
@@ -473,59 +481,13 @@ public partial class Form1 {
                         workData.Lk4 = byte.Parse(types[lk + 3].Def);
                         workData.Lk5 = byte.Parse(types[lk + 4].Def);
 
-                        if (wsp1 < types[sp + 1].Hani_Min2
-                            || wsp1 - (wsp * (wsu - 1)) < types[sp + 2].Hani_Min2) {
-                            workData.Sp1 = decimal.Parse(types[sp].Def);
-                            workData.Sp2 = decimal.Parse(types[sp + 1].Def);
-                            workData.Sp3 = wsp1 - (workData.Sp1 + workData.Sp2);
-                        }
-                        else {
-                            workData.Sp1 = wsp;
-                            workData.Sp2 = wsp;
-                            workData.Sp3 = wsp1 - (wsp * (wsu - 1));
-                        }
-
-                        workData.Sp4 = sp2 - lt1 + lt2;
-
-                        workData.Lh1 = 0;
-                        workData.Lh2 = 0;
-                        workData.Lh3 = lh2;
-                        workData.Lh4 = lh1;
-                        workData.Lh5 = 0;
-
-                        workData.Lt1 = 0;
-                        workData.Lt2 = 0;
-                        workData.Lt3 = lt2;
-                        workData.Lt4 = lt1;
-                        workData.Lt5 = 0;
-
-                        workData.Ll1 = 0;
-                        workData.Ll2 = 0;
-                        workData.Ll3 = ll2;
-                        workData.Ll4 = ll1;
-                        workData.Ll5 = 0;
-
-                        workData.Wl1 = byte.Parse(types[wl].Def);
-                        workData.Wl2 = byte.Parse(types[wl + 1].Def);
-                        workData.Wl3 = wl2;
-                        workData.Wl4 = wl1;
-                        workData.Wl5 = byte.Parse(types[wl + 4].Def);
-
-                        break;
-                    case 3:
-                        workData.Lk1 = byte.Parse(types[lk].Def);
-                        workData.Lk2 = byte.Parse(types[lk + 1].Def);
-                        workData.Lk3 = lk2;
-                        workData.Lk4 = lk1;
-                        workData.Lk5 = byte.Parse(types[lk + 4].Def);
-
-                        if ((wsp1 - (wsp * 1)) < types[sp + 1].Hani_Min2) {
+                        if (wsp1 - wsp * (wsu - 1) < types[sp + 1].Hani_Min2) {
                             workData.Sp1 = decimal.Parse(types[sp].Def);
                             workData.Sp2 = wsp1 - workData.Sp1;
                         }
                         else {
                             workData.Sp1 = wsp;
-                            workData.Sp2 = (wsp1 - (wsp * (wsu - 1)));
+                            workData.Sp2 = wsp1 - wsp * (wsu - 1);
                         }
 
                         workData.Sp3 = sp2 - lt1 + lt2;
@@ -555,6 +517,52 @@ public partial class Form1 {
                         workData.Wl5 = byte.Parse(types[wl + 4].Def);
 
                         break;
+                    case 3:
+                        workData.Lk1 = byte.Parse(types[lk].Def);
+                        workData.Lk2 = byte.Parse(types[lk + 1].Def);
+                        workData.Lk3 = lk2;
+                        workData.Lk4 = lk1;
+                        workData.Lk5 = byte.Parse(types[lk + 4].Def);
+
+                        if (wsp < types[sp + 1].Hani_Min2
+                            || wsp1 - wsp * (wsu - 1) < types[sp + 2].Hani_Min2) {
+                            workData.Sp1 = decimal.Parse(types[sp].Def);
+                            workData.Sp2 = decimal.Parse(types[sp + 1].Def);
+                            workData.Sp3 = wsp1 - (workData.Sp1 + workData.Sp2);
+                        }
+                        else {
+                            workData.Sp1 = wsp;
+                            workData.Sp2 = wsp;
+                            workData.Sp3 = wsp1 - wsp * (wsu - 1);
+                        }
+
+                        workData.Sp4 = sp2 - lt1 + lt2;
+
+                        workData.Lh1 = 0;
+                        workData.Lh2 = 0;
+                        workData.Lh3 = lh2;
+                        workData.Lh4 = lh1;
+                        workData.Lh5 = 0;
+
+                        workData.Lt1 = 0;
+                        workData.Lt2 = 0;
+                        workData.Lt3 = lt2;
+                        workData.Lt4 = lt1;
+                        workData.Lt5 = 0;
+
+                        workData.Ll1 = 0;
+                        workData.Ll2 = 0;
+                        workData.Ll3 = ll2;
+                        workData.Ll4 = ll1;
+                        workData.Ll5 = 0;
+
+                        workData.Wl1 = byte.Parse(types[wl].Def);
+                        workData.Wl2 = byte.Parse(types[wl + 1].Def);
+                        workData.Wl3 = wl2;
+                        workData.Wl4 = wl1;
+                        workData.Wl5 = byte.Parse(types[wl + 4].Def);
+
+                        break;
                     default:
                         workData.Lk1 = byte.Parse(types[lk].Def);
                         workData.Lk2 = byte.Parse(types[lk + 1].Def);
@@ -563,8 +571,8 @@ public partial class Form1 {
                         workData.Lk5 = lk1;
 
                         if (wsp1 < types[sp + 1].Hani_Min2
-                            || wsp1 < types[sp + 2].Hani_Min2
-                            || (wsp * 3) < types[sp + 3].Hani_Min2) {
+                            || wsp < types[sp + 2].Hani_Min2
+                            || wsp1 - wsp * 3 < types[sp + 3].Hani_Min2) {
                             workData.Sp1 = decimal.Parse(types[sp].Def);
                             workData.Sp2 = decimal.Parse(types[sp + 1].Def);
                             workData.Sp3 = decimal.Parse(types[sp + 2].Def);
@@ -608,9 +616,9 @@ public partial class Form1 {
                 break;
             case 1:
                 //--- LH1入力有り(LH2=0,LH3=0,LH4=0,LH5=0) -----
-                wsp1 = (decimal)(b - (sp1 + lt1));
+                wsp1 = b - (sp1 + lt1);
                 wsu = (int)(Math.Truncate(wsp1 / decimal.Parse(defMax) + 1));
-                wsp = wsp1 / wsu;
+                wsp = Math.Truncate(wsp1 / wsu);
 
                 switch (wsu) {
                     case 1:
@@ -618,18 +626,19 @@ public partial class Form1 {
                         workData.Sp1 = (byte)wsp;
                         workData.Lh1 = lh1;
                         workData.Lt1 = lt1;
+                        workData.Ll1 = ll1;
                         workData.Wl1 = wl1;
                         break;
                     case 2:
                         workData.Lk1 = byte.Parse(types[lk].Def);
                         workData.Lk2 = lk1;
-                        if (wsp1 - (wsp * (wsu - 1)) < types[sp + 1].Hani_Min2) {
+                        if (wsp1 - wsp * (wsu - 1) < types[sp + 1].Hani_Min2) {
                             workData.Sp1 = byte.Parse(types[sp].Def);
                             workData.Sp2 = wsp1 - workData.Sp1;
                         }
                         else {
                             workData.Sp1 = wsp;
-                            workData.Sp2 = wsp1 - (wsp * (wsu - 1));
+                            workData.Sp2 = wsp1 - wsp * (wsu - 1);
                         }
 
                         workData.Lh1 = 0;
@@ -649,8 +658,8 @@ public partial class Form1 {
                         workData.Lk1 = byte.Parse(types[lk].Def);
                         workData.Lk2 = byte.Parse(types[lk + 1].Def);
                         workData.Lk2 = lk1;
-                        if (wsp1 < types[sp + 1].Hani_Min2
-                            || wsp1 - (wsp * (wsu - 1)) < types[sp + 2].Hani_Min2) {
+                        if (wsp < types[sp + 1].Hani_Min2
+                            || wsp1 - wsp * (wsu - 1) < types[sp + 2].Hani_Min2) {
                             workData.Sp1 = byte.Parse(types[sp].Def);
                             workData.Sp2 = byte.Parse(types[sp + 1].Def);
                             workData.Sp3 = wsp1 - (workData.Sp1 + workData.Sp2);
@@ -658,7 +667,7 @@ public partial class Form1 {
                         else {
                             workData.Sp1 = wsp;
                             workData.Sp2 = wsp;
-                            workData.Sp3 = (wsp1 - (wsp * (wsu - 1)));
+                            workData.Sp3 = wsp1 - wsp * (wsu - 1);
                         }
 
                         workData.Lh1 = 0;
@@ -683,9 +692,9 @@ public partial class Form1 {
                         workData.Lk2 = byte.Parse(types[lk + 1].Def);
                         workData.Lk3 = byte.Parse(types[lk + 2].Def);
                         workData.Lk4 = lk1;
-                        if (wsp1 < types[sp + 1].Hani_Min2
-                            || wsp1 < types[sp + 2].Hani_Min2
-                            || (wsp1 - (wsp * (wsu - 1))) < types[sp + 3].Hani_Min2) {
+                        if (wsp < types[sp + 1].Hani_Min2
+                            || wsp < types[sp + 2].Hani_Min2
+                            || wsp1 - wsp * (wsu - 1) < types[sp + 3].Hani_Min2) {
                             workData.Sp1 = byte.Parse(types[sp].Def);
                             workData.Sp2 = byte.Parse(types[sp + 1].Def);
                             workData.Sp3 = byte.Parse(types[sp + 2].Def);
@@ -695,7 +704,7 @@ public partial class Form1 {
                             workData.Sp1 = wsp;
                             workData.Sp2 = wsp;
                             workData.Sp3 = wsp;
-                            workData.Sp4 = (wsp1 - (wsp * (wsu - 1)));
+                            workData.Sp4 = wsp1 - wsp * (wsu - 1);
                         }
 
                         workData.Lh1 = 0;
@@ -722,16 +731,16 @@ public partial class Form1 {
                         workData.Lk1 = byte.Parse(types[lk].Def);
                         workData.Lk2 = byte.Parse(types[lk + 1].Def);
                         workData.Lk3 = byte.Parse(types[lk + 2].Def);
-                        workData.Lk3 = byte.Parse(types[lk + 3].Def);
+                        workData.Lk4 = byte.Parse(types[lk + 3].Def);
                         workData.Lk5 = lk1;
-                        if (wsp1 < types[sp + 1].Hani_Min2
-                            || wsp1 < types[sp + 2].Hani_Min2
-                            || wsp1 < types[sp + 3].Hani_Min2
-                            || (wsp1 - (wsp * (wsu - 1))) < types[sp + 4].Hani_Min2) {
+                        if (wsp < types[sp + 1].Hani_Min2
+                            || wsp < types[sp + 2].Hani_Min2
+                            || wsp < types[sp + 3].Hani_Min2
+                            || wsp1 - wsp * 4 < types[sp + 4].Hani_Min2) {
                             workData.Sp1 = byte.Parse(types[sp].Def);
                             workData.Sp2 = byte.Parse(types[sp + 1].Def);
                             workData.Sp3 = byte.Parse(types[sp + 2].Def);
-                            workData.Sp4 = byte.Parse(types[sp + 2].Def);
+                            workData.Sp4 = byte.Parse(types[sp + 3].Def);
                             workData.Sp5 = wsp1 -
                                            (workData.Sp1 + workData.Sp2 + workData.Sp3 + workData.Sp4);
                         }
@@ -740,7 +749,7 @@ public partial class Form1 {
                             workData.Sp2 = wsp;
                             workData.Sp3 = wsp;
                             workData.Sp3 = wsp;
-                            workData.Sp4 = (wsp1 - (wsp * (wsu - 1)));
+                            workData.Sp4 = wsp1 - wsp * 4;
                         }
 
                         workData.Lh1 = 0;
