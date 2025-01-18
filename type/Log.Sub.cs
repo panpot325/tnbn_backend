@@ -2,6 +2,7 @@
 using System.IO;
 using System.Text;
 using BackendMonitor.Properties;
+using BackendMonitor.share;
 
 namespace BackendMonitor.type;
 
@@ -24,7 +25,17 @@ public partial class Log {
     /// WriteLine
     /// </summary>
     /// <param name="message"></param>
-    public static void WriteLine(string message) {
-        Console.WriteLine(message);
+    /// <param name="lf"></param>
+    public static void WriteLine(string message, bool lf = true) {
+        if (!AppConfig.debugMode) {
+            return;
+        }
+
+        if (lf) {
+            Console.WriteLine(message);
+        }
+        else {
+            Console.Write(message);
+        }
     }
 }

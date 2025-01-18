@@ -1,7 +1,7 @@
-using System;
 using System.IO;
 using System.Text;
 using BackendMonitor.Properties;
+using BackendMonitor.type;
 using BackendMonitor.type.singleton;
 
 namespace BackendMonitor.share;
@@ -42,25 +42,25 @@ public partial class Globals {
     public static void ConsoleWriteMcProtocolData(string mode, string sData) {
         if (mode == "W") {
             if (Settings.Default.MC_Protocol == "3E") {
-                Console.WriteLine(@"----------------------------------------------------------");
-                Console.Write(@" 送信ヘッダ：" + sData.Substring(0, 4));
-                Console.Write(sData.Substring(22, 4) == "0401" ? " READ" : " WRITE");
-                Console.Write(@"：" + sData.Substring(22, 4));
-                Console.Write(sData.Substring(26, 4) == "0000" ? " WORD" : " BIT");
-                Console.Write(@" " + sData.Substring(26, 4));
-                Console.Write(@" デバイス：" + sData.Substring(30, 2));
-                Console.Write(@" アドレス：" + sData.Substring(32, 6));
-                Console.Write(@" 点数：" + sData.Substring(38, 4));
-                Console.WriteLine(@" データ：" + sData.Substring(42));
+                Log.WriteLine(@"----------------------------------------------------------");
+                Log.WriteLine(@" 送信ヘッダ：" + sData.Substring(0, 4), false);
+                Log.WriteLine(sData.Substring(22, 4) == "0401" ? " READ" : " WRITE", false);
+                Log.WriteLine(@"：" + sData.Substring(22, 4), false);
+                Log.WriteLine(sData.Substring(26, 4) == "0000" ? " WORD" : " BIT", false);
+                Log.WriteLine(@" " + sData.Substring(26, 4), false);
+                Log.WriteLine(@" デバイス：" + sData.Substring(30, 2), false);
+                Log.WriteLine(@" アドレス：" + sData.Substring(32, 6), false);
+                Log.WriteLine(@" 点数：" + sData.Substring(38, 4), false);
+                Log.WriteLine(@" データ：" + sData.Substring(42), false);
             }
         }
 
         if (mode == "R") {
             if (Settings.Default.MC_Protocol == "3E") {
-                Console.Write(@" 受信ヘッダ：" + sData.Substring(0, 4));
-                Console.Write(@" レスポンスヘッダ：" + SCmd.ResponseHeader);
-                Console.Write(@" コード：" + sData.Substring(18, 4));
-                Console.WriteLine(@" データ：" + sData.Substring(22));
+                Log.WriteLine(@" 受信ヘッダ：" + sData.Substring(0, 4), false);
+                Log.WriteLine(@" レスポンスヘッダ：" + SCmd.ResponseHeader, false);
+                Log.WriteLine(@" コード：" + sData.Substring(18, 4), false);
+                Log.WriteLine(@" データ：" + sData.Substring(22));
             }
         }
     }
