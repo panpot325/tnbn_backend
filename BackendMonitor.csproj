@@ -142,6 +142,7 @@
         <Compile Include="model\MTcpClient.cs" />
         <Compile Include="Program.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
+        <Compile Include="share\AppConfig.cs" />
         <Compile Include="share\Constants.cs" />
         <Compile Include="share\Globals.cs" />
         <Compile Include="share\Globals.Snipets.cs">
