@@ -24,6 +24,10 @@ public partial class Globals {
     /// ファイルの内容をクリアする
     /// </summary>
     public static void ClearDebugFile() {
+        if (!AppConfig.debugMode) {
+            return;
+        }
+
         var fileName = $"{Settings.Default.Dev_Path}/{Settings.Default.Dev_File}";
         if (!File.Exists(fileName)) {
             using (File.Create(fileName)) {
@@ -71,27 +75,34 @@ public partial class Globals {
     /// <param name="mode"></param>
     /// <param name="data"></param>
     public static void StreamWriteData(string mode, string data) {
+        if (!AppConfig.debugMode) {
+            return;
+        }
+
         // ReSharper disable once ConvertToUsingDeclaration
         using (var sw = new StreamWriter($"{Settings.Default.Dev_Path}/{Settings.Default.Dev_File}", true,
                    Encoding.UTF8)) {
-            if (mode == "W") {
-                if (Settings.Default.MC_Protocol == "3E") {
-                    sw.WriteLine("Send Data: " + data);
-                    sw.Write(@" 送信ヘッダ：" + data.Substring(0, 4));
-                    sw.Write(data.Substring(22, 4) == "0401" ? " READ" : " WRITE");
-                    sw.Write(@"：" + data.Substring(22, 4));
-                    sw.Write(data.Substring(26, 4) == "0000" ? " WORD" : " BIT");
-                    sw.Write(@" " + data.Substring(26, 4));
-                    sw.Write(@" デバイス：" + data.Substring(30, 2));
-                    sw.Write(@" アドレス：" + data.Substring(32, 6));
-                    sw.Write(@" 点数：" + data.Substring(38, 4));
-                    sw.Write(@" データ：" + data.Substring(42));
-                    sw.WriteLine("");
-                }
-            }
+            switch (mode) {
+                case "W": {
+                    if (Settings.Default.MC_Protocol == "3E") {
+                        sw.WriteLine("Send Data: " + data);
+                        sw.Write(@" 送信ヘッダ：" + data.Substring(0, 4));
+                        sw.Write(data.Substring(22, 4) == "0401" ? " READ" : " WRITE");
+                        sw.Write(@"：" + data.Substring(22, 4));
+                        sw.Write(data.Substring(26, 4) == "0000" ? " WORD" : " BIT");
+                        sw.Write(@" " + data.Substring(26, 4));
+                        sw.Write(@" デバイス：" + data.Substring(30, 2));
+                        sw.Write(@" アドレス：" + data.Substring(32, 6));
+                        sw.Write(@" 点数：" + data.Substring(38, 4));
+                        sw.Write(@" データ：" + data.Substring(42));
+                        sw.WriteLine("");
+                    }
 
-            if (mode == "R") {
-                sw.WriteLine("Read Data: " + data);
+                    break;
+                }
+                case "R":
+                    sw.WriteLine("Read Data: " + data);
+                    break;
             }
         }
     }

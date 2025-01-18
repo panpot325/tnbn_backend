@@ -1,10 +1,8 @@
 using System.Drawing;
+using BackendMonitor.share;
 using BackendMonitor.type.singleton;
 using G = BackendMonitor.share.Globals;
 using C = BackendMonitor.share.Constants;
-
-// ReSharper disable ConvertIfStatementToSwitchStatement
-// ReSharper disable InvertIf
 
 namespace BackendMonitor;
 
@@ -13,6 +11,10 @@ namespace BackendMonitor;
 /// </summary>
 public partial class Form1 {
     private void ReadBitResponseTest() {
+        if (!AppConfig.debugMode) {
+            return;
+        }
+
         switch (_unit) {
             case C.UNIT_2:
                 button2.BackColor = MonitorMessage.RequestBit == C.REQ_SNO ? Color.Red : Color.White;
