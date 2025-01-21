@@ -47,10 +47,10 @@ public partial class Globals {
     }
 
     /// <summary>
-    /// 稼働時間内か
+    /// 稼動時間内か
     /// </summary>
     /// <param name="endTime"></param>
-    /// <returns>稼働時間内であればtrue</returns>
+    /// <returns>稼動時間内であればtrue</returns>
     public static bool IsUsableTime(string endTime) {
         if (string.IsNullOrEmpty(endTime)) {
             endTime = Settings.Default.End_Time;

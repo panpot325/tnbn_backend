@@ -668,7 +668,7 @@ public partial class Form1 {
     }
 
     /// <summary>
-    /// 稼働開始要求要求コマンド
+    /// 稼動開始要求要求コマンド
     /// デバッグ用
     /// </summary>
     /// <param name="unit"></param>
@@ -688,7 +688,7 @@ public partial class Form1 {
     }
 
     /// <summary>
-    /// 稼働終了要求要求コマンド
+    /// 稼動終了要求要求コマンド
     /// デバッグ用
     /// </summary>
     /// <param name="unit"></param>

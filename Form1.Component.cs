@@ -129,7 +129,7 @@ public partial class Form1 {
         // button6
         // 
         button6.Name = @"button6";
-        button6.Text = @"稼働開始";
+        button6.Text = @"稼動開始";
         button6.Location = new Point(30, 300);
         button6.Size = new Size(150, 50);
         button6.TabIndex = 6;
@@ -139,7 +139,7 @@ public partial class Form1 {
         // button6
         // 
         button7.Name = @"button6";
-        button7.Text = @"稼働終了";
+        button7.Text = @"稼動終了";
         button7.Location = new Point(200, 300);
         button7.Size = new Size(150, 50);
         button7.TabIndex = 6;

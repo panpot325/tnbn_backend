@@ -209,7 +209,7 @@ public partial class WorkState(int unit) {
     /// 稼動実績WKを更新終了
     /// </summary>
     public void Update_End() {
-        //稼動終了、稼動終了時の時間と稼働時間の算出
+        //稼動終了、稼動終了時の時間と稼動時間の算出
         if (Diff() < 0) {
             EndTime = "19:20:00";
         }

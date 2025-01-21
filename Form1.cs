@@ -160,7 +160,7 @@ public partial class Form1 : Form {
     }
 
     /// <summary>
-    /// 稼働開始
+    /// 稼動開始
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
@@ -169,7 +169,7 @@ public partial class Form1 : Form {
     }
 
     /// <summary>
-    /// 稼働開始
+    /// 稼動終了
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>

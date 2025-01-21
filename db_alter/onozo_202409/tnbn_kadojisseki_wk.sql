@@ -1,4 +1,4 @@
--- 単板ラインの稼働状況を一時的に保持する
+-- 単板ラインの稼動状況を一時的に保持する
 -- 板単位でログを出力できるように使うテーブル
 DROP TABLE IF EXISTS tnbn_kadojisseki_wk;
 CREATE TABLE tnbn_kadojisseki_wk
