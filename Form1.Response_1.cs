@@ -63,8 +63,8 @@ public partial class Form1 {
             }
         }
         else {
-            WorkState.Update_Clear(_unit); //稼動実績WKをクリア
-            workState.Update_Init(); //稼動実績WKを初期化
+            //WorkState.Update_Clear(_unit); //稼動実績WKをクリア
+            workState.Update_Start(); //稼動実績WKを初期化
         }
 
         Timer1.Enabled = true;
