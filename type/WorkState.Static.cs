@@ -23,10 +23,10 @@ public partial class WorkState {
         sb.Append(" b = 0,");
         sb.Append(" tmax = 0,");
         sb.Append(" honsu = 0,");
-        sb.Append(" ymd = ' ',");
-        sb.Append(" str_time = '00:00:00',");
-        sb.Append(" str_time2 = '00:00:00',");
-        sb.Append(" end_time = '00:00:00',");
+        sb.Append(" ymd = '',");
+        sb.Append($" str_time = '{CLR_TIME}',");
+        sb.Append($" str_time2 = '{CLR_TIME}',");
+        sb.Append($" end_time = '{CLR_TIME}',");
         sb.Append($" ttl_time = 0,");
         sb.Append($" kad_time = 0,");
         sb.Append($" stp_time = 0,");

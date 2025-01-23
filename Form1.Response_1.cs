@@ -20,12 +20,12 @@ public partial class Form1 {
         workState.End_Count++;
         workState.EndTime = DateTime.Now.ToString("HH:mm:ss");
 
-        workState.Update_End(); //稼動実績WKを更新終了
+        workState.Update_Stop(); //稼動実績WKを更新終了
         ReadLogFile(_unit); //ログファイル読込
         WriteLogFile(_unit); //ログファイル出力
 
         workState.Start_Count = 0;
-        workState.EndTime = "00:00:00";
+        workState.EndTime = WorkState.CLR_TIME;
 
         Timer1.Enabled = true;
     }
@@ -55,7 +55,7 @@ public partial class Form1 {
             workState.StrTime = recState.StrTime;
             workState.KAD_TIME = recState.KAD_TIME;
 
-            if (recState.EndTime != "00:00:00") {
+            if (recState.EndTime != WorkState.CLR_TIME) {
                 workState.Update_ReStart(); //稼動実績WKを更新
             }
             else {

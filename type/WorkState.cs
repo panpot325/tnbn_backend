@@ -28,6 +28,7 @@ public partial class WorkState(int unit) {
     public int Start_Count; // 稼動開始Cnt @Transient
     public int End_Count; //   稼動終了Cnt @Transient
     public bool EndState; //   終了判定    @Transient
+    public const string CLR_TIME = "00:00:00";
 
     /// <summary>
     /// 初期化
@@ -42,9 +43,9 @@ public partial class WorkState(int unit) {
         Tmax = 0;
         Count = 0;
         YMD = "";
-        StrTime = "00:00:00";
-        StrTime2 = "00:00:00";
-        EndTime = "00:00:00";
+        StrTime = CLR_TIME;
+        StrTime2 = CLR_TIME;
+        EndTime = CLR_TIME;
         KAD_TIME = 0;
         Ttl_TIME = 0;
         Stp_Time = 0;
@@ -101,7 +102,7 @@ public partial class WorkState(int unit) {
             StrTime2 = reader.GetString(10);
             EndTime = reader.GetString(11);
             if (endCheck) {
-                EndState = EndTime != "00:00:00";
+                EndState = EndTime != CLR_TIME;
             }
             else {
                 KAD_TIME = reader.GetInt32(12);
@@ -181,7 +182,7 @@ public partial class WorkState(int unit) {
         sb.Append($" ymd = '{YMD}',");
         sb.Append($" str_time = '{StrTime}',");
         sb.Append($" str_time2 = '{StrTime2}',");
-        sb.Append($" end_time = '00:00:00',");
+        sb.Append($" end_time = '{CLR_TIME}',");
         sb.Append(" ttl_time = 0,");
         sb.Append(" kad_time = 0,");
         sb.Append(" stp_time = 0,");
@@ -209,7 +210,7 @@ public partial class WorkState(int unit) {
     /// <summary>
     /// 稼動実績WKを更新終了
     /// </summary>
-    public void Update_End() {
+    public void Update_Stop() {
         //稼動終了、稼動終了時の時間と稼動時間の算出
         if (Diff() < 0) {
             EndTime = "19:20:00";
