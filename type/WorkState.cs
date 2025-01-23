@@ -8,26 +8,26 @@ namespace BackendMonitor.type;
 /// 稼動状況監視用クラス
 /// </summary>
 public partial class WorkState(int unit) {
-    public int Start_Count; //稼動開始Cnt
-    public int End_Count; //稼動終了Cnt
-    public string SNO; //
-    public string BLK; //
-    public string BZI; //
-    public string PCS; //
-    public decimal L; //
-    public decimal B; //
-    public decimal Tmax; //Tmax
-    public int Count; //本数
-    public string YMD; //
-    public string StrTime; //稼動開始Time
-    public string StrTime2; //稼動開始Time2
-    public string EndTime; //稼動終了Time
-    public int KAD_TIME; //
-    public int Ttl_TIME; //
-    public int Stp_Time; //
-    public int CNT; //
-    public bool EndState; //終了判定
-    public int Unit = unit; //装置番号
+    public int Unit = unit; // taisyo    VARCHAR(2)    '2'(仮付)／'3'(本付)／'5'（矯正）
+    public string SNO; //      sno       CHAR(6)       船番6桁
+    public string BLK; //      blk       CHAR(8)       ブロック名8桁
+    public string BZI; //      bzi       char(16)      部材名16桁
+    public string PCS; //      pcs       char(1)
+    public decimal L; //       l         DECIMAL(8, 1) 板継ぎがある場合は合計長さ
+    public decimal B; //       b         DECIMAL(8, 1) 板継が有り幅が違う場合は最大値の板幅
+    public decimal Tmax; //    tmax      DECIMAL(8, 1) 板継有りの場合の最大板厚を設定
+    public int Count; //       honsu     SMALLINT      ロンジの総本数(LH1～5で0以外のモノをカウント)
+    public string YMD; //      ymd       varchar(10)   yyyy/mm/dd(監視PCのシステム日付)
+    public string StrTime; //  str_time  VARCHAR(8)    hh:nn:ss 運転開始時のシステム時間
+    public string StrTime2; // str_time2 VARCHAR(8)    hh:nn:ss 運転開始時のシステム時間(再開時) 
+    public string EndTime; //  end_time  VARCHAR(8)    hh:nn:ss 運転開始ビット=0の時の時間
+    public int Ttl_TIME; //    ttl_time  INTEGER       STR_TIME～END_TIMEの経過時間(秒)
+    public int KAD_TIME; //    kad_time  INTEGER       STR_TIME2～END_TIMEの経過時間(秒)(※２) 
+    public int Stp_Time; //    stp_time  INTEGER       TTL_TIME－KAD_TIME
+    public int CNT; //         cnt       SMALLINT      運転開始ビット=0の時(運転終了の時)、カウントアップ
+    public int Start_Count; // 稼動開始Cnt @Transient
+    public int End_Count; //   稼動終了Cnt @Transient
+    public bool EndState; //   終了判定    @Transient
 
     /// <summary>
     /// 初期化
