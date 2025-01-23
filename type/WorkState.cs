@@ -33,15 +33,15 @@ public partial class WorkState(int unit) {
     /// 初期化
     /// </summary>
     public void Clear() {
-        SNO = " ";
-        BLK = " ";
-        BZI = " ";
-        PCS = " ";
+        SNO = "";
+        BLK = "";
+        BZI = "";
+        PCS = "";
         L = 0;
         B = 0;
         Tmax = 0;
         Count = 0;
-        YMD = " ";
+        YMD = "";
         StrTime = "00:00:00";
         StrTime2 = "00:00:00";
         EndTime = "00:00:00";
@@ -166,7 +166,7 @@ public partial class WorkState(int unit) {
     /// <summary>
     /// @稼動実績WKを初期化
     /// </summary>
-    public void Update_Init() {
+    public void Update_Start() {
         var sb = new StringBuilder();
 
         sb.Append("UPDATE tnbn_kadojisseki_wk SET");
@@ -189,7 +189,7 @@ public partial class WorkState(int unit) {
         sb.Append($" WHERE taisyo = '{Unit}'");
         PgConnect.Update(sb.ToString());
         PgConnect.Close();
-        Log.Sub_LogWrite($@"【稼動実績WKを初期化】{sb.ToString()}");
+        Log.Sub_LogWrite($@"【稼動実績WKを初期化】{sb}");
     }
 
     /// <summary>
@@ -202,7 +202,7 @@ public partial class WorkState(int unit) {
         sb.Append($" WHERE taisyo = '{Unit}'");
         PgConnect.Update(sb.ToString());
         PgConnect.Close();
-        Log.Sub_LogWrite($@"【稼動実績WKを更新】{sb.ToString()}");
+        Log.Sub_LogWrite($@"【稼動実績WKを更新】{sb}");
     }
 
     /// <summary>
