@@ -49,16 +49,23 @@ public partial class Form1 {
             && workState.SNO.Trim() == recState.SNO.Trim()
             && workState.BLK.Trim() == recState.BLK.Trim()
             && workState.BZI.Trim() == recState.BZI.Trim()
-            && workState.PCS.Trim() == recState.PCS.Trim()
-           ) {
+            && workState.PCS.Trim() == recState.PCS.Trim()) {
             workState.CNT = recState.CNT;
             workState.StrTime = recState.StrTime;
             workState.KAD_TIME = recState.KAD_TIME;
 
             if (recState.EndTime != WorkState.CLR_TIME) {
+                // ReSharper disable once InvalidXmlDocComment
+                /**
+                 * 停止処理後同じものを再度稼働させた場合
+                 */
                 workState.Update_ReStart(); //稼動実績WKを更新
             }
             else {
+                // ReSharper disable once InvalidXmlDocComment
+                /**
+                 * 稼動中で同じものを再度稼働させた場合（プログラム再起動時など）
+                 */
                 workState.StrTime2 = recState.StrTime2;
             }
         }
