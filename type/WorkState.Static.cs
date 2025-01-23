@@ -1,4 +1,3 @@
-using System.Data;
 using System.Text;
 using BackendMonitor.share;
 
@@ -9,7 +8,7 @@ namespace BackendMonitor.type;
 /// </summary>
 public partial class WorkState {
     /// <summary>
-    /// 
+    /// Update_Clear
     /// </summary>
     /// <param name="unit"></param>
     public static void Update_Clear(int unit) {
