@@ -195,8 +195,9 @@ public partial class WorkState(int unit) {
     /// <summary>
     /// @稼動実績WKを更新
     /// </summary>
-    public void Update_StrTime2() {
+    public void Update_ReStart() {
         var sb = new StringBuilder();
+
         sb.Append("UPDATE tnbn_kadojisseki_wk SET");
         sb.Append($" str_time2 = '{StrTime2}'");
         sb.Append($" WHERE taisyo = '{Unit}'");

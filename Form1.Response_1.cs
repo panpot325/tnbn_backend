@@ -56,7 +56,7 @@ public partial class Form1 {
             workState.KAD_TIME = recState.KAD_TIME;
 
             if (recState.EndTime != "00:00:00") {
-                workState.Update_StrTime2(); //稼動実績WKを更新
+                workState.Update_ReStart(); //稼動実績WKを更新
             }
             else {
                 workState.StrTime2 = recState.StrTime2;
