@@ -1,3 +1,4 @@
+using System.Data;
 using System.Text;
 using BackendMonitor.share;
 
@@ -15,10 +16,10 @@ public partial class WorkState {
         var sb = new StringBuilder();
 
         sb.Append("UPDATE tnbn_kadojisseki_wk SET");
-        sb.Append(" sno = ' ',");
-        sb.Append(" blk = ' ',");
-        sb.Append(" bzi = ' ',");
-        sb.Append(" pcs = ' ',");
+        sb.Append(" sno = '',");
+        sb.Append(" blk = '',");
+        sb.Append(" bzi = '',");
+        sb.Append(" pcs = '',");
         sb.Append(" l = 0,");
         sb.Append(" b = 0,");
         sb.Append(" tmax = 0,");
@@ -49,8 +50,14 @@ public partial class WorkState {
         sb.Append(" str_time, str_time2, end_time, kad_time, ttl_time, stp_time, cnt");
         sb.Append(" FROM tnbn_kadojisseki_wk");
         sb.Append($" WHERE taisyo = '{unit}'");
-        var row = PgOpen.PgSelect(sb.ToString()).Rows[0];
+        
+        var dataTable = PgOpen.PgSelect(sb.ToString());
+        if (dataTable.Rows.Count == 0) {
+            WorkStates.List[0].Clear();
+            return WorkStates.List[0];
+        }
 
+        var row = dataTable.Rows[0];
         return new WorkState(unit) {
             Unit = unit,
             SNO = ((string)row["sno"]).Trim(),
