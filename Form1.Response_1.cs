@@ -1,4 +1,3 @@
-using System;
 using BackendMonitor.type;
 using BackendMonitor.type.singleton;
 using G = BackendMonitor.share.Globals;
@@ -14,18 +13,17 @@ public partial class Form1 {
     /// @稼動終了
     /// </summary>
     public void Process_Stop() {
-        var unit = _unit;
-        var workState = WorkStates.List[unit];
+        var state = WorkStates.List[_unit];
 
-        workState.End_Count++;
-        workState.EndTime = DateTime.Now.ToString("HH:mm:ss");
+        state.End_Count++;
+        state.EndTime = WorkState.NowTime;
+        state.Update_Stop(); //稼動実績WKを更新終了
 
-        workState.Update_Stop(); //稼動実績WKを更新終了
         ReadLogFile(_unit); //ログファイル読込
         WriteLogFile(_unit); //ログファイル出力
 
-        workState.Start_Count = 0;
-        workState.EndTime = WorkState.CLR_TIME;
+        state.Start_Count = 0;
+        state.EndTime = WorkState.CLR_TIME;
 
         Timer1.Enabled = true;
     }
@@ -35,43 +33,44 @@ public partial class Form1 {
     /// </summary>
     public void Process_Start() {
         Log.WriteLine(@"稼動開始");
-        var workState = WorkStates.List[_unit]; // 加工ワークデータから取得
-        var recState = WorkState.Fetch(_unit); // 稼動実績WKから取得
+        var state = WorkStates.List[_unit]; // 加工ワークデータから取得
+        var recState = WorkStates.RecState(_unit);
+        ; // 稼動実績WKから取得
 
-        workState.Fetch_WorkData();
-        workState.Start_Count++;
-        workState.YMD = DateTime.Now.ToString("yyyy/MM/dd");
-        workState.StrTime = DateTime.Now.ToString("HH:mm:ss");
-        workState.StrTime2 = workState.StrTime;
+        state.Fetch_WorkData();
+        state.Start_Count++;
+        state.YMD = WorkState.NowDate;
+        state.StrTime = WorkState.NowTime;
+        state.StrTime2 = WorkState.NowTime;
 
 
-        if (workState.YMD == recState.YMD
-            && workState.SNO.Trim() == recState.SNO.Trim()
-            && workState.BLK.Trim() == recState.BLK.Trim()
-            && workState.BZI.Trim() == recState.BZI.Trim()
-            && workState.PCS.Trim() == recState.PCS.Trim()) {
-            workState.CNT = recState.CNT;
-            workState.StrTime = recState.StrTime;
-            workState.KAD_TIME = recState.KAD_TIME;
+        if (state.YMD == recState.YMD
+            && state.SNO.Trim() == recState.SNO.Trim()
+            && state.BLK.Trim() == recState.BLK.Trim()
+            && state.BZI.Trim() == recState.BZI.Trim()
+            && state.PCS.Trim() == recState.PCS.Trim()) {
+            state.CNT = recState.CNT;
+            state.StrTime = recState.StrTime;
+            state.KAD_TIME = recState.KAD_TIME;
 
             if (recState.EndTime != WorkState.CLR_TIME) {
                 // ReSharper disable once InvalidXmlDocComment
                 /**
                  * 停止処理後同じものを再度稼働させた場合
                  */
-                workState.Update_ReStart(); //稼動実績WKを更新
+                state.Update_ReStart(); //稼動実績WKを更新
             }
             else {
                 // ReSharper disable once InvalidXmlDocComment
                 /**
                  * 稼動中で同じものを再度稼働させた場合（プログラム再起動時など）
                  */
-                workState.StrTime2 = recState.StrTime2;
+                state.StrTime2 = recState.StrTime2;
             }
         }
         else {
             //WorkState.Update_Clear(_unit); //稼動実績WKをクリア
-            workState.Update_Start(); //稼動実績WKを初期化
+            state.Update_Start(); //稼動実績WKを初期化
         }
 
         Timer1.Enabled = true;
@@ -98,7 +97,7 @@ public partial class Form1 {
         Log.Sub_LogWrite($"装置({unit}).SNO:{sno}.BLK:{blk}.BZI:{bzi}.PCS:{pcs}");
 
         if (MonitorMessage.RequestBit == C.REQ_STA) {
-            WorkStates.List[unit].Set(sno, blk, bzi, pcs);
+            StatusKey.Init(sno, blk, bzi, pcs);
         }
         else {
             RequestKey.Init(sno, blk, bzi, pcs);
