@@ -73,7 +73,9 @@ public class MonitorMessage : RCmd {
     /// <returns></returns>
     private static string GetRequestBit(string readData, int unit) {
         if (G.Mid(readData, 7, 2) == "11") {
-            return WorkStates.List[unit].Start_Count == 0 ? C.REQ_STA : C.REQ_NOP;
+            return WorkStates.List[unit].Start_Count == 0
+                ? C.REQ_STA
+                : C.REQ_NOP;
         }
 
         if (G.Mid(readData, 7, 1) != "0") {
@@ -84,7 +86,8 @@ public class MonitorMessage : RCmd {
             return C.REQ_STP;
         }
 
-        if (WorkStates.List[unit].End_Count == 0 && !GetEndState(unit)) {
+        WorkStates.List[unit].Fetch();
+        if (!WorkStates.List[unit].EndState) {
             return C.REQ_STP;
         }
 
@@ -101,6 +104,7 @@ public class MonitorMessage : RCmd {
 
     /// <summary>
     /// @稼動実績WKから終了判定
+    /// @Deprecated
     /// 終了していなければtrue
     /// </summary>
     /// <param name="unit"></param>
