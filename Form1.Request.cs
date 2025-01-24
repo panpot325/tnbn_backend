@@ -62,7 +62,7 @@ public partial class Form1 {
     /// @稼動データキー取得
     /// </summary>
     public void WorkKeyRequest() {
-        WorkStates.List[_unit].Clear();
+        //WorkStates.List[_unit].Clear();
         //稼動データキーの取得コマンド
         SendData(WorkDataKeyCmd(_unit));
     }
