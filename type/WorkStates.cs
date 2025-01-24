@@ -30,4 +30,13 @@ public class WorkStates {
             new WorkState(5)
         ];
     }
+
+    /// <summary>
+    /// Fetch
+    /// </summary>
+    /// <param name="unit"></param>
+    /// <returns></returns>
+    public static WorkState RecState(int unit) {
+        return List[0].Fetch(unit);
+    }
 }
