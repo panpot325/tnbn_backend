@@ -1,6 +1,7 @@
 using System;
 using System.Text;
 using BackendMonitor.share;
+using BackendMonitor.type.singleton;
 
 namespace BackendMonitor.type;
 
@@ -30,6 +31,8 @@ public partial class WorkState(int unit) {
     public bool EndState; //   終了判定    @Transient
     public const string CLR_TIME = "00:00:00";
     public const string END_TIME = "19:20:00";
+    public static string NowTime => DateTime.Now.ToString("HH:mm:ss"); 
+    public static string NowDate => DateTime.Now.ToString("yyyy/MM/dd"); 
 
     /// <summary>
     /// 初期化
@@ -54,23 +57,101 @@ public partial class WorkState(int unit) {
     }
 
     /// <summary>
-    /// Set
+    /// SetKey
     /// </summary>
-    /// <param name="sno"></param>
-    /// <param name="blk"></param>
-    /// <param name="bzi"></param>
-    /// <param name="pcs"></param>
     /// <returns></returns>
-    public WorkState Set(string sno, string blk, string bzi, string pcs) {
-        SNO = sno;
-        BLK = blk;
-        BZI = bzi;
-        PCS = pcs;
+    public WorkState SetKey() {
+        SNO = StatusKey.Sno;
+        BLK = StatusKey.Blk;
+        BZI = StatusKey.Bzi;
+        PCS = StatusKey.Pcs;
+        
         return this;
     }
 
     /// <summary>
     /// @稼動実績WKから取得
+    /// </summary>
+    /// <returns></returns>
+    public WorkState Fetch() {
+        var sb = new StringBuilder();
+
+        sb.Append(" SElECT sno, blk, bzi, pcs, l, b, tmax, honsu, ymd,");
+        sb.Append(" str_time, str_time2, end_time, kad_time, ttl_time, stp_time, cnt");
+        sb.Append(" FROM tnbn_kadojisseki_wk");
+        sb.Append($" WHERE taisyo = '{Unit}'");
+
+        Clear();
+        using var reader = PgConnect.Read(sb.ToString());
+        while (reader.Read()) {
+            SNO = reader.GetString(0).Trim();
+            BLK = reader.GetString(1).Trim();
+            BZI = reader.GetString(2).Trim();
+            PCS = reader.GetString(3).Trim();
+            L = reader.GetDecimal(4);
+            B = reader.GetDecimal(5);
+            Tmax = reader.GetDecimal(6);
+            Count = reader.GetInt16(7);
+            YMD = reader.GetString(8);
+            StrTime = reader.GetString(9);
+            StrTime2 = reader.GetString(10);
+            EndTime = reader.GetString(11);
+            KAD_TIME = reader.GetInt32(12);
+            Ttl_TIME = reader.GetInt32(13);
+            Stp_Time = reader.GetInt32(14);
+            CNT = reader.GetByte(15);
+            EndState = EndTime != CLR_TIME;
+        }
+
+        PgConnect.Close();
+
+        return this;
+    }
+
+    /// <summary>
+    /// @稼動実績WKから取得
+    /// </summary>
+    /// <param name="unit"></param>
+    /// <returns></returns>
+    public WorkState Fetch(int unit) {
+        var sb = new StringBuilder();
+
+        sb.Append(" SElECT sno, blk, bzi, pcs, l, b, tmax, honsu, ymd,");
+        sb.Append(" str_time, str_time2, end_time, kad_time, ttl_time, stp_time, cnt");
+        sb.Append(" FROM tnbn_kadojisseki_wk");
+        sb.Append($" WHERE taisyo = '{unit}'");
+
+        Clear();
+        using var reader = PgConnect.Read(sb.ToString());
+        while (reader.Read()) {
+            Unit = unit;
+            SNO = reader.GetString(0).Trim();
+            BLK = reader.GetString(1).Trim();
+            BZI = reader.GetString(2).Trim();
+            PCS = reader.GetString(3).Trim();
+            L = reader.GetDecimal(4);
+            B = reader.GetDecimal(5);
+            Tmax = reader.GetDecimal(6);
+            Count = reader.GetInt16(7);
+            YMD = reader.GetString(8);
+            StrTime = reader.GetString(9);
+            StrTime2 = reader.GetString(10);
+            EndTime = reader.GetString(11);
+            KAD_TIME = reader.GetInt32(12);
+            Ttl_TIME = reader.GetInt32(13);
+            Stp_Time = reader.GetInt32(14);
+            CNT = reader.GetByte(15);
+            EndState = EndTime != CLR_TIME;
+        }
+
+        PgConnect.Close();
+
+        return this;
+    }
+
+    /// <summary>
+    /// @稼動実績WKから取得
+    /// @Deprecated
     /// </summary>
     /// <param name="unit"></param>
     /// <param name="endCheck"></param>
@@ -127,6 +208,8 @@ public partial class WorkState(int unit) {
         var count = 0;
         var sb = new StringBuilder();
 
+        Clear();
+        SetKey();
         sb.Append(" SElECT l, b, tmax, lh1, lh2, lh3, lh4, lh5");
         sb.Append(" FROM tnbn_kakowk_data");
         sb.Append($" WHERE sno = '{SNO.Trim()}'");

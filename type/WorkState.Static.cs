@@ -5,10 +5,12 @@ namespace BackendMonitor.type;
 
 /// <summary>
 /// 稼動状況監視用クラス
+/// @Deprecated
 /// </summary>
 public partial class WorkState {
     /// <summary>
     /// Update_Clear
+    /// @Deprecated
     /// </summary>
     /// <param name="unit"></param>
     public static void Update_Clear(int unit) {
@@ -40,16 +42,17 @@ public partial class WorkState {
 
     /// <summary>
     /// Fetch
+    /// @Deprecated
     /// </summary>
     /// <param name="unit"></param>
     /// <returns></returns>
-    public static WorkState Fetch(int unit) {
+    public static WorkState RecState(int unit) {
         var sb = new StringBuilder();
         sb.Append(" SElECT sno, blk, bzi, pcs, l, b, tmax, honsu, ymd,");
         sb.Append(" str_time, str_time2, end_time, kad_time, ttl_time, stp_time, cnt");
         sb.Append(" FROM tnbn_kadojisseki_wk");
         sb.Append($" WHERE taisyo = '{unit}'");
-        
+
         var dataTable = PgOpen.PgSelect(sb.ToString());
         if (dataTable.Rows.Count == 0) {
             WorkStates.List[0].Clear();
