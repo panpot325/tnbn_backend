@@ -29,6 +29,7 @@ public partial class WorkState(int unit) {
     public int End_Count; //   稼動終了Cnt @Transient
     public bool EndState; //   終了判定    @Transient
     public const string CLR_TIME = "00:00:00";
+    public const string END_TIME = "19:20:00";
 
     /// <summary>
     /// 初期化
@@ -213,13 +214,13 @@ public partial class WorkState(int unit) {
     public void Update_Stop() {
         //稼動終了、稼動終了時の時間と稼動時間の算出
         if (Diff() < 0) {
-            EndTime = "19:20:00";
+            EndTime = END_TIME;
         }
 
         Ttl_TIME = Diff();
 
         if (Diff2() < 0) {
-            EndTime = "19:20:00";
+            EndTime = END_TIME;
         }
 
         KAD_TIME += Diff2();
