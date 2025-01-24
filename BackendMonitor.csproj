@@ -167,6 +167,9 @@
         <Compile Include="type\singleton\KeyMessage.cs">
           <DependentUpon>RCmd.cs</DependentUpon>
         </Compile>
+        <Compile Include="type\singleton\StatusKey.cs">
+          <DependentUpon>PKey.cs</DependentUpon>
+        </Compile>
         <Compile Include="type\singleton\WorkData.cs" />
         <Compile Include="type\singleton\MonitorMessage.cs">
           <DependentUpon>RCmd.cs</DependentUpon>
