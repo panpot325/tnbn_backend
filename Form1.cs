@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Threading;
 using System.Timers;
 using System.Windows.Forms;
 using BackendMonitor.model;
 using BackendMonitor.Properties;
 using BackendMonitor.type;
+using C = BackendMonitor.share.Constants;
 
 // ReSharper disable MemberCanBeMadeStatic.Local
 namespace BackendMonitor;
@@ -74,14 +76,6 @@ public partial class Form1 : Form {
     }
 
     /// <summary>
-    /// Click Event
-    /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
-    private void button1_Click_1(object sender, EventArgs e) {
-    }
-
-    /// <summary>
     /// Closing Event
     /// </summary>
     /// <param name="sender"></param>
@@ -120,6 +114,19 @@ public partial class Form1 : Form {
     /// 通信スレッドからの受信通知
     /// </summary>
     private void OnDisconnect() {
+    }
+
+    /// <summary>
+    /// 要求ビット、データなしビットクリア
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void button1_Click(object sender, EventArgs e) {
+        Timer1.Enabled = false;
+        SendData(ClearRequestBitCmd());
+        Thread.Sleep(1000);
+        SendData(ClearEmptyBitCmd());
+        Timer1.Enabled = true;
     }
 
     /// <summary>
@@ -175,5 +182,64 @@ public partial class Form1 : Form {
     /// <param name="e"></param>
     private void button7_Click(object sender, EventArgs e) {
         SendData(WorkStopRequestCmd(2));
+    }
+
+    /// <summary>
+    /// 船番キー設定
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void InputSno_KeyUp(object sender, KeyEventArgs e) {
+        if (e.KeyValue != (char)Keys.Enter) return;
+        Timer1.Enabled = false;
+        SendData(WorkKeyWriteCmd(C.DEVICE_W, "sno", InputSno.Text));
+
+        Console.WriteLine(WorkKeyWriteCmd(C.DEVICE_W, "sno", InputSno.Text));
+
+        Thread.Sleep(1000);
+        SendData(WorkKeyWriteCmd(C.DEVICE_D, "sno", InputSno.Text));
+        Timer1.Enabled = true;
+    }
+
+    /// <summary>
+    /// ブロック名キー設定
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void InputBlk_KeyUp(object sender, KeyEventArgs e) {
+        if (e.KeyValue != (char)Keys.Enter) return;
+        Timer1.Enabled = false;
+        SendData(WorkKeyWriteCmd(C.DEVICE_W, "blk", InputBlk.Text));
+        Thread.Sleep(1000);
+        SendData(WorkKeyWriteCmd(C.DEVICE_D, "blk", InputBlk.Text));
+        Timer1.Enabled = true;
+    }
+
+    /// <summary>
+    /// 部材名キー設定
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void InputBzi_KeyUp(object sender, KeyEventArgs e) {
+        if (e.KeyValue != (char)Keys.Enter) return;
+        Timer1.Enabled = false;
+        SendData(WorkKeyWriteCmd(C.DEVICE_W, "bzi", InputBzi.Text));
+        Thread.Sleep(1000);
+        SendData(WorkKeyWriteCmd(C.DEVICE_D, "bzi", InputBzi.Text));
+        Timer1.Enabled = true;
+    }
+
+    /// <summary>
+    /// 舷キー設定
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void InputPcs_KeyUp(object sender, KeyEventArgs e) {
+        if (e.KeyValue != (char)Keys.Enter) return;
+        Timer1.Enabled = false;
+        SendData(WorkKeyWriteCmd(C.DEVICE_W, "pcs", InputPcs.Text));
+        Thread.Sleep(1000);
+        SendData(WorkKeyWriteCmd(C.DEVICE_D, "pcs", InputPcs.Text));
+        Timer1.Enabled = true;
     }
 }

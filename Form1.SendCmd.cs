@@ -696,7 +696,7 @@ public partial class Form1 {
     public string WorkStopRequestCmd(int unit) {
         return SCmd.GetCmd(
             C.REQ_WR_B,
-            G.UnitCode(unit),
+            C.UNIT_CODE_2,
             C.DEVICE_B,
             unit switch {
                 C.UNIT_2 => "00000063",
@@ -704,6 +704,83 @@ public partial class Form1 {
             },
             "04",
             "0000"
+        );
+    }
+
+    /// <summary>
+    /// 要求ビットクリア
+    /// </summary>
+    /// <returns></returns>
+    public string ClearRequestBitCmd() {
+        return SCmd.GetCmd(
+            C.REQ_WR_B,
+            C.UNIT_CODE_2,
+            C.DEVICE_B,
+            "00000110",
+            "04",
+            "0000"
+        );
+    }
+
+    /// <summary>
+    /// データなしビットクリア
+    /// </summary>
+    /// <returns></returns>
+    public string ClearEmptyBitCmd() {
+        return SCmd.GetCmd(
+            C.REQ_WR_B,
+            C.UNIT_CODE_2,
+            C.DEVICE_B,
+            "00000100",
+            "04",
+            "0000"
+        );
+    }
+
+    /// <summary>
+    /// ワークデータキー書き込みコマンド
+    /// デバッグ用
+    /// </summary>
+    /// <param name="deviceName"></param>
+    /// <param name="name"></param>
+    /// <param name="data"></param>
+    /// <returns></returns>
+    public string WorkKeyWriteCmd(string deviceName, string name, string data) {
+        var deviceNumber = "";
+        var deviceCount = "";
+        var writeData = "";
+
+        switch (name) {
+            case "sno":
+                deviceNumber = deviceName == C.DEVICE_W ? "000000F0" : "000007D0";
+                deviceCount = "03";
+                writeData = SCmd.HexWriteData(data.PadRight(6, ' '));
+                break;
+            case "blk":
+                deviceNumber = deviceName == C.DEVICE_W ? "000000F3" : "000007D3";
+                deviceCount = "04";
+                writeData = SCmd.HexWriteData(data.PadRight(8, ' '));
+                break;
+            case "bzi":
+                deviceNumber = deviceName == C.DEVICE_W ? "000000F7" : "000007D7";
+                ;
+                deviceCount = "08";
+                writeData = SCmd.HexWriteData(data.PadRight(16, ' '));
+                break;
+            case "pcs":
+                deviceNumber = deviceName == C.DEVICE_W ? "000000FF" : "000007DF";
+                deviceCount = "01";
+                writeData = SCmd.HexWriteData(data.PadRight(2, ' '));
+                break;
+        }
+
+        return SCmd.GetCmd(
+            C.REQ_WR_W,
+            C.UNIT_CODE_2,
+            deviceName,
+            deviceNumber,
+            deviceCount,
+            writeData
         );
     }
 }

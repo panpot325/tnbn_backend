@@ -12,11 +12,10 @@ namespace BackendMonitor;
 public partial class Form1 {
     public Timer Timer1;
     public Timer Timer2;
-
     public Label Text1;
-
-    //public TextBox Text1;
     public Button Command1;
+
+    //Debug
     private Button button1;
     private Button button2;
     private Button button3;
@@ -24,11 +23,20 @@ public partial class Form1 {
     private Button button5;
     private Button button6;
     private Button button7;
+    private TextBox InputSno;
+    private TextBox InputBlk;
+    private TextBox InputBzi;
+    private TextBox InputPcs;
+    private Label LabelSno;
+    private Label LabelBlk;
+    private Label LabelBzi;
+    private Label LabelPcs;
 
     private void InitComponent() {
         Timer1 = new Timer();
         Timer2 = new Timer();
         Text1 = new Label();
+
         Command1 = new Button();
         button1 = new Button();
         button2 = new Button();
@@ -75,19 +83,18 @@ public partial class Form1 {
         Command1.TabIndex = 0;
         Command1.UseVisualStyleBackColor = true;
         Command1.Click += Command1_Click;
+
         // 
-        // button1
+        // Debug
         // 
         button1.Name = @"button1";
-        button1.Text = @"テスト";
+        button1.Text = @"テストクリア";
         button1.Location = new Point(200, 20);
         button1.Size = new Size(150, 50);
         button1.TabIndex = 2;
         button1.UseVisualStyleBackColor = true;
-        button1.Click += button1_Click_1;
-        // 
-        // button2
-        // 
+        button1.Click += button1_Click;
+
         button2.Name = @"button2";
         button2.Text = @"船番一覧要求";
         button2.Location = new Point(30, 180);
@@ -95,9 +102,7 @@ public partial class Form1 {
         button2.TabIndex = 3;
         button2.UseVisualStyleBackColor = true;
         button2.Click += button2_Click;
-        // 
-        // button3
-        // 
+
         button3.Name = @"button3";
         button3.Text = @"ブロック名一覧要求";
         button3.Location = new Point(200, 180);
@@ -105,9 +110,7 @@ public partial class Form1 {
         button3.TabIndex = 4;
         button3.UseVisualStyleBackColor = true;
         button3.Click += button3_Click;
-        // 
-        // button4
-        // 
+
         button4.Name = @"button4";
         button4.Text = @"部材名一覧要求";
         button4.Location = new Point(30, 240);
@@ -115,9 +118,7 @@ public partial class Form1 {
         button4.TabIndex = 5;
         button4.UseVisualStyleBackColor = true;
         button4.Click += button4_Click;
-        // 
-        // button5
-        // 
+
         button5.Name = @"button5";
         button5.Text = @"ワークデータ要求";
         button5.Location = new Point(200, 240);
@@ -125,9 +126,7 @@ public partial class Form1 {
         button5.TabIndex = 6;
         button5.UseVisualStyleBackColor = true;
         button5.Click += button5_Click;
-        // 
-        // button6
-        // 
+
         button6.Name = @"button6";
         button6.Text = @"稼動開始";
         button6.Location = new Point(30, 300);
@@ -135,9 +134,7 @@ public partial class Form1 {
         button6.TabIndex = 6;
         button6.UseVisualStyleBackColor = true;
         button6.Click += button6_Click;
-        // 
-        // button6
-        // 
+
         button7.Name = @"button6";
         button7.Text = @"稼動終了";
         button7.Location = new Point(200, 300);
@@ -145,14 +142,56 @@ public partial class Form1 {
         button7.TabIndex = 6;
         button7.UseVisualStyleBackColor = true;
         button7.Click += button7_Click;
+
+        InputSno = new TextBox();
+        InputSno.Text = "";
+        InputSno.Location = new Point(30, 370);
+        InputSno.Size = new Size(60, 80);
+        InputSno.KeyUp += InputSno_KeyUp;
+
+        InputBlk = new TextBox();
+        InputBlk.Text = "";
+        InputBlk.Location = new Point(100, 370);
+        InputBlk.Size = new Size(80, 80);
+        InputBlk.KeyUp += InputBlk_KeyUp;
+
+        InputBzi = new TextBox();
+        InputBzi.Text = "";
+        InputBzi.Location = new Point(190, 370);
+        InputBzi.Size = new Size(120, 80);
+        InputBzi.KeyUp += InputBzi_KeyUp;
+
+        InputPcs = new TextBox();
+        InputPcs.Text = "";
+        InputPcs.Location = new Point(320, 370);
+        InputPcs.Size = new Size(20, 80);
+        InputPcs.KeyUp += InputPcs_KeyUp;
+
+        LabelSno = new Label();
+        LabelSno.Location = new Point(30, 356);
+        LabelSno.Size = new Size(40, 80);
+        LabelSno.Text = @"SNO";
+        
+        LabelBlk = new Label();
+        LabelBlk.Location = new Point(100, 356);
+        LabelBlk.Size = new Size(40, 80);
+        LabelBlk.Text = @"BLK";
+        
+        LabelBzi = new Label();
+        LabelBzi.Location = new Point(190, 356);
+        LabelBzi.Size = new Size(40, 80);
+        LabelBzi.Text = @"BZI";
+        
+        LabelPcs = new Label();
+        LabelPcs.Location = new Point(320, 356);
+        LabelPcs.Size = new Size(40, 80);
+        LabelPcs.Text = @"PCS";
+        
         // 
         // Form1
         // 
         Name = @"Form1";
         Text = @"Form1";
-        //AutoScaleDimensions = new SizeF(13F, 24F);
-        //AutoScaleMode = AutoScaleMode.None;
-        //Size = new Size(800, 600);
         ClientSize = new Size(380, 200);
         Controls.Add(Text1);
         Controls.Add(Command1);
@@ -164,6 +203,14 @@ public partial class Form1 {
             Controls.Add(button5);
             Controls.Add(button6);
             Controls.Add(button7);
+            Controls.Add(InputSno);
+            Controls.Add(InputBlk);
+            Controls.Add(InputBzi);
+            Controls.Add(InputPcs);
+            Controls.Add(LabelSno);
+            Controls.Add(LabelBlk);
+            Controls.Add(LabelBzi);
+            Controls.Add(LabelPcs);
             ClientSize = new Size(380, 400);
         }
 
