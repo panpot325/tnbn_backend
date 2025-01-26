@@ -1,5 +1,4 @@
 ﻿using System;
-using System.CodeDom;
 using System.Configuration;
 using System.Linq;
 using System.Threading;
@@ -56,11 +55,8 @@ internal static class Program {
         var keys = ConfigurationManager.AppSettings.AllKeys;
         foreach (SettingsProperty property in Settings.Default.Properties) {
             if (keys.Contains(property.Name)) {
-                Settings.Default[property.Name] = property.PropertyType.Name switch {
-                    "Int16" => short.Parse(GetAppSetting(property.Name)),
-                    "Boolean" => bool.Parse(GetAppSetting(property.Name)),
-                    _ => GetAppSetting(property.Name)
-                };
+                Settings.Default[property.Name] =
+                    Convert.ChangeType(GetAppSetting(property.Name), property.PropertyType);
             }
         }
     }
