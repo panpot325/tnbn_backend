@@ -48,7 +48,7 @@ namespace BackendMonitor.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("22:20:00")]
+        [global::System.Configuration.DefaultSettingValueAttribute("19:20:00")]
         public string End_Time {
             get {
                 return ((string)(this["End_Time"]));
@@ -84,7 +84,7 @@ namespace BackendMonitor.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("192.168.11.99")]
+        [global::System.Configuration.DefaultSettingValueAttribute("172.16.6.42")]
         public string PLC_Host {
             get {
                 return ((string)(this["PLC_Host"]));
@@ -120,7 +120,7 @@ namespace BackendMonitor.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("10.211.55.2")]
+        [global::System.Configuration.DefaultSettingValueAttribute("localhost")]
         public string DB_Host {
             get {
                 return ((string)(this["DB_Host"]));
@@ -144,7 +144,7 @@ namespace BackendMonitor.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("onozo_202409")]
+        [global::System.Configuration.DefaultSettingValueAttribute("onozo_202501")]
         public string DB_Name {
             get {
                 return ((string)(this["DB_Name"]));
@@ -192,7 +192,7 @@ namespace BackendMonitor.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("//Mac/Home/Documents/ONOZO/RiderProjects/Log")]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\RiderProject/Log")]
         public string Log_Path {
             get {
                 return ((string)(this["Log_Path"]));
@@ -204,7 +204,7 @@ namespace BackendMonitor.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("//Mac/Home/Documents/ONOZO/RiderProjects/Dev")]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\RiderProject/Dev")]
         public string Dev_Path {
             get {
                 return ((string)(this["Dev_Path"]));
@@ -216,7 +216,7 @@ namespace BackendMonitor.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("//Mac/Home/Documents/ONOZO/RiderProjects/Csv")]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\RiderProject//Csv")]
         public string Csv_Path {
             get {
                 return ((string)(this["Csv_Path"]));
