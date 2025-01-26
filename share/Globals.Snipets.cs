@@ -15,9 +15,9 @@ public partial class Globals {
     /// </summary>
     public static string UnitCode(int unit) {
         return unit switch {
-            C.UNIT_2 => C.UNIT_CODE_2,
-            C.UNIT_3 => C.UNIT_CODE_3,
-            C.UNIT_5 => C.UNIT_CODE_5,
+            C.UNIT_2 => AppConfig.UnitCode2,
+            C.UNIT_3 => AppConfig.UnitCode3,
+            C.UNIT_5 => AppConfig.UnitCode5,
             _ => ""
         };
     }

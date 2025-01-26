@@ -8,9 +8,12 @@ namespace BackendMonitor.share;
 /// </summary>
 public static class AppConfig {
     /// <summary>
-    /// Debug_Mode
+    /// AppSettings
     /// </summary>
-    public static bool debugMode = Get<bool>("Debug_Mode");
+    public static bool debugMode = Get<bool>("Debug_Mode", false);
+    public static string UnitCode2 = Get<string>("Unit_Code_2", "02");
+    public static string UnitCode3 = Get<string>("Unit_Code_3", "03");
+    public static string UnitCode5 = Get<string>("Unit_Code_5", "05");
 
     /// <summary>
     /// 設定ファイルから指定した型のデータを取得

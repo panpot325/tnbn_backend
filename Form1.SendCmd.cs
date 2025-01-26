@@ -709,6 +709,7 @@ public partial class Form1 {
 
     /// <summary>
     /// 要求ビットクリア
+    /// デバッグ用
     /// </summary>
     /// <returns></returns>
     public string ClearRequestBitCmd() {
@@ -724,6 +725,7 @@ public partial class Form1 {
 
     /// <summary>
     /// データなしビットクリア
+    /// デバッグ用
     /// </summary>
     /// <returns></returns>
     public string ClearEmptyBitCmd() {
