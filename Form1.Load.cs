@@ -40,7 +40,7 @@ public partial class Form1 {
 
         var result = MessageBox.Show(@"単板ラインの監視を中断しますか？",
             @"確認",
-            MessageBoxButtons.YesNoCancel,
+            MessageBoxButtons.YesNo,
             MessageBoxIcon.Exclamation,
             MessageBoxDefaultButton.Button2);
 

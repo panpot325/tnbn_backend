@@ -117,6 +117,18 @@ public partial class Form1 : Form {
     }
 
     /// <summary>
+    /// 強制終了　Control | Shift | Alt | C 
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void Form1_KeyDown(object sender, KeyEventArgs e) {
+        if (e.KeyData == (Keys.Control | Keys.Shift | Keys.Alt | Keys.C)) {
+            Environment.Exit(0x8020);
+            //Application.Exit();
+        }
+    }
+
+    /// <summary>
     /// 要求ビット、データなしビットクリア
     /// </summary>
     /// <param name="sender"></param>

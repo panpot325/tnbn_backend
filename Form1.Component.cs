@@ -171,27 +171,28 @@ public partial class Form1 {
         LabelSno.Location = new Point(30, 356);
         LabelSno.Size = new Size(40, 80);
         LabelSno.Text = @"SNO";
-        
+
         LabelBlk = new Label();
         LabelBlk.Location = new Point(100, 356);
         LabelBlk.Size = new Size(40, 80);
         LabelBlk.Text = @"BLK";
-        
+
         LabelBzi = new Label();
         LabelBzi.Location = new Point(190, 356);
         LabelBzi.Size = new Size(40, 80);
         LabelBzi.Text = @"BZI";
-        
+
         LabelPcs = new Label();
         LabelPcs.Location = new Point(320, 356);
         LabelPcs.Size = new Size(40, 80);
         LabelPcs.Text = @"PCS";
-        
+
         // 
         // Form1
         // 
         Name = @"Form1";
         Text = @"Form1";
+        KeyPreview = true;
         ClientSize = new Size(380, 200);
         Controls.Add(Text1);
         Controls.Add(Command1);
@@ -217,6 +218,7 @@ public partial class Form1 {
         ControlBox = false;
 
         Load += Form1_Load;
+        KeyDown += Form1_KeyDown;
         FormClosed += Form1_FormClosed;
         FormClosing += Form1_FormClosing;
         ((ISupportInitialize)(Timer1)).EndInit();
