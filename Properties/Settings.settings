@@ -13,14 +13,11 @@
     <Setting Name="End_Time" Type="System.String" Scope="User">
       <Value Profile="(Default)">19:20:00</Value>
     </Setting>
-    <Setting Name="Server_Ip" Type="System.String" Scope="User">
-      <Value Profile="(Default)">192.168.200.4</Value>
-    </Setting>
     <Setting Name="MC_Protocol" Type="System.String" Scope="User">
       <Value Profile="(Default)">1E</Value>
     </Setting>
     <Setting Name="PLC_Host" Type="System.String" Scope="User">
-      <Value Profile="(Default)">172.16.6.42</Value>
+      <Value Profile="(Default)">172.16.6.37</Value>
     </Setting>
     <Setting Name="PLC_Port" Type="System.Int16" Scope="User">
       <Value Profile="(Default)">8192</Value>

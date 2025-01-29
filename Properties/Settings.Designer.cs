@@ -60,18 +60,6 @@ namespace BackendMonitor.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("192.168.200.4")]
-        public string Server_Ip {
-            get {
-                return ((string)(this["Server_Ip"]));
-            }
-            set {
-                this["Server_Ip"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("1E")]
         public string MC_Protocol {
             get {
@@ -84,7 +72,7 @@ namespace BackendMonitor.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("172.16.6.42")]
+        [global::System.Configuration.DefaultSettingValueAttribute("172.16.6.37")]
         public string PLC_Host {
             get {
                 return ((string)(this["PLC_Host"]));
