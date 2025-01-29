@@ -100,7 +100,7 @@ public partial class Form1 {
         if (AppConfig.debugMode) {
             InputSno.Text = sno;
             InputBlk.Text = blk;
-            InputBzi.Text = blk;
+            InputBzi.Text = bzi;
             InputPcs.Text = pcs;
         }
 
