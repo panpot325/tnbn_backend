@@ -4,6 +4,7 @@ using System.Timers;
 using System.Windows.Forms;
 using BackendMonitor.model;
 using BackendMonitor.Properties;
+using BackendMonitor.share;
 using BackendMonitor.type;
 using C = BackendMonitor.share.Constants;
 
@@ -32,7 +33,7 @@ public partial class Form1 : Form {
             Settings.Default.PLC_Timeout);
         _melsecPort.MOnRecv += OnRecv;
         _melsecPort.MOnConnect += OnDisconnect;
-        _clrFinish = false; //起動時にクリア処理を行う
+        _clrFinish = AppConfig.ClrFinish; //起動時にクリア処理を行うか
         _clrState = 1;
         _unit = 1; // 装置No = 1
     }
