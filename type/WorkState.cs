@@ -31,8 +31,8 @@ public partial class WorkState(int unit) {
     public bool EndState; //   終了判定    @Transient
     public const string CLR_TIME = "00:00:00";
     public const string END_TIME = "19:20:00";
-    public static string NowTime => DateTime.Now.ToString("HH:mm:ss"); 
-    public static string NowDate => DateTime.Now.ToString("yyyy/MM/dd"); 
+    public static string NowTime => DateTime.Now.ToString("HH:mm:ss");
+    public static string NowDate => DateTime.Now.ToString("yyyy/MM/dd");
 
     /// <summary>
     /// 初期化
@@ -65,7 +65,7 @@ public partial class WorkState(int unit) {
         BLK = StatusKey.Blk;
         BZI = StatusKey.Bzi;
         PCS = StatusKey.Pcs;
-        
+
         return this;
     }
 

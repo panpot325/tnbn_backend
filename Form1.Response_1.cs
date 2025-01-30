@@ -96,7 +96,7 @@ public partial class Form1 {
         var bzi = G.Mid(reverseString, 15, 16);
         var pcs = G.Mid(reverseString, 31, 2);
         Log.Sub_LogWrite($"装置({unit}).SNO:{sno}.BLK:{blk}.BZI:{bzi}.PCS:{pcs}");
-        
+
         if (AppConfig.debugMode) {
             InputSno.Text = sno;
             InputBlk.Text = blk;
