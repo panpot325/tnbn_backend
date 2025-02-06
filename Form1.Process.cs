@@ -1,3 +1,5 @@
+using System;
+using BackendMonitor.type;
 using BackendMonitor.type.singleton;
 using G = BackendMonitor.share.Globals;
 using C = BackendMonitor.share.Constants;
@@ -19,9 +21,7 @@ public partial class Form1 {
 
         // *** Debug ***
         G.StreamWriteData("R", buff);
-        G.LogWrite($@"GetData:{buff}");
-        //Console.WriteLine(
-        //  @$"Unit: {_unit} ClrFinish: {_clrFinish} GListClrState: {_gListClrState} ItrnClrCnt: {_itrnClrCnt} Finish :{_finish} ItrnCnt :{_itrnCnt}");
+        Log.Sub_LogWrite($@"GetData:{buff}");
 
         ResponseMessage.Set(buff);
         if (ResponseMessage.FinishCode != "00") {
@@ -54,22 +54,23 @@ public partial class Form1 {
     /// <summary>
     /// SendData
     /// </summary>
-    private void SendData(string cmd, bool gCmd = true, bool pingCheck = true) {
+    /// <param name="cmd"></param>
+    /// <param name="pingCheck"></param>
+    private void SendData(string cmd, bool pingCheck = true) {
         if (string.IsNullOrEmpty(cmd)) {
             return;
         }
 
-        _gCmd = gCmd ? cmd : "";
         if (!pingCheck || G.PingCheck()) {
-            G.LogWrite($"SendData: {cmd}");
+            Log.Sub_LogWrite($"SendData: {cmd}");
             _melsecPort.Send(cmd);
 
             //Debug Send Data
             G.StreamWriteData("W", cmd);
         }
         else {
-            SetText(@"単板ライン 接続処理実施中...", "単板ライン\n続処理実施中...");
-            G.LogWrite(@"接続処理Msg設定 単板ライン 接続処理実施中...");
+            SetText(@"単板ライン 接続処理実施中...", $"単板ライン{Environment.NewLine}続処理実施中...");
+            Log.Sub_LogWrite(@"接続処理Msg設定 単板ライン 接続処理実施中...");
 
             Timer2.Enabled = true;
         }

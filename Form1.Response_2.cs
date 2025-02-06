@@ -22,13 +22,18 @@ public partial class Form1 {
     public void ReadLogFile(int unit) {
         var workState = WorkStates.List[_unit];
         var fileName = GetFilePath();
-        
+
         if (string.IsNullOrEmpty(fileName)) return;
         if (File.Exists(fileName)) {
             Log.Read(fileName);
         }
         else {
             Log.Clear();
+        }
+
+        //同一材料でログ出力が2回目以降は書き換える
+        if (workState.CNT > 1) {
+            Log.RemoveLast();
         }
 
         var min0 = workState.Ttl_TIME / 60;
@@ -40,6 +45,7 @@ public partial class Form1 {
         var min2 = workState.Stp_Time / 60;
         var sec2 = workState.Stp_Time - min2 * 60;
 
+        //新しいログを追加行に書き込む
         Log.Add(
             new Log {
                 SNO = workState.SNO,
@@ -68,7 +74,7 @@ public partial class Form1 {
     public void WriteLogFile(int unit) {
         var fileName = GetFilePath();
         if (string.IsNullOrEmpty(fileName)) return;
-        Log.CreateDir(Settings.Default.Log_Path);
+        Log.CreateDir(Settings.Default.Csv_Path);
         Log.Write(fileName);
     }
 
@@ -79,9 +85,9 @@ public partial class Form1 {
     private string GetFilePath() {
         var workState = WorkStates.List[_unit];
         return _unit switch {
-            C.UNIT_2 => $"{Settings.Default.Log_Path}\\{workState.SNO.Trim()}-{DateTime.Now:yyyy-MM}-仮付.csv",
-            C.UNIT_3 => $"{Settings.Default.Log_Path}\\{workState.SNO.Trim()}-{DateTime.Now:yyyy-MM}-本付.csv",
-            C.UNIT_5 => $"{Settings.Default.Log_Path}\\{workState.SNO.Trim()}-{DateTime.Now:yyyy-MM}-矯正.csv",
+            C.UNIT_2 => $"{Settings.Default.Csv_Path}\\{workState.SNO.Trim()}-{DateTime.Now:yyyy-MM}-仮付.csv",
+            C.UNIT_3 => $"{Settings.Default.Csv_Path}\\{workState.SNO.Trim()}-{DateTime.Now:yyyy-MM}-本付.csv",
+            C.UNIT_5 => $"{Settings.Default.Csv_Path}\\{workState.SNO.Trim()}-{DateTime.Now:yyyy-MM}-矯正.csv",
             _ => ""
         };
     }
@@ -99,185 +105,194 @@ public partial class Form1 {
         //現物を180度回転した値を計算
 
         //--- データタイプのLK1の配列番号を取得 -----
-        var lk = DataTypesIndex("W715");
+        var lk = WorkDataTypes.DmIndex("W715");
 
         //--- データタイプのWL1の配列番号を取得 -----
-        var wl = DataTypesIndex("W745");
+        var wl = WorkDataTypes.DmIndex("W745");
 
         //--- データタイプのSP1の配列番号を取得 -----
-        var sp = DataTypesIndex("W72C");
+        var sp = WorkDataTypes.DmIndex("W72C");
 
         //データタイプのSP1〜SP5より最大のデフォルト値を取得
-        var defMax = DataTypesDefMax(sp);
+        var defMax = WorkDataTypes.DefMax(sp);
 
         //加工ワークデータを一時退避
-        var bk = WorkData.I;
+        var workData = WorkData.I;
         var types = WorkDataTypes.List;
 
         //最終ロンジを取得
-        var longi = DataTypesLastLongi(bk);
+        var longi = DataTypesLastLongi(workData);
 
         //各項目の初期値を設定
-        WorkData.I.Lk1 = bk.Lk1;
-        WorkData.I.Lk2 = bk.Lk2;
-        WorkData.I.Lk3 = bk.Lk3;
-        WorkData.I.Lk4 = bk.Lk4;
-        WorkData.I.Lk5 = bk.Lk5;
+        var lk1 = workData.Lk1;
+        var lk2 = workData.Lk2;
+        var lk3 = workData.Lk3;
+        var lk4 = workData.Lk4;
+        var lk5 = workData.Lk5;
 
-        WorkData.I.Sp1 = bk.Sp1;
-        WorkData.I.Sp2 = bk.Sp2;
-        WorkData.I.Sp3 = bk.Sp3;
-        WorkData.I.Sp4 = bk.Sp4;
-        WorkData.I.Sp5 = bk.Sp5;
+        var sp1 = workData.Sp1;
+        var sp2 = workData.Sp2;
+        var sp3 = workData.Sp3;
+        var sp4 = workData.Sp4;
+        var sp5 = workData.Sp5;
 
-        WorkData.I.Lh1 = bk.Lh1;
-        WorkData.I.Lh2 = bk.Lh2;
-        WorkData.I.Lh3 = bk.Lh3;
-        WorkData.I.Lh4 = bk.Lh4;
-        WorkData.I.Lh5 = bk.Lh5;
+        var lh1 = workData.Lh1;
+        var lh2 = workData.Lh2;
+        var lh3 = workData.Lh3;
+        var lh4 = workData.Lh4;
+        var lh5 = workData.Lh5;
 
-        WorkData.I.Lt1 = bk.Lt1;
-        WorkData.I.Lt2 = bk.Lt2;
-        WorkData.I.Lt3 = bk.Lt3;
-        WorkData.I.Lt4 = bk.Lt4;
-        WorkData.I.Lt5 = bk.Lt5;
+        var lt1 = workData.Lt1;
+        var lt2 = workData.Lt2;
+        var lt3 = workData.Lt3;
+        var lt4 = workData.Lt4;
+        var lt5 = workData.Lt5;
 
-        WorkData.I.Ll1 = bk.Ll1;
-        WorkData.I.Ll2 = bk.Ll2;
-        WorkData.I.Ll3 = bk.Ll3;
-        WorkData.I.Ll4 = bk.Ll4;
-        WorkData.I.Ll5 = bk.Ll5;
+        var ll1 = workData.Ll1;
+        var ll2 = workData.Ll2;
+        var ll3 = workData.Ll3;
+        var ll4 = workData.Ll4;
+        var ll5 = workData.Ll5;
 
-        WorkData.I.Wl1 = bk.Wl1;
-        WorkData.I.Wl2 = bk.Wl2;
-        WorkData.I.Wl3 = bk.Wl3;
-        WorkData.I.Wl4 = bk.Wl4;
-        WorkData.I.Wl5 = bk.Wl5;
+        var wl1 = workData.Wl1;
+        var wl2 = workData.Wl2;
+        var wl3 = workData.Wl3;
+        var wl4 = workData.Wl4;
+        var wl5 = workData.Wl5;
+
+        var b = workData.B;
 
         switch (longi) {
             case 5:
                 //--- LH5入力有り -----
                 //--- ロンジ形状を入替 -----
-                WorkData.I.Lk1 = bk.Lk5;
-                WorkData.I.Lk2 = bk.Lk4;
-                WorkData.I.Lk3 = bk.Lk3;
-                WorkData.I.Lk4 = bk.Lk2;
-                WorkData.I.Lk5 = bk.Lk1;
+                workData.Lk1 = lk5;
+                workData.Lk2 = lk4;
+                workData.Lk3 = lk3;
+                workData.Lk4 = lk2;
+                workData.Lk5 = lk1;
 
                 //--- ロンジスペースを算出 -----
-                WorkData.I.Sp1 = bk.B - (bk.Sp1 + bk.Sp2 + bk.Sp3 + bk.Sp4 + bk.Sp5 + bk.Lt5);
-                WorkData.I.Sp2 = bk.Sp5 - bk.Lt4 + bk.Lt5;
-                WorkData.I.Sp3 = bk.Sp4 - bk.Lt3 + bk.Lt4;
-                WorkData.I.Sp4 = bk.Sp3 - bk.Lt2 + bk.Lt3;
-                WorkData.I.Sp5 = bk.Sp2 - bk.Lt1 + bk.Lt2;
+                workData.Sp1 = b - (sp1 + sp2 + sp3 + sp4 + sp5 + lt5);
+                workData.Sp2 = sp5 - lt4 + lt5;
+                workData.Sp3 = sp4 - lt3 + lt4;
+                workData.Sp4 = sp3 - lt2 + lt3;
+                workData.Sp5 = sp2 - lt1 + lt2;
 
                 //--- ロンジ高さを入替 -----
-                WorkData.I.Lh1 = bk.Lh5;
-                WorkData.I.Lh2 = bk.Lh4;
-                WorkData.I.Lh3 = bk.Lh3;
-                WorkData.I.Lh4 = bk.Lh2;
-                WorkData.I.Lh5 = bk.Lh1;
+                workData.Lh1 = lh5;
+                workData.Lh2 = lh4;
+                workData.Lh3 = lh3;
+                workData.Lh4 = lh2;
+                workData.Lh5 = lh1;
+
+                //--- ロンジウェブ板厚を入替 -----
+                workData.Lt1 = lt5;
+                workData.Lt2 = lt4;
+                workData.Lt3 = lt3;
+                workData.Lt4 = lt2;
+                workData.Lt5 = lt1;
+
 
                 //--- ロンジ全長を入替 -----
-                WorkData.I.Lt1 = bk.Lt5;
-                WorkData.I.Ll2 = bk.Ll4;
-                WorkData.I.Ll3 = bk.Ll3;
-                WorkData.I.Ll4 = bk.Ll2;
-                WorkData.I.Ll5 = bk.Ll1;
+                workData.Ll1 = ll5;
+                workData.Ll2 = ll4;
+                workData.Ll3 = ll3;
+                workData.Ll4 = ll2;
+                workData.Ll5 = ll1;
 
                 //-- 溶接脚長を入替 -----
-                WorkData.I.Wl1 = bk.Wl5;
-                WorkData.I.Wl2 = bk.Wl4;
-                WorkData.I.Wl3 = bk.Wl3;
-                WorkData.I.Wl4 = bk.Wl2;
-                WorkData.I.Wl5 = bk.Wl1;
+                workData.Wl1 = wl5;
+                workData.Wl2 = wl4;
+                workData.Wl3 = wl3;
+                workData.Wl4 = wl2;
+                workData.Wl5 = wl1;
                 break;
             case 4:
-                var wsp1 = (decimal)bk.B - (bk.Sp1 + bk.Sp2 + bk.Sp3 + bk.Sp4 + bk.Lt4);
-                var wsu = (int)(Math.Truncate(wsp1));
-                var wsp = wsp1 / wsu;
+                var wsp1 = b - (sp1 + sp2 + sp3 + sp4 + lt4);
+                var wsu = (int)(Math.Truncate(wsp1 / decimal.Parse(defMax) + 1));
+                var wsp = Math.Truncate(wsp1 / wsu);
 
                 switch (wsu) {
                     case 1:
-                        WorkData.I.Lk1 = bk.Lk4;
-                        WorkData.I.Lk2 = bk.Lk3;
-                        WorkData.I.Lk3 = bk.Lk2;
-                        WorkData.I.Lk4 = bk.Lk1;
-                        WorkData.I.Lk5 = byte.Parse(types[lk + 4].Def);
+                        workData.Lk1 = lk4;
+                        workData.Lk2 = lk3;
+                        workData.Lk3 = lk2;
+                        workData.Lk4 = lk1;
+                        workData.Lk5 = byte.Parse(types[lk + 4].Def);
 
-                        WorkData.I.Sp1 = wsp;
-                        WorkData.I.Sp2 = bk.Sp4 - bk.Lt3 + bk.Lt4;
-                        WorkData.I.Sp3 = bk.Sp3 - bk.Lt2 + bk.Lt3;
-                        WorkData.I.Sp4 = bk.Sp2 - bk.Lt1 + bk.Lt2;
+                        workData.Sp1 = wsp;
+                        workData.Sp2 = sp4 - lt3 + lt4;
+                        workData.Sp3 = sp3 - lt2 + lt3;
+                        workData.Sp4 = sp2 - lt1 + lt2;
 
-                        WorkData.I.Lh1 = bk.Lh4;
-                        WorkData.I.Lh2 = bk.Lh3;
-                        WorkData.I.Lh3 = bk.Lh2;
-                        WorkData.I.Lh4 = bk.Lh1;
-                        WorkData.I.Lh5 = 0;
+                        workData.Lh1 = lh4;
+                        workData.Lh2 = lh3;
+                        workData.Lh3 = lh2;
+                        workData.Lh4 = lh1;
+                        workData.Lh5 = 0;
 
-                        WorkData.I.Lt1 = bk.Lt4;
-                        WorkData.I.Lt2 = bk.Lt3;
-                        WorkData.I.Lt3 = bk.Lt2;
-                        WorkData.I.Lt4 = bk.Lt1;
-                        WorkData.I.Lh5 = 0;
+                        workData.Lt1 = lt4;
+                        workData.Lt2 = lt3;
+                        workData.Lt3 = lt2;
+                        workData.Lt4 = lt1;
+                        workData.Lt5 = 0;
 
-                        WorkData.I.Ll1 = bk.Ll4;
-                        WorkData.I.Ll2 = bk.Ll3;
-                        WorkData.I.Ll3 = bk.Ll2;
-                        WorkData.I.Ll4 = bk.Ll1;
-                        WorkData.I.Ll5 = 0;
+                        workData.Ll1 = ll4;
+                        workData.Ll2 = ll3;
+                        workData.Ll3 = ll2;
+                        workData.Ll4 = ll1;
+                        workData.Ll5 = 0;
 
-                        WorkData.I.Wl1 = bk.Wl4;
-                        WorkData.I.Wl2 = bk.Wl3;
-                        WorkData.I.Wl3 = bk.Wl2;
-                        WorkData.I.Wl4 = bk.Wl1;
-                        WorkData.I.Wl5 = byte.Parse(types[wl + 4].Def);
+                        workData.Wl1 = wl4;
+                        workData.Wl2 = wl3;
+                        workData.Wl3 = wl2;
+                        workData.Wl4 = wl1;
+                        workData.Wl5 = byte.Parse(types[wl + 4].Def);
 
                         break;
                     default:
-                        WorkData.I.Lk1 = byte.Parse(types[lk].Def);
-                        WorkData.I.Lk2 = bk.Lk4;
-                        WorkData.I.Lk3 = bk.Lk3;
-                        WorkData.I.Lk4 = bk.Lk2;
-                        WorkData.I.Lk5 = bk.Lk1;
-                        if ((wsp1 - (wsp * 1)) < types[sp + 1].Hani_Min2) {
-                            WorkData.I.Sp1 = decimal.Parse(types[sp].Def);
-                            WorkData.I.Sp2 = wsp1 - WorkData.I.Sp1;
+                        workData.Lk1 = byte.Parse(types[lk].Def);
+                        workData.Lk2 = lk4;
+                        workData.Lk3 = lk3;
+                        workData.Lk4 = lk2;
+                        workData.Lk5 = lk1;
+                        if (wsp1 - wsp * 1 < types[sp + 1].Hani_Min2) {
+                            workData.Sp1 = decimal.Parse(types[sp].Def);
+                            workData.Sp2 = wsp1 - workData.Sp1;
                         }
                         else {
-                            WorkData.I.Sp1 = wsp;
-                            WorkData.I.Sp2 = wsp1 - (wsp * 1);
+                            workData.Sp1 = wsp;
+                            workData.Sp2 = wsp1 - wsp * 1;
                         }
 
-                        WorkData.I.Sp3 = bk.Sp4 - bk.Lt3 + bk.Lt4;
-                        WorkData.I.Sp4 = bk.Sp3 - bk.Lt2 + bk.Lt3;
-                        WorkData.I.Sp5 = bk.Sp2 - bk.Lt1 + bk.Lt2;
+                        workData.Sp3 = sp4 - lt3 + lt4;
+                        workData.Sp4 = sp3 - lt2 + lt3;
+                        workData.Sp5 = sp2 - lt1 + lt2;
 
-                        WorkData.I.Lh1 = 0;
-                        WorkData.I.Lh2 = bk.Lh4;
-                        WorkData.I.Lh3 = bk.Lh3;
-                        WorkData.I.Lh4 = bk.Lh2;
-                        WorkData.I.Lh5 = bk.Lh1;
+                        workData.Lh1 = 0;
+                        workData.Lh2 = lh4;
+                        workData.Lh3 = lh3;
+                        workData.Lh4 = lh2;
+                        workData.Lh5 = lh1;
 
-                        WorkData.I.Lt1 = 0;
-                        WorkData.I.Lt2 = bk.Lt4;
-                        WorkData.I.Lt3 = bk.Lt3;
-                        WorkData.I.Lt4 = bk.Lt2;
-                        WorkData.I.Lt5 = bk.Lt1;
+                        workData.Lt1 = 0;
+                        workData.Lt2 = lt4;
+                        workData.Lt3 = lt3;
+                        workData.Lt4 = lt2;
+                        workData.Lt5 = lt1;
 
-                        WorkData.I.Ll1 = 0;
-                        WorkData.I.Ll2 = bk.Ll4;
-                        WorkData.I.Ll3 = bk.Ll3;
-                        WorkData.I.Ll4 = bk.Ll2;
-                        WorkData.I.Ll5 = bk.Ll1;
+                        workData.Ll1 = 0;
+                        workData.Ll2 = ll4;
+                        workData.Ll3 = ll3;
+                        workData.Ll4 = ll2;
+                        workData.Ll5 = ll1;
 
-                        WorkData.I.Wl1 = byte.Parse(types[wl].Def);
-                        ;
-                        WorkData.I.Wl2 = bk.Wl4;
-                        WorkData.I.Wl3 = bk.Wl3;
-                        WorkData.I.Wl4 = bk.Wl2;
-                        WorkData.I.Wl5 = bk.Wl1;
+                        workData.Wl1 = byte.Parse(types[wl].Def);
+                        workData.Wl2 = wl4;
+                        workData.Wl3 = wl3;
+                        workData.Wl4 = wl2;
+                        workData.Wl5 = wl1;
                         break;
                 }
 
@@ -285,136 +300,134 @@ public partial class Form1 {
                 break;
             case 3:
                 //--- LH3入力有り(LH4=0,LH5=0) -----
-                wsp1 = (decimal)(bk.B - (bk.Sp1 + bk.Sp2 + bk.Sp3 + bk.Lt3));
+                wsp1 = b - (sp1 + sp2 + sp3 + lt3);
                 wsu = (int)(Math.Truncate(wsp1 / decimal.Parse(defMax) + 1));
-                wsp = wsp1 / wsu;
+                wsp = Math.Truncate(wsp1 / wsu);
                 switch (wsu) {
                     case 1:
-                        WorkData.I.Lk1 = bk.Lk3;
-                        WorkData.I.Lk2 = bk.Lk3;
-                        WorkData.I.Lk3 = bk.Lk3;
-                        WorkData.I.Lk4 = byte.Parse(types[lk + 3].Def);
-                        WorkData.I.Lk5 = byte.Parse(types[lk + 4].Def);
+                        workData.Lk1 = lk3;
+                        workData.Lk2 = lk2;
+                        workData.Lk3 = lk1;
+                        workData.Lk4 = byte.Parse(types[lk + 3].Def);
+                        workData.Lk5 = byte.Parse(types[lk + 4].Def);
 
-                        WorkData.I.Sp1 = wsp;
-                        WorkData.I.Sp2 = bk.Sp3 - bk.Lt2 + bk.Lt3;
-                        WorkData.I.Sp3 = bk.Sp2 - bk.Lt1 + bk.Lt2;
+                        workData.Sp1 = wsp;
+                        workData.Sp2 = sp3 - lt2 + lt3;
+                        workData.Sp3 = sp2 - lt1 + lt2;
 
-                        WorkData.I.Lh1 = bk.Lh3;
-                        WorkData.I.Lh2 = bk.Lh2;
-                        WorkData.I.Lh3 = bk.Lh1;
-                        WorkData.I.Lh4 = 0;
-                        WorkData.I.Lh5 = 0;
+                        workData.Lh1 = lh3;
+                        workData.Lh2 = lh2;
+                        workData.Lh3 = lh1;
+                        workData.Lh4 = 0;
+                        workData.Lh5 = 0;
 
-                        WorkData.I.Lt1 = bk.Lt3;
-                        WorkData.I.Lt2 = bk.Lt2;
-                        WorkData.I.Lt3 = bk.Lt1;
-                        WorkData.I.Lt4 = 0;
-                        WorkData.I.Lh5 = 0;
+                        workData.Lt1 = lt3;
+                        workData.Lt2 = lt2;
+                        workData.Lt3 = lt1;
+                        workData.Lt4 = 0;
+                        workData.Lt5 = 0;
 
-                        WorkData.I.Ll1 = bk.Ll3;
-                        WorkData.I.Ll2 = bk.Ll2;
-                        WorkData.I.Ll3 = bk.Ll1;
-                        WorkData.I.Ll4 = 0;
-                        WorkData.I.Ll5 = 0;
+                        workData.Ll1 = ll3;
+                        workData.Ll2 = ll2;
+                        workData.Ll3 = ll1;
+                        workData.Ll4 = 0;
+                        workData.Ll5 = 0;
 
-                        WorkData.I.Wl1 = bk.Wl3;
-                        WorkData.I.Wl2 = bk.Wl2;
-                        WorkData.I.Wl3 = bk.Wl1;
-                        WorkData.I.Wl4 = byte.Parse(types[wl + 3].Def);
-                        WorkData.I.Wl5 = byte.Parse(types[wl + 4].Def);
+                        workData.Wl1 = wl3;
+                        workData.Wl2 = wl2;
+                        workData.Wl3 = wl1;
+                        workData.Wl4 = byte.Parse(types[wl + 3].Def);
+                        workData.Wl5 = byte.Parse(types[wl + 4].Def);
 
                         break;
                     case 2:
-                        WorkData.I.Lk1 = byte.Parse(types[lk].Def);
-                        WorkData.I.Lk2 = bk.Lk3;
-                        WorkData.I.Lk3 = bk.Lk2;
-                        WorkData.I.Lk4 = bk.Lk1;
-                        WorkData.I.Lk5 = byte.Parse(types[lk + 4].Def);
+                        workData.Lk1 = byte.Parse(types[lk].Def);
+                        workData.Lk2 = lk3;
+                        workData.Lk3 = lk2;
+                        workData.Lk4 = lk1;
+                        workData.Lk5 = byte.Parse(types[lk + 4].Def);
 
-                        if ((wsp1 - (wsp * 1)) < types[sp + 1].Hani_Min2) {
-                            WorkData.I.Sp1 = decimal.Parse(types[sp].Def);
-                            WorkData.I.Sp2 = wsp1 - WorkData.I.Sp1;
+                        if (wsp1 - wsp * 1 < types[sp + 1].Hani_Min2) {
+                            workData.Sp1 = decimal.Parse(types[sp].Def);
+                            workData.Sp2 = wsp1 - workData.Sp1;
                         }
                         else {
-                            WorkData.I.Sp1 = wsp;
-                            WorkData.I.Sp2 = wsp1 - (wsp * 1);
+                            workData.Sp1 = wsp;
+                            workData.Sp2 = wsp1 - wsp * 1;
                         }
 
-                        WorkData.I.Sp3 = bk.Sp3 - bk.Lt2 + bk.Lt3;
-                        WorkData.I.Sp4 = bk.Sp2 - bk.Lt1 + bk.Lt2;
+                        workData.Sp3 = sp3 - lt2 + lt3;
+                        workData.Sp4 = sp2 - lt1 + lt2;
 
-                        WorkData.I.Lh1 = 0;
-                        WorkData.I.Lh2 = bk.Lh3;
-                        WorkData.I.Lh3 = bk.Lh2;
-                        WorkData.I.Lh4 = bk.Lh1;
-                        WorkData.I.Lh5 = 0;
+                        workData.Lh1 = 0;
+                        workData.Lh2 = lh3;
+                        workData.Lh3 = lh2;
+                        workData.Lh4 = lh1;
+                        workData.Lh5 = 0;
 
-                        WorkData.I.Lt1 = 0;
-                        WorkData.I.Lt2 = bk.Lt3;
-                        WorkData.I.Lt3 = bk.Lt2;
-                        WorkData.I.Lt4 = bk.Lt1;
-                        WorkData.I.Lt5 = 0;
+                        workData.Lt1 = 0;
+                        workData.Lt2 = lt3;
+                        workData.Lt3 = lt2;
+                        workData.Lt4 = lt1;
+                        workData.Lt5 = 0;
 
-                        WorkData.I.Ll1 = 0;
-                        WorkData.I.Ll2 = bk.Ll3;
-                        WorkData.I.Ll3 = bk.Ll2;
-                        WorkData.I.Ll4 = bk.Ll1;
-                        WorkData.I.Ll5 = 0;
+                        workData.Ll1 = 0;
+                        workData.Ll2 = ll3;
+                        workData.Ll3 = ll2;
+                        workData.Ll4 = ll1;
+                        workData.Ll5 = 0;
 
-                        WorkData.I.Wl1 = byte.Parse(types[wl].Def);
-                        ;
-                        WorkData.I.Wl2 = bk.Wl3;
-                        WorkData.I.Wl3 = bk.Wl2;
-                        WorkData.I.Wl4 = bk.Wl1;
-                        WorkData.I.Wl5 = byte.Parse(types[wl + 4].Def);
+                        workData.Wl1 = byte.Parse(types[wl].Def);
+                        workData.Wl2 = wl3;
+                        workData.Wl3 = wl2;
+                        workData.Wl4 = wl1;
+                        workData.Wl5 = byte.Parse(types[wl + 4].Def);
                         break;
                     default:
-                        WorkData.I.Lk1 = byte.Parse(types[lk].Def);
-                        WorkData.I.Lk2 = byte.Parse(types[lk + 1].Def);
-                        WorkData.I.Lk3 = bk.Lk3;
-                        WorkData.I.Lk4 = bk.Lk2;
-                        WorkData.I.Lk5 = bk.Lk1;
+                        workData.Lk1 = byte.Parse(types[lk].Def);
+                        workData.Lk2 = byte.Parse(types[lk + 1].Def);
+                        workData.Lk3 = lk3;
+                        workData.Lk4 = lk2;
+                        workData.Lk5 = lk1;
 
-                        if (wsp1 < types[sp + 1].Hani_Min2
-                            || wsp1 - (wsp * 2) < types[sp + 2].Hani_Min2) {
-                            WorkData.I.Sp1 = decimal.Parse(types[sp].Def);
-                            WorkData.I.Sp2 = decimal.Parse(types[sp + 1].Def);
-                            WorkData.I.Sp3 = wsp1 - (WorkData.I.Sp1 + WorkData.I.Sp2);
+                        if (wsp < types[sp + 1].Hani_Min2
+                            || wsp1 - wsp * 2 < types[sp + 2].Hani_Min2) {
+                            workData.Sp1 = decimal.Parse(types[sp].Def);
+                            workData.Sp2 = decimal.Parse(types[sp + 1].Def);
+                            workData.Sp3 = wsp1 - (workData.Sp1 + workData.Sp2);
                         }
                         else {
-                            WorkData.I.Sp1 = wsp;
-                            WorkData.I.Sp2 = wsp;
-                            WorkData.I.Sp3 = (wsp1 - (wsp * 2));
+                            workData.Sp1 = wsp;
+                            workData.Sp2 = wsp;
+                            workData.Sp3 = wsp1 - wsp * 2;
                         }
 
-                        WorkData.I.Sp4 = bk.Sp3 - bk.Lt2 + bk.Lt3;
-                        WorkData.I.Sp5 = bk.Sp2 - bk.Lt1 + bk.Lt2;
+                        workData.Sp4 = sp3 - lt2 + lt3;
+                        workData.Sp5 = sp2 - lt1 + lt2;
 
-                        WorkData.I.Lh1 = 0;
-                        WorkData.I.Lh2 = 0;
-                        WorkData.I.Lh3 = bk.Lh3;
-                        WorkData.I.Lh4 = bk.Lh2;
-                        WorkData.I.Lh5 = bk.Lh1;
+                        workData.Lh1 = 0;
+                        workData.Lh2 = 0;
+                        workData.Lh3 = lh3;
+                        workData.Lh4 = lh2;
+                        workData.Lh5 = lh1;
 
-                        WorkData.I.Lt1 = 0;
-                        WorkData.I.Lt2 = 0;
-                        WorkData.I.Lt3 = bk.Lt3;
-                        WorkData.I.Lt4 = bk.Lt2;
-                        WorkData.I.Lt5 = bk.Lt1;
+                        workData.Lt1 = 0;
+                        workData.Lt2 = 0;
+                        workData.Lt3 = lt3;
+                        workData.Lt4 = lt2;
+                        workData.Lt5 = lt1;
 
-                        WorkData.I.Ll1 = 0;
-                        WorkData.I.Ll2 = 0;
-                        WorkData.I.Ll3 = bk.Ll3;
-                        WorkData.I.Ll4 = bk.Ll2;
-                        WorkData.I.Ll5 = bk.Ll1;
+                        workData.Ll1 = 0;
+                        workData.Ll2 = 0;
+                        workData.Ll3 = ll3;
+                        workData.Ll4 = ll2;
+                        workData.Ll5 = ll1;
 
-                        WorkData.I.Wl1 = byte.Parse(types[wl].Def);
-                        ;
-                        WorkData.I.Wl2 = byte.Parse(types[wl + 1].Def);
-                        WorkData.I.Wl3 = bk.Wl3;
-                        WorkData.I.Wl4 = bk.Wl2;
-                        WorkData.I.Wl5 = bk.Wl1;
+                        workData.Wl1 = byte.Parse(types[wl].Def);
+                        workData.Wl2 = byte.Parse(types[wl + 1].Def);
+                        workData.Wl3 = wl3;
+                        workData.Wl4 = wl2;
+                        workData.Wl5 = wl1;
 
                         break;
                 }
@@ -422,347 +435,346 @@ public partial class Form1 {
                 break;
             case 2:
                 //--- LH2入力有り(LH3=0,LH4=0,LH5=0) -----
-                wsp1 = (decimal)(bk.B - (bk.Sp1 + bk.Sp2 + bk.Lt2));
-                wsu = (int)(Math.Truncate(wsp1 / decimal.Parse(defMax) + 1));
-                wsp = wsp1 / wsu;
+                wsp1 = b - (sp1 + sp2 + lt2);
+                wsu = (int)Math.Truncate(wsp1 / decimal.Parse(defMax) + 1);
+                wsp = Math.Truncate(wsp1 / wsu);
 
                 switch (wsu) {
                     case 1:
-                        WorkData.I.Lk1 = bk.Lk2;
-                        WorkData.I.Lk2 = bk.Lk1;
-                        WorkData.I.Lk3 = byte.Parse(types[lk + 2].Def);
-                        WorkData.I.Lk4 = byte.Parse(types[lk + 3].Def);
-                        WorkData.I.Lk5 = byte.Parse(types[lk + 4].Def);
+                        workData.Lk1 = lk2;
+                        workData.Lk2 = lk1;
+                        workData.Lk3 = byte.Parse(types[lk + 2].Def);
+                        workData.Lk4 = byte.Parse(types[lk + 3].Def);
+                        workData.Lk5 = byte.Parse(types[lk + 4].Def);
 
-                        WorkData.I.Sp1 = wsp;
-                        WorkData.I.Sp2 = bk.Sp2 - bk.Lt1 + bk.Lt2;
+                        workData.Sp1 = wsp;
+                        workData.Sp2 = sp2 - lt1 + lt2;
 
-                        WorkData.I.Lh1 = bk.Lh2;
-                        WorkData.I.Lh2 = bk.Lh1;
-                        WorkData.I.Lh3 = 0;
-                        WorkData.I.Lh4 = 0;
-                        WorkData.I.Lh5 = 0;
+                        workData.Lh1 = lh2;
+                        workData.Lh2 = lh1;
+                        workData.Lh3 = 0;
+                        workData.Lh4 = 0;
+                        workData.Lh5 = 0;
 
-                        WorkData.I.Lt1 = bk.Lt2;
-                        WorkData.I.Lt2 = bk.Lt1;
-                        WorkData.I.Lt3 = 0;
-                        WorkData.I.Lt4 = 0;
-                        WorkData.I.Lh5 = 0;
+                        workData.Lt1 = lt2;
+                        workData.Lt2 = lt1;
+                        workData.Lt3 = 0;
+                        workData.Lt4 = 0;
+                        workData.Lt5 = 0;
 
-                        WorkData.I.Ll1 = bk.Ll2;
-                        WorkData.I.Ll2 = bk.Ll1;
-                        WorkData.I.Ll3 = 0;
-                        WorkData.I.Ll4 = 0;
-                        WorkData.I.Ll5 = 0;
+                        workData.Ll1 = ll2;
+                        workData.Ll2 = ll1;
+                        workData.Ll3 = 0;
+                        workData.Ll4 = 0;
+                        workData.Ll5 = 0;
 
-                        WorkData.I.Wl1 = bk.Wl2;
-                        WorkData.I.Wl2 = bk.Wl1;
-                        WorkData.I.Wl3 = byte.Parse(types[wl + 2].Def);
-                        WorkData.I.Wl4 = byte.Parse(types[wl + 3].Def);
-                        WorkData.I.Wl5 = byte.Parse(types[wl + 4].Def);
+                        workData.Wl1 = wl2;
+                        workData.Wl2 = wl1;
+                        workData.Wl3 = byte.Parse(types[wl + 2].Def);
+                        workData.Wl4 = byte.Parse(types[wl + 3].Def);
+                        workData.Wl5 = byte.Parse(types[wl + 4].Def);
                         break;
                     case 2:
-                        WorkData.I.Lk1 = byte.Parse(types[lk].Def);
-                        WorkData.I.Lk2 = bk.Lk2;
-                        WorkData.I.Lk3 = bk.Lk1;
-                        WorkData.I.Lk4 = byte.Parse(types[lk + 3].Def);
-                        WorkData.I.Lk5 = byte.Parse(types[lk + 4].Def);
+                        workData.Lk1 = byte.Parse(types[lk].Def);
+                        workData.Lk2 = lk2;
+                        workData.Lk3 = lk1;
+                        workData.Lk4 = byte.Parse(types[lk + 3].Def);
+                        workData.Lk5 = byte.Parse(types[lk + 4].Def);
 
-                        if (wsp1 < types[sp + 1].Hani_Min2
-                            || wsp1 - (wsp * (wsu - 1)) < types[sp + 2].Hani_Min2) {
-                            WorkData.I.Sp1 = decimal.Parse(types[sp].Def);
-                            WorkData.I.Sp2 = decimal.Parse(types[sp + 1].Def);
-                            WorkData.I.Sp3 = wsp1 - (WorkData.I.Sp1 + WorkData.I.Sp2);
+                        if (wsp1 - wsp * (wsu - 1) < types[sp + 1].Hani_Min2) {
+                            workData.Sp1 = decimal.Parse(types[sp].Def);
+                            workData.Sp2 = wsp1 - workData.Sp1;
                         }
                         else {
-                            WorkData.I.Sp1 = wsp;
-                            WorkData.I.Sp2 = wsp;
-                            WorkData.I.Sp3 = wsp1 - (wsp * (wsu - 1));
+                            workData.Sp1 = wsp;
+                            workData.Sp2 = wsp1 - wsp * (wsu - 1);
                         }
 
-                        WorkData.I.Sp4 = bk.Sp2 - bk.Lt1 + bk.Lt2;
+                        workData.Sp3 = sp2 - lt1 + lt2;
 
-                        WorkData.I.Lh1 = 0;
-                        WorkData.I.Lh2 = 0;
-                        WorkData.I.Lh3 = bk.Lh2;
-                        WorkData.I.Lh4 = bk.Lh1;
-                        WorkData.I.Lh5 = 0;
+                        workData.Lh1 = 0;
+                        workData.Lh2 = lh2;
+                        workData.Lh3 = lh1;
+                        workData.Lh4 = 0;
+                        workData.Lh5 = 0;
 
-                        WorkData.I.Lt1 = 0;
-                        WorkData.I.Lt2 = 0;
-                        WorkData.I.Lt3 = bk.Lt2;
-                        WorkData.I.Lt4 = bk.Lt1;
-                        WorkData.I.Lt5 = 0;
+                        workData.Lt1 = 0;
+                        workData.Lt2 = lt2;
+                        workData.Lt3 = lt1;
+                        workData.Lt4 = 0;
+                        workData.Lt5 = 0;
 
-                        WorkData.I.Ll1 = 0;
-                        WorkData.I.Ll2 = 0;
-                        WorkData.I.Ll3 = bk.Ll2;
-                        WorkData.I.Ll4 = bk.Ll1;
-                        WorkData.I.Ll5 = 0;
+                        workData.Ll1 = 0;
+                        workData.Ll2 = ll2;
+                        workData.Ll3 = ll1;
+                        workData.Ll4 = 0;
+                        workData.Ll5 = 0;
 
-                        WorkData.I.Wl1 = byte.Parse(types[wl].Def);
-                        ;
-                        WorkData.I.Wl2 = byte.Parse(types[wl + 1].Def);
-                        WorkData.I.Wl3 = bk.Wl2;
-                        WorkData.I.Wl4 = bk.Wl1;
-                        WorkData.I.Wl5 = byte.Parse(types[wl + 4].Def);
+                        workData.Wl1 = byte.Parse(types[wl].Def);
+                        workData.Wl2 = wl2;
+                        workData.Wl3 = wl1;
+                        workData.Wl4 = byte.Parse(types[wl + 3].Def);
+                        workData.Wl5 = byte.Parse(types[wl + 4].Def);
 
                         break;
                     case 3:
-                        WorkData.I.Lk1 = byte.Parse(types[lk].Def);
-                        WorkData.I.Lk2 = byte.Parse(types[lk + 1].Def);
-                        WorkData.I.Lk3 = bk.Lk2;
-                        WorkData.I.Lk4 = bk.Lk1;
-                        WorkData.I.Lk5 = byte.Parse(types[lk + 4].Def);
+                        workData.Lk1 = byte.Parse(types[lk].Def);
+                        workData.Lk2 = byte.Parse(types[lk + 1].Def);
+                        workData.Lk3 = lk2;
+                        workData.Lk4 = lk1;
+                        workData.Lk5 = byte.Parse(types[lk + 4].Def);
 
-                        if ((wsp1 - (wsp * 1)) < types[sp + 1].Hani_Min2) {
-                            WorkData.I.Sp1 = decimal.Parse(types[sp].Def);
-                            WorkData.I.Sp2 = wsp1 - WorkData.I.Sp1;
+                        if (wsp < types[sp + 1].Hani_Min2
+                            || wsp1 - wsp * (wsu - 1) < types[sp + 2].Hani_Min2) {
+                            workData.Sp1 = decimal.Parse(types[sp].Def);
+                            workData.Sp2 = decimal.Parse(types[sp + 1].Def);
+                            workData.Sp3 = wsp1 - (workData.Sp1 + workData.Sp2);
                         }
                         else {
-                            WorkData.I.Sp1 = wsp;
-                            WorkData.I.Sp2 = (wsp1 - (wsp * (wsu - 1)));
+                            workData.Sp1 = wsp;
+                            workData.Sp2 = wsp;
+                            workData.Sp3 = wsp1 - wsp * (wsu - 1);
                         }
 
-                        WorkData.I.Sp3 = bk.Sp2 - bk.Lt1 + bk.Lt2;
+                        workData.Sp4 = sp2 - lt1 + lt2;
 
-                        WorkData.I.Lh1 = 0;
-                        WorkData.I.Lh2 = bk.Lh2;
-                        WorkData.I.Lh3 = bk.Lh1;
-                        WorkData.I.Lh4 = 0;
-                        WorkData.I.Lh5 = 0;
+                        workData.Lh1 = 0;
+                        workData.Lh2 = 0;
+                        workData.Lh3 = lh2;
+                        workData.Lh4 = lh1;
+                        workData.Lh5 = 0;
 
-                        WorkData.I.Lt1 = 0;
-                        WorkData.I.Lt2 = bk.Lt2;
-                        WorkData.I.Lt3 = bk.Lt1;
-                        WorkData.I.Lt4 = 0;
-                        WorkData.I.Lt5 = 0;
+                        workData.Lt1 = 0;
+                        workData.Lt2 = 0;
+                        workData.Lt3 = lt2;
+                        workData.Lt4 = lt1;
+                        workData.Lt5 = 0;
 
-                        WorkData.I.Ll1 = 0;
-                        WorkData.I.Ll2 = bk.Ll2;
-                        WorkData.I.Ll3 = bk.Ll1;
-                        WorkData.I.Ll4 = 0;
-                        WorkData.I.Ll5 = 0;
+                        workData.Ll1 = 0;
+                        workData.Ll2 = 0;
+                        workData.Ll3 = ll2;
+                        workData.Ll4 = ll1;
+                        workData.Ll5 = 0;
 
-                        WorkData.I.Wl1 = byte.Parse(types[wl].Def);
-                        ;
-                        WorkData.I.Wl2 = bk.Wl2;
-                        WorkData.I.Wl3 = bk.Wl1;
-                        WorkData.I.Wl4 = byte.Parse(types[wl + 3].Def);
-                        WorkData.I.Wl5 = byte.Parse(types[wl + 4].Def);
+                        workData.Wl1 = byte.Parse(types[wl].Def);
+                        workData.Wl2 = byte.Parse(types[wl + 1].Def);
+                        workData.Wl3 = wl2;
+                        workData.Wl4 = wl1;
+                        workData.Wl5 = byte.Parse(types[wl + 4].Def);
 
                         break;
                     default:
-                        WorkData.I.Lk1 = byte.Parse(types[lk].Def);
-                        WorkData.I.Lk2 = byte.Parse(types[lk + 1].Def);
-                        WorkData.I.Lk3 = byte.Parse(types[lk + 2].Def);
-                        WorkData.I.Lk4 = bk.Lk2;
-                        WorkData.I.Lk5 = bk.Lk1;
+                        workData.Lk1 = byte.Parse(types[lk].Def);
+                        workData.Lk2 = byte.Parse(types[lk + 1].Def);
+                        workData.Lk3 = byte.Parse(types[lk + 2].Def);
+                        workData.Lk4 = lk2;
+                        workData.Lk5 = lk1;
 
                         if (wsp1 < types[sp + 1].Hani_Min2
-                            || wsp1 < types[sp + 2].Hani_Min2
-                            || (wsp * 3) < types[sp + 3].Hani_Min2) {
-                            WorkData.I.Sp1 = decimal.Parse(types[sp].Def);
-                            WorkData.I.Sp2 = decimal.Parse(types[sp + 1].Def);
-                            WorkData.I.Sp3 = decimal.Parse(types[sp + 2].Def);
-                            WorkData.I.Sp4 = wsp1 - (WorkData.I.Sp1 + WorkData.I.Sp2 + WorkData.I.Sp3);
+                            || wsp < types[sp + 2].Hani_Min2
+                            || wsp1 - wsp * 3 < types[sp + 3].Hani_Min2) {
+                            workData.Sp1 = decimal.Parse(types[sp].Def);
+                            workData.Sp2 = decimal.Parse(types[sp + 1].Def);
+                            workData.Sp3 = decimal.Parse(types[sp + 2].Def);
+                            workData.Sp4 = wsp1 - (workData.Sp1 + workData.Sp2 + workData.Sp3);
                         }
                         else {
-                            WorkData.I.Sp1 = wsp;
-                            WorkData.I.Sp2 = wsp;
-                            WorkData.I.Sp3 = wsp;
-                            WorkData.I.Sp4 = wsp1 - wsp * 3;
+                            workData.Sp1 = wsp;
+                            workData.Sp2 = wsp;
+                            workData.Sp3 = wsp;
+                            workData.Sp4 = wsp1 - wsp * 3;
                         }
 
-                        WorkData.I.Sp5 = bk.Sp2 - bk.Lt1 + bk.Lt2;
+                        workData.Sp5 = sp2 - lt1 + lt2;
 
-                        WorkData.I.Lh1 = 0;
-                        WorkData.I.Lh2 = 0;
-                        WorkData.I.Lh3 = 0;
-                        WorkData.I.Lh4 = bk.Lh2;
-                        WorkData.I.Lh5 = bk.Lh1;
+                        workData.Lh1 = 0;
+                        workData.Lh2 = 0;
+                        workData.Lh3 = 0;
+                        workData.Lh4 = lh2;
+                        workData.Lh5 = lh1;
 
-                        WorkData.I.Lt1 = 0;
-                        WorkData.I.Lt2 = 0;
-                        WorkData.I.Lt3 = 0;
-                        WorkData.I.Lt4 = bk.Lt2;
-                        WorkData.I.Lt5 = bk.Lt1;
+                        workData.Lt1 = 0;
+                        workData.Lt2 = 0;
+                        workData.Lt3 = 0;
+                        workData.Lt4 = lt2;
+                        workData.Lt5 = lt1;
 
-                        WorkData.I.Ll1 = 0;
-                        WorkData.I.Ll2 = 0;
-                        WorkData.I.Ll3 = 0;
-                        WorkData.I.Ll4 = bk.Ll2;
-                        WorkData.I.Ll5 = bk.Ll1;
+                        workData.Ll1 = 0;
+                        workData.Ll2 = 0;
+                        workData.Ll3 = 0;
+                        workData.Ll4 = ll2;
+                        workData.Ll5 = ll1;
 
-                        WorkData.I.Wl1 = byte.Parse(types[wl].Def);
-                        WorkData.I.Wl2 = byte.Parse(types[wl + 1].Def);
-                        WorkData.I.Wl3 = byte.Parse(types[wl + 2].Def);
-                        WorkData.I.Wl4 = bk.Wl2;
-                        WorkData.I.Wl5 = bk.Wl1;
+                        workData.Wl1 = byte.Parse(types[wl].Def);
+                        workData.Wl2 = byte.Parse(types[wl + 1].Def);
+                        workData.Wl3 = byte.Parse(types[wl + 2].Def);
+                        workData.Wl4 = wl2;
+                        workData.Wl5 = wl1;
                         break;
                 }
 
                 break;
             case 1:
                 //--- LH1入力有り(LH2=0,LH3=0,LH4=0,LH5=0) -----
-                wsp1 = (decimal)(bk.B - (bk.Sp1 + bk.Lt1));
+                wsp1 = b - (sp1 + lt1);
                 wsu = (int)(Math.Truncate(wsp1 / decimal.Parse(defMax) + 1));
-                wsp = wsp1 / wsu;
+                wsp = Math.Truncate(wsp1 / wsu);
 
                 switch (wsu) {
                     case 1:
-                        WorkData.I.Lk1 = bk.Lk1;
-                        WorkData.I.Sp1 = (byte)wsp;
-                        WorkData.I.Lh1 = bk.Lh1;
-                        WorkData.I.Lt1 = bk.Lt1;
-                        WorkData.I.Wl1 = bk.Wl1;
+                        workData.Lk1 = lk1;
+                        workData.Sp1 = (byte)wsp;
+                        workData.Lh1 = lh1;
+                        workData.Lt1 = lt1;
+                        workData.Ll1 = ll1;
+                        workData.Wl1 = wl1;
                         break;
                     case 2:
-                        WorkData.I.Lk1 = byte.Parse(types[lk].Def);
-                        WorkData.I.Lk2 = bk.Lk1;
-                        if (wsp1 - (wsp * (wsu - 1)) < types[sp + 1].Hani_Min2) {
-                            WorkData.I.Sp1 = byte.Parse(types[sp].Def);
-                            WorkData.I.Sp2 = wsp1 - WorkData.I.Sp1;
+                        workData.Lk1 = byte.Parse(types[lk].Def);
+                        workData.Lk2 = lk1;
+                        if (wsp1 - wsp * (wsu - 1) < types[sp + 1].Hani_Min2) {
+                            workData.Sp1 = byte.Parse(types[sp].Def);
+                            workData.Sp2 = wsp1 - workData.Sp1;
                         }
                         else {
-                            WorkData.I.Sp1 = wsp;
-                            WorkData.I.Sp2 = wsp1 - (wsp * (wsu - 1));
+                            workData.Sp1 = wsp;
+                            workData.Sp2 = wsp1 - wsp * (wsu - 1);
                         }
 
-                        WorkData.I.Lh1 = 0;
-                        WorkData.I.Lh2 = bk.Lh1;
+                        workData.Lh1 = 0;
+                        workData.Lh2 = lh1;
 
-                        WorkData.I.Lt1 = 0;
-                        WorkData.I.Lt2 = bk.Lt1;
+                        workData.Lt1 = 0;
+                        workData.Lt2 = lt1;
 
-                        WorkData.I.Ll1 = 0;
-                        WorkData.I.Ll2 = bk.Ll1;
+                        workData.Ll1 = 0;
+                        workData.Ll2 = ll1;
 
-                        WorkData.I.Wl1 = byte.Parse(types[wl].Def);
-                        WorkData.I.Wl2 = bk.Wl1;
+                        workData.Wl1 = byte.Parse(types[wl].Def);
+                        workData.Wl2 = wl1;
 
                         break;
                     case 3:
-                        WorkData.I.Lk1 = byte.Parse(types[lk].Def);
-                        WorkData.I.Lk2 = byte.Parse(types[lk + 1].Def);
-                        WorkData.I.Lk2 = bk.Lk1;
-                        if (wsp1 < types[sp + 1].Hani_Min2
-                            || wsp1 - (wsp * (wsu - 1)) < types[sp + 2].Hani_Min2) {
-                            WorkData.I.Sp1 = byte.Parse(types[sp].Def);
-                            WorkData.I.Sp2 = byte.Parse(types[sp + 1].Def);
-                            WorkData.I.Sp3 = wsp1 - (WorkData.I.Sp1 + WorkData.I.Sp2);
+                        workData.Lk1 = byte.Parse(types[lk].Def);
+                        workData.Lk2 = byte.Parse(types[lk + 1].Def);
+                        workData.Lk2 = lk1;
+                        if (wsp < types[sp + 1].Hani_Min2
+                            || wsp1 - wsp * (wsu - 1) < types[sp + 2].Hani_Min2) {
+                            workData.Sp1 = byte.Parse(types[sp].Def);
+                            workData.Sp2 = byte.Parse(types[sp + 1].Def);
+                            workData.Sp3 = wsp1 - (workData.Sp1 + workData.Sp2);
                         }
                         else {
-                            WorkData.I.Sp1 = wsp;
-                            WorkData.I.Sp2 = wsp;
-                            WorkData.I.Sp3 = (wsp1 - (wsp * (wsu - 1)));
+                            workData.Sp1 = wsp;
+                            workData.Sp2 = wsp;
+                            workData.Sp3 = wsp1 - wsp * (wsu - 1);
                         }
 
-                        WorkData.I.Lh1 = 0;
-                        WorkData.I.Lh2 = 0;
-                        WorkData.I.Lh3 = bk.Lh1;
+                        workData.Lh1 = 0;
+                        workData.Lh2 = 0;
+                        workData.Lh3 = lh1;
 
-                        WorkData.I.Lt1 = 0;
-                        WorkData.I.Lt2 = 0;
-                        WorkData.I.Lt3 = bk.Lt1;
+                        workData.Lt1 = 0;
+                        workData.Lt2 = 0;
+                        workData.Lt3 = lt1;
 
-                        WorkData.I.Ll1 = 0;
-                        WorkData.I.Ll2 = 0;
-                        WorkData.I.Ll3 = bk.Ll1;
+                        workData.Ll1 = 0;
+                        workData.Ll2 = 0;
+                        workData.Ll3 = ll1;
 
-                        WorkData.I.Wl1 = byte.Parse(types[wl].Def);
-                        WorkData.I.Wl2 = byte.Parse(types[wl + 1].Def);
-                        WorkData.I.Wl3 = bk.Wl1;
+                        workData.Wl1 = byte.Parse(types[wl].Def);
+                        workData.Wl2 = byte.Parse(types[wl + 1].Def);
+                        workData.Wl3 = wl1;
 
                         break;
                     case 4:
-                        WorkData.I.Lk1 = byte.Parse(types[lk].Def);
-                        WorkData.I.Lk2 = byte.Parse(types[lk + 1].Def);
-                        WorkData.I.Lk3 = byte.Parse(types[lk + 2].Def);
-                        WorkData.I.Lk4 = bk.Lk1;
-                        if (wsp1 < types[sp + 1].Hani_Min2
-                            || wsp1 < types[sp + 2].Hani_Min2
-                            || (wsp1 - (wsp * (wsu - 1))) < types[sp + 3].Hani_Min2) {
-                            WorkData.I.Sp1 = byte.Parse(types[sp].Def);
-                            WorkData.I.Sp2 = byte.Parse(types[sp + 1].Def);
-                            WorkData.I.Sp3 = byte.Parse(types[sp + 2].Def);
-                            WorkData.I.Sp4 = wsp1 - (WorkData.I.Sp1 + WorkData.I.Sp2 + WorkData.I.Sp3);
+                        workData.Lk1 = byte.Parse(types[lk].Def);
+                        workData.Lk2 = byte.Parse(types[lk + 1].Def);
+                        workData.Lk3 = byte.Parse(types[lk + 2].Def);
+                        workData.Lk4 = lk1;
+                        if (wsp < types[sp + 1].Hani_Min2
+                            || wsp < types[sp + 2].Hani_Min2
+                            || wsp1 - wsp * (wsu - 1) < types[sp + 3].Hani_Min2) {
+                            workData.Sp1 = byte.Parse(types[sp].Def);
+                            workData.Sp2 = byte.Parse(types[sp + 1].Def);
+                            workData.Sp3 = byte.Parse(types[sp + 2].Def);
+                            workData.Sp4 = wsp1 - (workData.Sp1 + workData.Sp2 + workData.Sp3);
                         }
                         else {
-                            WorkData.I.Sp1 = wsp;
-                            WorkData.I.Sp2 = wsp;
-                            WorkData.I.Sp3 = wsp;
-                            WorkData.I.Sp4 = (wsp1 - (wsp * (wsu - 1)));
+                            workData.Sp1 = wsp;
+                            workData.Sp2 = wsp;
+                            workData.Sp3 = wsp;
+                            workData.Sp4 = wsp1 - wsp * (wsu - 1);
                         }
 
-                        WorkData.I.Lh1 = 0;
-                        WorkData.I.Lh2 = 0;
-                        WorkData.I.Lh3 = 0;
-                        WorkData.I.Lh4 = bk.Lh1;
+                        workData.Lh1 = 0;
+                        workData.Lh2 = 0;
+                        workData.Lh3 = 0;
+                        workData.Lh4 = lh1;
 
-                        WorkData.I.Lt1 = 0;
-                        WorkData.I.Lt2 = 0;
-                        WorkData.I.Lt3 = 0;
-                        WorkData.I.Lt4 = bk.Lt1;
+                        workData.Lt1 = 0;
+                        workData.Lt2 = 0;
+                        workData.Lt3 = 0;
+                        workData.Lt4 = lt1;
 
-                        WorkData.I.Ll1 = 0;
-                        WorkData.I.Ll2 = 0;
-                        WorkData.I.Ll3 = 0;
-                        WorkData.I.Ll4 = bk.Ll1;
+                        workData.Ll1 = 0;
+                        workData.Ll2 = 0;
+                        workData.Ll3 = 0;
+                        workData.Ll4 = ll1;
 
-                        WorkData.I.Wl1 = byte.Parse(types[wl].Def);
-                        WorkData.I.Wl2 = byte.Parse(types[wl + 1].Def);
-                        WorkData.I.Wl3 = byte.Parse(types[wl + 2].Def);
-                        WorkData.I.Wl3 = bk.Wl1;
+                        workData.Wl1 = byte.Parse(types[wl].Def);
+                        workData.Wl2 = byte.Parse(types[wl + 1].Def);
+                        workData.Wl3 = byte.Parse(types[wl + 2].Def);
+                        workData.Wl3 = wl1;
                         break;
                     default:
-                        WorkData.I.Lk1 = byte.Parse(types[lk].Def);
-                        WorkData.I.Lk2 = byte.Parse(types[lk + 1].Def);
-                        WorkData.I.Lk3 = byte.Parse(types[lk + 2].Def);
-                        WorkData.I.Lk3 = byte.Parse(types[lk + 3].Def);
-                        WorkData.I.Lk5 = bk.Lk1;
-                        if (wsp1 < types[sp + 1].Hani_Min2
-                            || wsp1 < types[sp + 2].Hani_Min2
-                            || wsp1 < types[sp + 3].Hani_Min2
-                            || (wsp1 - (wsp * (wsu - 1))) < types[sp + 4].Hani_Min2) {
-                            WorkData.I.Sp1 = byte.Parse(types[sp].Def);
-                            WorkData.I.Sp2 = byte.Parse(types[sp + 1].Def);
-                            WorkData.I.Sp3 = byte.Parse(types[sp + 2].Def);
-                            WorkData.I.Sp4 = byte.Parse(types[sp + 2].Def);
-                            WorkData.I.Sp5 = wsp1 -
-                                             (WorkData.I.Sp1 + WorkData.I.Sp2 + WorkData.I.Sp3 + WorkData.I.Sp4);
+                        workData.Lk1 = byte.Parse(types[lk].Def);
+                        workData.Lk2 = byte.Parse(types[lk + 1].Def);
+                        workData.Lk3 = byte.Parse(types[lk + 2].Def);
+                        workData.Lk4 = byte.Parse(types[lk + 3].Def);
+                        workData.Lk5 = lk1;
+                        if (wsp < types[sp + 1].Hani_Min2
+                            || wsp < types[sp + 2].Hani_Min2
+                            || wsp < types[sp + 3].Hani_Min2
+                            || wsp1 - wsp * 4 < types[sp + 4].Hani_Min2) {
+                            workData.Sp1 = byte.Parse(types[sp].Def);
+                            workData.Sp2 = byte.Parse(types[sp + 1].Def);
+                            workData.Sp3 = byte.Parse(types[sp + 2].Def);
+                            workData.Sp4 = byte.Parse(types[sp + 3].Def);
+                            workData.Sp5 = wsp1 -
+                                           (workData.Sp1 + workData.Sp2 + workData.Sp3 + workData.Sp4);
                         }
                         else {
-                            WorkData.I.Sp1 = wsp;
-                            WorkData.I.Sp2 = wsp;
-                            WorkData.I.Sp3 = wsp;
-                            WorkData.I.Sp3 = wsp;
-                            WorkData.I.Sp4 = (wsp1 - (wsp * (wsu - 1)));
+                            workData.Sp1 = wsp;
+                            workData.Sp2 = wsp;
+                            workData.Sp3 = wsp;
+                            workData.Sp3 = wsp;
+                            workData.Sp4 = wsp1 - wsp * 4;
                         }
 
-                        WorkData.I.Lh1 = 0;
-                        WorkData.I.Lh2 = 0;
-                        WorkData.I.Lh3 = 0;
-                        WorkData.I.Lh4 = 0;
-                        WorkData.I.Lh5 = bk.Lh1;
+                        workData.Lh1 = 0;
+                        workData.Lh2 = 0;
+                        workData.Lh3 = 0;
+                        workData.Lh4 = 0;
+                        workData.Lh5 = lh1;
 
-                        WorkData.I.Lt1 = 0;
-                        WorkData.I.Lt2 = 0;
-                        WorkData.I.Lt3 = 0;
-                        WorkData.I.Lt4 = 0;
-                        WorkData.I.Lt5 = bk.Lt1;
+                        workData.Lt1 = 0;
+                        workData.Lt2 = 0;
+                        workData.Lt3 = 0;
+                        workData.Lt4 = 0;
+                        workData.Lt5 = lt1;
 
-                        WorkData.I.Ll1 = 0;
-                        WorkData.I.Ll2 = 0;
-                        WorkData.I.Ll3 = 0;
-                        WorkData.I.Ll4 = 0;
-                        WorkData.I.Ll5 = bk.Ll1;
+                        workData.Ll1 = 0;
+                        workData.Ll2 = 0;
+                        workData.Ll3 = 0;
+                        workData.Ll4 = 0;
+                        workData.Ll5 = ll1;
 
-                        WorkData.I.Wl1 = byte.Parse(types[wl].Def);
-                        WorkData.I.Wl2 = byte.Parse(types[wl + 1].Def);
-                        WorkData.I.Wl3 = byte.Parse(types[wl + 2].Def);
-                        WorkData.I.Wl4 = byte.Parse(types[wl + 3].Def);
-                        WorkData.I.Wl5 = bk.Wl1;
+                        workData.Wl1 = byte.Parse(types[wl].Def);
+                        workData.Wl2 = byte.Parse(types[wl + 1].Def);
+                        workData.Wl3 = byte.Parse(types[wl + 2].Def);
+                        workData.Wl4 = byte.Parse(types[wl + 3].Def);
+                        workData.Wl5 = wl1;
                         break;
                 }
 
@@ -770,51 +782,7 @@ public partial class Form1 {
         }
 
         //--- SP1により基準を変更 -----
-        WorkData.I.Org = WorkData.I.Sp1 < types[sp].Hani_Min2 ? (byte)1 : (byte)0;
-    }
-
-    /// <summary>
-    /// データタイプの配列番号を取得
-    /// </summary>
-    /// <param name="type"></param>
-    /// <returns></returns>
-    private int DataTypesIndex(string type) {
-        var types = WorkDataTypes.List;
-        for (var i = 0; i < WorkDataTypes.Count; i++) {
-            if (types[i].DM == type) {
-                return i;
-            }
-        }
-
-        return 0;
-    }
-
-    /// <summary>
-    /// データタイプのSP1〜SP5より最大のデフォルト値を取得
-    /// </summary>
-    /// <param name="sp"></param>
-    /// <returns></returns>
-    private string DataTypesDefMax(int sp) {
-        var types = WorkDataTypes.List;
-        var defMax = types[sp].Def;
-
-        if (string.Compare(defMax, types[sp + 1].Def, StringComparison.Ordinal) == -1) {
-            defMax = types[sp + 1].Def;
-        }
-
-        if (string.Compare(defMax, types[sp + 2].Def, StringComparison.Ordinal) == -1) {
-            defMax = types[sp + 2].Def;
-        }
-
-        if (string.Compare(defMax, types[sp + 3].Def, StringComparison.Ordinal) == -1) {
-            defMax = types[sp + 3].Def;
-        }
-
-        if (string.Compare(defMax, types[sp + 4].Def, StringComparison.Ordinal) == -1) {
-            defMax = types[sp + 4].Def;
-        }
-
-        return defMax;
+        workData.Org = workData.Sp1 < types[sp].Hani_Min2 ? (byte)1 : (byte)0;
     }
 
     /// <summary>

@@ -23,6 +23,7 @@ public class SnoIndex {
 
     /// Property
     public static List<string> List => _instance._list;
+
     public static int Count => List.Count;
     public static bool Exist => Count > 0;
 

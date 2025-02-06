@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using System.Text;
 using BackendMonitor.share;
@@ -272,6 +271,6 @@ public class WorkData {
         sb.Append($" AND pcs = '{pcs}'");
 
         var rowsAffected = PgConnect.Update(sb.ToString());
-        Console.WriteLine(@"rowsAffected = " + rowsAffected);
+        Log.WriteLine(@"rowsAffected = " + rowsAffected);
     }
 }

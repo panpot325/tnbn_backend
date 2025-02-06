@@ -1,5 +1,5 @@
+using BackendMonitor.type;
 using BackendMonitor.type.singleton;
-using G = BackendMonitor.share.Globals;
 using C = BackendMonitor.share.Constants;
 
 // ReSharper disable ConvertIfStatementToSwitchStatement
@@ -15,29 +15,29 @@ public partial class Form1 {
     /// @読出ビット_レスポンス処理
     /// </summary>
     public void ReadBitResponse() {
-        G.LogWrite(@"【読出ビット_レスポンス処理】");
-        G.LogWrite($"受信Cmd.読込データ: {ResponseMessage.ReadData}");
+        Log.Sub_LogWrite(@"【読出ビット_レスポンス処理】");
+        Log.Sub_LogWrite($"受信Cmd.読込データ: {ResponseMessage.ReadData}");
 
         //監視用受信Cmd
         MonitorMessage.Set(_unit);
 
         //テスト用
         ReadBitResponseTest();
-        //Timer1.Enabled = true;
-        //Command1.Enabled = true;
-        //return;
-        
+
         switch (MonitorMessage.RequestBit) {
             //稼動終了
             case C.REQ_STP:
+                Command1.Enabled = false;
                 Process_Stop(); //稼動終了
                 break;
             //稼動開始
             case C.REQ_STA:
+                Command1.Enabled = false;
                 WorkKeyRequest(); //稼動データキー取得
                 break;
             //船番要求
             case C.REQ_SNO:
+                Command1.Enabled = false;
                 SnoIndexWrite();
                 break;
             //ブロック要求、部材要求、データ要求、ミラー要求
@@ -45,6 +45,7 @@ public partial class Form1 {
             case C.REQ_BZI:
             case C.REQ_DAT:
             case C.REQ_MIR:
+                Command1.Enabled = false;
                 DataKeyRequest(); //要求データキー取得
                 break;
             //回転要求
@@ -60,7 +61,7 @@ public partial class Form1 {
     /// @書込ビット_レスポンス処理
     /// </summary>
     public void WriteBitResponse() {
-        G.LogWrite(@"【書込ビット_レスポンス処理】");
+        Log.Sub_LogWrite(@"【書込ビット_レスポンス処理】");
         Timer1.Enabled = true;
     }
 
@@ -68,10 +69,10 @@ public partial class Form1 {
     /// @読出ワード_レスポンス処理
     /// </summary>
     public void ReadWordResponse() {
-        G.LogWrite(@"【読出ワード_レスポンス処理】");
+        Log.Sub_LogWrite(@"【読出ワード_レスポンス処理】");
         KeyMessage.Set();
 
-        RevertRecvKey(_unit); //要求データキーの戻し作業
+        SetRequestKey(_unit); //要求データキーの戻し作業
 
         switch (MonitorMessage.RequestBit) {
             //稼動開始
@@ -97,7 +98,7 @@ public partial class Form1 {
     /// @書込ワード_レスポンス処理
     /// </summary>
     public void WriteWordResponse() {
-        G.LogWrite(@"【書込ワード_レスポンス処理】");
+        Log.Sub_LogWrite(@"【書込ワード_レスポンス処理】");
         if (_finish) {
             switch (MonitorMessage.RequestBit) {
                 case C.REQ_DAT:
@@ -134,12 +135,12 @@ public partial class Form1 {
     /// @書込ワード_レスポンス処理_クリア
     /// </summary>
     public void ClearWordResponse() {
-        G.LogWrite(@"【書込ワード_レスポンス処理_クリア】");
+        Log.Sub_LogWrite(@"【書込ワード_レスポンス処理_クリア】");
 
-        if (_gListClrState == 1) {
+        if (_clrState == 1) {
             SendData(SnoIndexClearCmd(_unit)); //船番一覧クリアコマンド
         }
-        else if (_gListClrState == 2) {
+        else if (_clrState == 2) {
             SendData(BlkIndexClearCmd(_unit)); //ブロック名一覧クリアコマンド
         }
         else {

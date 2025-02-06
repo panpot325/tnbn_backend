@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Configuration;
+using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 using BackendMonitor.Properties;
@@ -18,7 +20,9 @@ internal static class Program {
     /// </summary>
     [STAThread]
     private static void Main() {
-        G.Sub_LogWrite(@$"プログラム起動開始 {Settings.Default.Prg_Ver}");
+        AppSetting();
+
+        Log.Sub_LogWrite(@$"プログラム起動開始 {Settings.Default.Prg_Ver}");
         using var mutex = new Mutex(false, Application.ProductName);
         if (!mutex.WaitOne(0, false)) {
             MessageBox.Show(@"既に起動中です。二重起動できません。");
@@ -34,20 +38,35 @@ internal static class Program {
             return;
         }
 
-        var isSucceeded = G.PingCheck(Settings.Default.PLC_Host, 5);
-        Console.WriteLine(@$"PingCheck: {isSucceeded}");
-
-        G.Sub_LogWrite(@$"【Sel_監視設定】 {KanshiSettei.SQL}");
-        KanshiSettei.Dump();
-
-        G.Sub_LogWrite(@$"【Sel_加工ワークデータタイプ】 {WorkDataTypes.SQL}");
-        WorkDataTypes.Dump();
-
-        G.Sub_LogWrite(@"【船番一覧データ作成】（省略）");
-        G.Sub_LogWrite(@"【ブロック一覧データ作成】（省略）");
-        G.Sub_LogWrite(@"【部材舷一覧データ作成】（省略）");
+        Log.Sub_LogWrite(@$"【Sel_監視設定】 {KanshiSettei.SQL}");
+        Log.Sub_LogWrite(@$"【Sel_加工ワークデータタイプ】 {WorkDataTypes.SQL}");
+        Log.Sub_LogWrite(@"【船番一覧データ作成】（省略）");
+        Log.Sub_LogWrite(@"【ブロック一覧データ作成】（省略）");
+        Log.Sub_LogWrite(@"【部材舷一覧データ作成】（省略）");
 
         Application.Run(new Form1());
-        G.Sub_LogWrite(@"Main終了");
+        Log.Sub_LogWrite(@"Main終了");
+    }
+
+    /// <summary>
+    /// ConfigurationManager.AppSettings
+    /// </summary>
+    private static void AppSetting() {
+        var keys = ConfigurationManager.AppSettings.AllKeys;
+        foreach (SettingsProperty property in Settings.Default.Properties) {
+            if (keys.Contains(property.Name)) {
+                Settings.Default[property.Name] =
+                    Convert.ChangeType(GetAppSetting(property.Name), property.PropertyType);
+            }
+        }
+    }
+
+    /// <summary>
+    /// GetAppSetting
+    /// </summary>
+    /// <param name="key"></param>
+    /// <returns></returns>
+    private static string GetAppSetting(string key) {
+        return ConfigurationManager.AppSettings[key];
     }
 }

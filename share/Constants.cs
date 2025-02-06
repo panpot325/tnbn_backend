@@ -9,7 +9,7 @@ namespace BackendMonitor.share {
         public const string REQ_SPI = "00000100"; //@c回転要求
         public const string REQ_STA = "00000010"; //@c稼動開始
         public const string REQ_STP = "00000001"; //@c稼動終了
-        public const string REQ_NOP = "00000001"; //@SKIP
+        public const string REQ_NOP = "00000000"; //@SKIP
 
         //-- リクエストコマンド種別
         public const string REQ_RD_B = "00"; //@cSH読出ビット // ﾃﾞﾊﾞｲｽﾒﾓﾘの一括読出し(ﾋﾞｯﾄ単位)
@@ -27,14 +27,11 @@ namespace BackendMonitor.share {
         public const int UNIT_1 = 1;
         public const int UNIT_2 = 2;
         public const int UNIT_3 = 3;
-        public const int UNIT_4 = 4;
         public const int UNIT_5 = 5;
-        //public const string UNIT_CODE_2 = "02"; //@cPc名仮付 // PC番号(パネル組立仮付け装置)
-        //public const string UNIT_CODE_3 = "03"; //@cPc名本付 // PC番号(２０電極溶接装置)
-        //public const string UNIT_CODE_5 = "05"; //@cPc名矯正 // PC番号(単板歪み矯正機)
-        public const string UNIT_CODE_2 = "01"; //@cPc名仮付 // PC番号(パネル組立仮付け装置)
-        public const string UNIT_CODE_3 = "01"; //@cPc名本付 // PC番号(２０電極溶接装置)
-        public const string UNIT_CODE_5 = "01"; //@cPc名矯正 // PC番号(単板歪み矯正機)
+
+        public const string UNIT_CODE_2 = "01"; //*02 @cPc名仮付 // PC番号(パネル組立仮付け装置)
+        public const string UNIT_CODE_3 = "01"; //*03 @cPc名本付 // PC番号(２０電極溶接装置)
+        public const string UNIT_CODE_5 = "01"; //*05 @cPc名矯正 // PC番号(単板歪み矯正機)
 
         //-- デバイス名
         public const string DEVICE_B = "4220"; //@cデバイス名B // ﾃﾞﾊﾞｲｽｺｰﾄﾞ B0(42h,20h)
@@ -79,41 +76,5 @@ namespace BackendMonitor.share {
         public const string MODE_ONO = "ONOMICHI";
         public const string MODE_MUK = "MUKAISHIMA";
         public const string MODE_SAI = "SAIKI";
-
-        public const long IP_SUCCESS = 0;
-        public const long IP_STATUS_BASE = 11000;
-        public const long IP_BUF_TOO_SMALL = (11000 + 1);
-        public const long IP_DEST_NET_UNREACHABLE = (11000 + 2);
-        public const long IP_DEST_HOST_UNREACHABLE = (11000 + 3);
-        public const long IP_DEST_PROT_UNREACHABLE = (11000 + 4);
-        public const long IP_DEST_PORT_UNREACHABLE = (11000 + 5);
-        public const long IP_NO_RESOURCES = (11000 + 6);
-        public const long IP_BAD_OPTION = (11000 + 7);
-        public const long IP_HW_ERROR = (11000 + 8);
-        public const long IP_PACKET_TOO_BIG = (11000 + 9);
-        public const long IP_REQ_TIMED_OUT = (11000 + 10);
-        public const long IP_BAD_REQ = (11000 + 11);
-        public const long IP_BAD_ROUTE = (11000 + 12);
-        public const long IP_TTL_EXPIRED_TRANSIT = (11000 + 13);
-        public const long IP_TTL_EXPIRED_REASSEM = (11000 + 14);
-        public const long IP_PARAM_PROBLEM = (11000 + 15);
-        public const long IP_SOURCE_QUENCH = (11000 + 16);
-        public const long IP_OPTION_TOO_BIG = (11000 + 17);
-        public const long IP_BAD_DESTINATION = (11000 + 18);
-        public const long IP_ADDR_DELETED = (11000 + 19);
-        public const long IP_SPEC_MTU_CHANGE = (11000 + 20);
-        public const long IP_MTU_CHANGE = (11000 + 21);
-        public const long IP_UNLOAD = (11000 + 22);
-        public const long IP_ADDR_ADDED = (11000 + 23);
-        public const long IP_GENERAL_FAILURE = (11000 + 50);
-        public const long MAX_IP_STATUS = (11000 + 50);
-        public const long IP_PENDING = (11000 + 255);
-        public const long PING_TIMEOUT = 500;
-        public const long WS_VERSION_REQD = 0x101;
-        public const long MIN_SOCKETS_REQD = 1;
-        public const long SOCKET_ERROR = -1;
-        public const long INADDR_NONE = 0xFFFFFFFF;
-        public const long MAX_WSA_DESCRIPTION = 256; //@MAX_WSADescription
-        public const long MAX_WSA_SYS_STATUS = 128; //@MAX_WSASYSStatus
     }
 }

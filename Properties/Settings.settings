@@ -11,16 +11,13 @@
       <Value Profile="(Default)">MUKAISHIMA</Value>
     </Setting>
     <Setting Name="End_Time" Type="System.String" Scope="User">
-      <Value Profile="(Default)">22:20:00</Value>
-    </Setting>
-    <Setting Name="Server_Ip" Type="System.String" Scope="User">
-      <Value Profile="(Default)">192.168.200.4</Value>
+      <Value Profile="(Default)">19:20:00</Value>
     </Setting>
     <Setting Name="MC_Protocol" Type="System.String" Scope="User">
       <Value Profile="(Default)">1E</Value>
     </Setting>
     <Setting Name="PLC_Host" Type="System.String" Scope="User">
-      <Value Profile="(Default)">192.168.11.99</Value>
+      <Value Profile="(Default)">172.16.6.37</Value>
     </Setting>
     <Setting Name="PLC_Port" Type="System.Int16" Scope="User">
       <Value Profile="(Default)">8192</Value>
@@ -29,13 +26,13 @@
       <Value Profile="(Default)">3000</Value>
     </Setting>
     <Setting Name="DB_Host" Type="System.String" Scope="User">
-      <Value Profile="(Default)">10.211.55.2</Value>
+      <Value Profile="(Default)">localhost</Value>
     </Setting>
     <Setting Name="DB_Port" Type="System.String" Scope="User">
       <Value Profile="(Default)">5432</Value>
     </Setting>
     <Setting Name="DB_Name" Type="System.String" Scope="User">
-      <Value Profile="(Default)">onozo_202409</Value>
+      <Value Profile="(Default)">onozo_202501</Value>
     </Setting>
     <Setting Name="DB_User" Type="System.String" Scope="User">
       <Value Profile="(Default)">postgres</Value>
@@ -47,13 +44,19 @@
       <Value Profile="(Default)">1</Value>
     </Setting>
     <Setting Name="Log_Path" Type="System.String" Scope="User">
-      <Value Profile="(Default)">//Mac/Home/Documents/ONOZO/RiderProjects/Log</Value>
-    </Setting>
-    <Setting Name="Log_File_Path" Type="System.String" Scope="User">
-      <Value Profile="(Default)">//Mac/Home/Documents/ONOZO/RiderProjects/Log/TanbanLog.txt</Value>
+      <Value Profile="(Default)">C:\RiderProject/Log</Value>
     </Setting>
     <Setting Name="Dev_Path" Type="System.String" Scope="User">
-      <Value Profile="(Default)">//Mac/Home/Documents/ONOZO/RiderProjects/Debug/BackendMonitor</Value>
+      <Value Profile="(Default)">C:\RiderProject/Dev</Value>
+    </Setting>
+    <Setting Name="Csv_Path" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\RiderProject//Csv</Value>
+    </Setting>
+    <Setting Name="Log_File" Type="System.String" Scope="User">
+      <Value Profile="(Default)">TnbnLog.txt</Value>
+    </Setting>
+    <Setting Name="Dev_File" Type="System.String" Scope="User">
+      <Value Profile="(Default)">TnbnDev.txt</Value>
     </Setting>
   </Settings>
 </SettingsFile>

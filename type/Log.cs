@@ -9,7 +9,7 @@ namespace BackendMonitor.type;
 /// <summary>
 /// Logクラス
 /// </summary>
-public class Log {
+public partial class Log {
     public string SNO { get; set; } //
     public string BLK { get; set; } //
     public string BZI { get; set; } //
@@ -44,7 +44,7 @@ public class Log {
         List = [];
         return List;
     }
-    
+
     /// <summary>
     /// Add
     /// </summary>
@@ -54,7 +54,19 @@ public class Log {
         List.Add(log);
         return List;
     }
-    
+
+    /// <summary>
+    /// 最後の要素を削除
+    /// </summary>
+    /// <returns></returns>
+    public static List<Log> RemoveLast() {
+        if (Exists) {
+            List.RemoveAt(Count - 1);
+        }
+
+        return List;
+    }
+
     /// <summary>
     /// Read
     /// </summary>

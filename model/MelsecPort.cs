@@ -1,7 +1,6 @@
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
-using BackendMonitor.type.singleton;
 
 // ReSharper disable InvertIf
 // ReSharper disable ConvertIfStatementToReturnStatement
@@ -54,6 +53,18 @@ public class MelsecPort(Control mWindowHandle, string serverIpAddress, int serve
         _mIsStopCommand = true;
     }
 
+    /// <summary>
+    /// IsStop
+    /// </summary>
+    /// <returns></returns>
+    public bool IsStop() {
+        return _mIsStopCommand;
+    }
+
+    /// <summary>
+    /// Send
+    /// </summary>
+    /// <param name="cmd"></param>
     public void Send(string cmd) {
         _mMelsecComm.Send(Encoding.ASCII.GetBytes(cmd));
     }
@@ -103,9 +114,9 @@ public class MelsecPort(Control mWindowHandle, string serverIpAddress, int serve
 
         // 受信通知
         if (mWindowHandle != null && MOnRecv != null) {
-            //Console.WriteLine("受信データ　" + recvData);
-            //Console.WriteLine(@"受信データ　" + new ASCIIEncoding().GetString(recvData));
-            mWindowHandle.Invoke(MOnRecv, new object[1] { new ASCIIEncoding().GetString(recvData, 0 ,recvSize) });
+            //Log.WriteLine("受信データ　" + recvData);
+            //Log.WriteLine(@"受信データ　" + new ASCIIEncoding().GetString(recvData));
+            mWindowHandle.Invoke(MOnRecv, new object[1] { new ASCIIEncoding().GetString(recvData, 0, recvSize) });
         }
     }
 }

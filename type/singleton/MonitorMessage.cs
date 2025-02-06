@@ -18,11 +18,11 @@ public class MonitorMessage : RCmd {
     /// Set
     /// </summary>
     public static MonitorMessage Set(int unit) {
-        var readData = GetReadData(ResponseMessage.ReadData, unit); //読込データ
-        G.LogWrite($"編集後 監視用受信Cmd.読込データ: {readData}");
+        var readData = MapReadData(ResponseMessage.ReadData, unit); //読込データ
+        Log.Sub_LogWrite($"編集後 監視用受信Cmd.読込データ: {readData}");
 
         var requestBit = GetRequestBit(readData, unit); //要求ビット
-        G.LogWrite($"監視用受信Cmd.要求ビット: {requestBit}");
+        Log.Sub_LogWrite($"監視用受信Cmd.要求ビット: {requestBit}");
 
         _instance.Set(
             ResponseMessage.Sh,
@@ -47,7 +47,7 @@ public class MonitorMessage : RCmd {
     /// <param name="readData"></param>
     /// <param name="unit"></param>
     /// <returns></returns>
-    private static string GetReadData(string readData, int unit) {
+    private static string MapReadData(string readData, int unit) {
         return unit switch {
             //B110-B115 B63 B66
             C.UNIT_2 => G.Mid(readData, 177, 6) +
@@ -73,14 +73,21 @@ public class MonitorMessage : RCmd {
     /// <returns></returns>
     private static string GetRequestBit(string readData, int unit) {
         if (G.Mid(readData, 7, 2) == "11") {
-            return WorkStates.List[unit].Start_Count == 0 ? C.REQ_STA : C.REQ_NOP;
+            return WorkStates.List[unit].Start_Count == 0
+                ? C.REQ_STA
+                : C.REQ_NOP;
         }
 
         if (G.Mid(readData, 7, 1) != "0") {
             return C.REQ_NOP;
         }
 
-        if (WorkStates.List[unit].Start_Count > 0 || !GetEndState(unit)) {
+        if (WorkStates.List[unit].Start_Count > 0) {
+            return C.REQ_STP;
+        }
+
+        WorkStates.List[unit].Fetch();
+        if (!WorkStates.List[unit].EndState) {
             return C.REQ_STP;
         }
 
@@ -97,6 +104,7 @@ public class MonitorMessage : RCmd {
 
     /// <summary>
     /// @稼動実績WKから終了判定
+    /// @Deprecated
     /// 終了していなければtrue
     /// </summary>
     /// <param name="unit"></param>

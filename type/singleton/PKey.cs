@@ -8,7 +8,7 @@ public abstract class PKey() {
     protected string BLK; //ブロック名
     protected string BZI; //部材名
     protected string PCS; //
-    
+
     /// <summary>
     /// Set
     /// </summary>
@@ -17,7 +17,7 @@ public abstract class PKey() {
         BLK = blk;
         BZI = bzi;
         PCS = pcs;
-        
+
         return this;
     }
 }

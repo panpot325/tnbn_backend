@@ -1,8 +1,6 @@
 using System;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
 using BackendMonitor.Properties;
 using C = BackendMonitor.share.Constants;
 
@@ -17,9 +15,9 @@ public partial class Globals {
     /// </summary>
     public static string UnitCode(int unit) {
         return unit switch {
-            C.UNIT_2 => C.UNIT_CODE_2,
-            C.UNIT_3 => C.UNIT_CODE_3,
-            C.UNIT_5 => C.UNIT_CODE_5,
+            C.UNIT_2 => AppConfig.UnitCode2,
+            C.UNIT_3 => AppConfig.UnitCode3,
+            C.UNIT_5 => AppConfig.UnitCode5,
             _ => ""
         };
     }
@@ -49,25 +47,16 @@ public partial class Globals {
     }
 
     /// <summary>
-    /// 稼働時間内か
+    /// 稼動時間内か
     /// </summary>
     /// <param name="endTime"></param>
-    /// <returns>稼働時間内であればtrue</returns>
+    /// <returns>稼動時間内であればtrue</returns>
     public static bool IsUsableTime(string endTime) {
         if (string.IsNullOrEmpty(endTime)) {
             endTime = Settings.Default.End_Time;
         }
 
         return string.CompareOrdinal(DateTime.Now.ToString("HH:mm:ss"), endTime) <= 0;
-    }
-
-    /// <summary>
-    /// PingCheck
-    /// Todo Implements
-    /// </summary>
-    /// <returns></returns>
-    public static bool PingCheck() {
-        return true;
     }
 
     /// <summary>
@@ -90,42 +79,5 @@ public partial class Globals {
         }
 
         return "";
-    }
-
-    /// <summary>
-    /// ASCII → 文字 に変換
-    /// </summary>
-    /// <param name="dataString"></param>
-    /// <returns></returns>
-    public static string AscToString(string dataString) {
-        var sb = new StringBuilder();
-        for (var i = 0; i < dataString.Length - 1; i += 2) {
-            var hex = dataString.Substring(i, 2);
-            if (hex != "00") {
-                sb.Append(
-                    ((char)Convert.ToInt32(hex, 16)).ToString()
-                );
-            }
-        }
-
-        return sb.ToString();
-    }
-
-    /// <summary>
-    /// 文字を2文字ずつ並びかえる
-    /// </summary>
-    /// <param name="dataString"></param>
-    /// <param name="max"></param>
-    /// <returns></returns>
-    public static string ReverseString(string dataString, int max = 0) {
-        var sb = new StringBuilder();
-        for (var i = 0; i < dataString.Length - 1; i += 2) {
-            var hex = dataString.Substring(i, 2);
-            if (max > 0 && i < max) {
-                sb.Append(string.Concat(hex.Reverse()));
-            }
-        }
-
-        return sb.ToString();
     }
 }

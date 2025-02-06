@@ -7,7 +7,7 @@ namespace BackendMonitor.share;
 /// PgConnect
 /// </summary>
 public class PgConnect {
-    private static NpgsqlConnection connection;
+    private static NpgsqlConnection _connection;
 
     public static PgConnect CreateInstance() {
         return new PgConnect();
@@ -23,25 +23,25 @@ public class PgConnect {
 
     public static NpgsqlDataReader Read(string sql) {
         Open();
-        var command = new NpgsqlCommand(sql, connection);
+        var command = new NpgsqlCommand(sql, _connection);
 
         return command.ExecuteReader();
     }
 
     public static int Update(string sql) {
         Open();
-        using var command = new NpgsqlCommand(sql, connection);
+        using var command = new NpgsqlCommand(sql, _connection);
         var rowsAffected = command.ExecuteNonQuery();
         Close();
         return rowsAffected;
     }
 
     private static void Open() {
-        connection = new NpgsqlConnection(GetConnectionString());
-        connection.Open();
+        _connection = new NpgsqlConnection(GetConnectionString());
+        _connection.Open();
     }
 
     public static void Close() {
-        connection.Close();
+        _connection.Close();
     }
 }
