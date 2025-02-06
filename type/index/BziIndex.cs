@@ -56,7 +56,7 @@ public class BziIndex {
     /// Dump
     /// </summary>
     public static void Dump() {
-        using var sw = new StreamWriter($"{Settings.Default.Dev_Path}/BlkIndex.txt", false, Encoding.UTF8);
+        using var sw = new StreamWriter($"{Settings.Default.Dev_Path}/BziIndex.txt", false, Encoding.UTF8);
         var i = 1;
         foreach (var data in BziList) {
             sw.WriteLine($"{i++:00} : {data} {PcsList[i - 1]}");

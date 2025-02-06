@@ -8,7 +8,7 @@ namespace BackendMonitor.share;
 /// </summary>
 public static class AppConfig {
     // AppSettings
-    public static bool debugMode = Get("Debug_Mode", false);
+    public static bool DebugMode = Get("Debug_Mode", false);
     public static bool ClrFinish = Get("Clr_Finish", false);
     public static string UnitCode2 = Get("Unit_Code_2", "02");
     public static string UnitCode3 = Get("Unit_Code_3", "03");

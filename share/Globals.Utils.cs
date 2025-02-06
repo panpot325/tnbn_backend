@@ -24,7 +24,7 @@ public partial class Globals {
     /// ファイルの内容をクリアする
     /// </summary>
     public static void ClearDebugFile() {
-        if (!AppConfig.debugMode) {
+        if (!AppConfig.DebugMode) {
             return;
         }
 
@@ -75,7 +75,7 @@ public partial class Globals {
     /// <param name="mode"></param>
     /// <param name="data"></param>
     public static void StreamWriteData(string mode, string data) {
-        if (!AppConfig.debugMode) {
+        if (!AppConfig.DebugMode) {
             return;
         }
 

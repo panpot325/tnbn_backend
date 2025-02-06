@@ -27,7 +27,7 @@ public partial class Log {
     /// <param name="message"></param>
     /// <param name="lf"></param>
     public static void WriteLine(string message, bool lf = true) {
-        if (!AppConfig.debugMode) {
+        if (!AppConfig.DebugMode) {
             return;
         }
 

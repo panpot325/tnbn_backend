@@ -11,7 +11,7 @@ namespace BackendMonitor;
 /// </summary>
 public partial class Form1 {
     private void ReadBitResponseTest() {
-        if (!AppConfig.debugMode) {
+        if (!AppConfig.DebugMode) {
             return;
         }
 

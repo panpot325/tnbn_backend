@@ -196,7 +196,7 @@ public partial class Form1 {
         ClientSize = new Size(380, 200);
         Controls.Add(Text1);
         Controls.Add(Command1);
-        if (AppConfig.debugMode) {
+        if (AppConfig.DebugMode) {
             Controls.Add(button1);
             Controls.Add(button2);
             Controls.Add(button3);
