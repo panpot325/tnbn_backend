@@ -22,7 +22,7 @@ public static class AppConfig {
     /// <param name="name">名称</param>
     /// <param name="def">デフォルト値</param>
     /// <returns>データ</returns>
-    public static T Get<T>(string name, T def = default) {
+    private static T Get<T>(string name, T def = default) {
         if (!Exists(name)) {
             return def;
         }
