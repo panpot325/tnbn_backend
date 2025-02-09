@@ -1,4 +1,5 @@
 using System;
+using BackendMonitor.share;
 using BackendMonitor.type;
 using BackendMonitor.type.singleton;
 using G = BackendMonitor.share.Globals;
@@ -20,7 +21,10 @@ public partial class Form1 {
         }
 
         // *** Debug ***
-        G.StreamWriteData("R", buff);
+        if (AppConfig.DebugMode) {
+            G.StreamWriteData("R", buff);
+        }
+
         Log.Sub_LogWrite($@"GetData:{buff}");
 
         ResponseMessage.Set(buff);
@@ -66,7 +70,9 @@ public partial class Form1 {
             _melsecPort.Send(cmd);
 
             //Debug Send Data
-            G.StreamWriteData("W", cmd);
+            if (AppConfig.DebugMode) {
+                G.StreamWriteData("W", cmd);
+            }
         }
         else {
             SetText(@"単板ライン 接続処理実施中...", $"単板ライン{Environment.NewLine}続処理実施中...");

@@ -32,7 +32,10 @@ internal static class Program {
         Application.EnableVisualStyles();
         Application.SetCompatibleTextRenderingDefault(false);
 
-        G.ClearDebugFile();
+        if (AppConfig.DebugMode) {
+            G.ClearDebugFile();
+        }
+
         if (!PgOpen.Connect()) {
             MessageBox.Show(@"データベース接続ができませんでした。");
             return;
