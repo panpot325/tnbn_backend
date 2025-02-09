@@ -84,3 +84,19 @@ CREATE TABLE tnbn_kakowk_data
 -- $ psql onozo_202409
 -- onozo_202409=# \copy tnbn_kakowk_data from TNBN_KAKOWK_DATA.csv with csv header
 -- copy 8383
+
+-- 船番一覧取得
+SELECT sno FROM tnbn_kakowk_data 
+           WHERE sno NOT IN (SELECT sno FROM tnbn_fin_ship_mst) GROUP BY sno  ORDER BY sno;
+
+-- ブロック名一覧取得
+SELECT blk FROM tnbn_kakowk_data
+WHERE sno NOT IN (SELECT sno FROM tnbn_fin_ship_mst) AND sno = :sno GROUP BY blk ORDER BY blk;
+
+-- 部材名一覧取得
+SELECT bzi, pcs FROM tnbn_kakowk_data
+                WHERE sno NOT IN (SELECT sno FROM tnbn_kakowk_data_haita) AND sno = :sno AND blk = :blk  
+                GROUP BY bzi, pcs ORDER BY bzi, pcs;
+
+-- ワークデータ取得
+SElECT sno, blk, bzi, pcs FROM tnbn_kakowk_data WHERE sno = :sno AND blk = :blk AND bzi = :bzi AND pcs = :pcs
