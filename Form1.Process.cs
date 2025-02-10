@@ -22,7 +22,7 @@ public partial class Form1 {
 
         // *** Debug ***
         if (AppConfig.DebugMode) {
-            G.StreamWriteData("R", buff);
+            //G.StreamWriteData("R", buff);
         }
 
         Log.Sub_LogWrite($@"GetData:{buff}");
@@ -71,7 +71,7 @@ public partial class Form1 {
 
             //Debug Send Data
             if (AppConfig.DebugMode) {
-                G.StreamWriteData("W", cmd);
+               //G.StreamWriteData("W", cmd);
             }
         }
         else {
