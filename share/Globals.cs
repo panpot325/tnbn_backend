@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Text;
+using System.Windows.Forms;
 using BackendMonitor.Properties;
 
 namespace BackendMonitor.share;
@@ -91,12 +92,18 @@ public partial class Globals {
     public static bool PingCheck(string target, int count) {
         var ping = new Ping();
         for (var i = 0; i < count; i++) {
-            var reply = ping.Send(target, 500);
-            if (reply is { Status: IPStatus.Success }) {
-                return true;
+            try {
+                var reply = ping.Send(target, 500);
+                if (reply is { Status: IPStatus.Success }) {
+                    return true;
+                }
+            }
+            catch (Exception e) {
+                Console.WriteLine(e.Message);
             }
         }
 
+        MessageBox.Show(@"Ping CheckError");
         return false;
     }
 }
