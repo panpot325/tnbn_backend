@@ -80,7 +80,7 @@ public partial class Globals {
     /// </summary>
     /// <returns></returns>
     public static bool PingCheck() {
-        return PingCheck(Settings.Default.PLC_Host, 5);
+        return PingCheck(Settings.Default.PLC_Host, 20);
     }
 
     /// <summary>
