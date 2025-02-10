@@ -99,7 +99,7 @@ public partial class Globals {
                 }
             }
             catch (Exception e) {
-                DebugWrite($@"Ping Check Error! Count: {i}");
+                DebugWrite($@"Ping Check Error! Count: {i} Time: {DateTime.Now:HH:mm:ss}");
                 Console.WriteLine(e.Message);
             }
         }
