@@ -33,9 +33,25 @@ public class MTcpClient {
         _mServerPort = serverPort;
         _mReadTimeout = readTimeout;
         _mWriteTimeout = writeTimeout;
-        // 「切断」状態に初期化
+
+        //「切断」状態に初期化
         m_connected = false;
-        // エラー処理を追加してfalseを返すのがベスト
+
+        // 接続確認
+        try {
+            Log.WriteLine(@"TcpClient接続テスト");
+            var client = new TcpClient(_mServerAddress, _mServerPort);
+            client.Close();
+        }
+        catch (Exception e) {
+            Log.WriteLine(e.Message);
+            Log.WriteLine(@"TcpClient接続NG");
+
+            return false;
+        }
+
+        Log.WriteLine(@"TcpClient接続OK");
+
         return true;
     }
 
