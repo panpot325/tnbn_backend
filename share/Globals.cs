@@ -94,9 +94,19 @@ public partial class Globals {
         var ping = new Ping();
         for (var i = 0; i < count; i++) {
             try {
-                var reply = ping.Send(target, 500);
+                var reply = ping.Send(target, 50);
                 if (reply is { Status: IPStatus.Success }) {
                     return true;
+                    /*
+                    Log.WriteLine("ping ----");
+                    var timeOfDay = DateTime.Now.TimeOfDay;
+                    var begin = new TimeSpan(12, 42, 0);
+                    var end = new TimeSpan(12, 42, 30);
+                    if (begin > timeOfDay || timeOfDay > end) {
+                        Log.WriteLine("ping OK");
+                        return true;
+                    }
+                    */
                 }
             }
             catch (Exception e) {
@@ -105,7 +115,7 @@ public partial class Globals {
             }
         }
 
-        MessageBox.Show(@"Ping CheckError");
+        //MessageBox.Show(@"Ping CheckError");
         return false;
     }
 }

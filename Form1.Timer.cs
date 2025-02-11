@@ -10,6 +10,8 @@ namespace BackendMonitor;
 /// Timer
 /// </summary>
 public partial class Form1 {
+    private bool _tcpConnected;
+
     /// <summary>
     /// Timer2_Timer
     /// </summary>
@@ -28,13 +30,16 @@ public partial class Form1 {
         SetText($@"{Settings.Default.Prg_Ver} 単板ライン 接続処理実施中...", @"単板ラインに接続処理開始");
         Log.Sub_LogWrite("Timer2 単板ライン 監視中...");
 
-        //Ethernetインタフェースユニットと接続
-        if (!_melsecPort.Start()) {
-            Timer2.Enabled = true;
-            Command1.Enabled = true;
-            return;
+        if (!_tcpConnected) {
+            if (!_melsecPort.Start()) {
+                _tcpConnected = false;
+                Timer2.Enabled = true;
+                Command1.Enabled = true;
+                return;
+            }
         }
 
+        _tcpConnected = true;
         Timer1.Enabled = true;
     }
 
