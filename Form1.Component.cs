@@ -51,14 +51,14 @@ public partial class Form1 {
         // 
         // Timer1
         // 
-        Timer1.Interval = KanshiSettei.Interval;
+        Timer1.Interval = AppConfig.Interval1;
         Timer1.Enabled = false;
         Timer1.SynchronizingObject = this;
         Timer1.Elapsed += Timer1_Elapsed;
         // 
         // Timer2
         // 
-        Timer2.Interval = KanshiSettei.Interval2 - KanshiSettei.IntervalC * 1000;
+        Timer2.Interval = AppConfig.Interval2;
         Timer2.Enabled = false;
         Timer2.SynchronizingObject = this;
         Timer2.Elapsed += Timer2_Elapsed;

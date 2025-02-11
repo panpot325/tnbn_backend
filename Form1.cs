@@ -207,7 +207,7 @@ public partial class Form1 : Form {
         Timer1.Enabled = false;
         SendData(WorkKeyWriteCmd(C.DEVICE_W, "sno", InputSno.Text));
 
-        Console.WriteLine(WorkKeyWriteCmd(C.DEVICE_W, "sno", InputSno.Text));
+        Log.WriteLine(WorkKeyWriteCmd(C.DEVICE_W, "sno", InputSno.Text));
 
         Thread.Sleep(1000);
         SendData(WorkKeyWriteCmd(C.DEVICE_D, "sno", InputSno.Text));

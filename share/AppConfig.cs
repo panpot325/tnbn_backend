@@ -13,6 +13,8 @@ public static class AppConfig {
     public static string UnitCode2 = Get("Unit_Code_2", "02");
     public static string UnitCode3 = Get("Unit_Code_3", "03");
     public static string UnitCode5 = Get("Unit_Code_5", "05");
+    public static double Interval1 = Get("Interval_1", 1000);
+    public static double Interval2 = Get("Interval_1", 57000);
 
     /// <summary>
     /// 設定ファイルから指定した型のデータを取得

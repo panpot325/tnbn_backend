@@ -4,6 +4,7 @@ using System.Net.NetworkInformation;
 using System.Text;
 using System.Windows.Forms;
 using BackendMonitor.Properties;
+using BackendMonitor.type;
 
 namespace BackendMonitor.share;
 
@@ -100,7 +101,7 @@ public partial class Globals {
             }
             catch (Exception e) {
                 DebugWrite($@"Ping Check Error! Count: {i} Time: {DateTime.Now:HH:mm:ss}");
-                Console.WriteLine(e.Message);
+                Log.WriteLine(e.Message);
             }
         }
 
