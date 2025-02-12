@@ -2,7 +2,6 @@ using System;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Text;
-using System.Windows.Forms;
 using BackendMonitor.Properties;
 using BackendMonitor.type;
 
@@ -81,7 +80,7 @@ public partial class Globals {
     /// </summary>
     /// <returns></returns>
     public static bool PingCheck() {
-        return PingCheck(Settings.Default.PLC_Host, 500);
+        return PingCheck(Settings.Default.PLC_Host, 20);
     }
 
     /// <summary>
@@ -94,7 +93,7 @@ public partial class Globals {
         var ping = new Ping();
         for (var i = 0; i < count; i++) {
             try {
-                var reply = ping.Send(target, 50);
+                var reply = ping.Send(target, 500);
                 if (reply is { Status: IPStatus.Success }) {
                     return true;
                     /*

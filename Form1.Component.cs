@@ -4,7 +4,6 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 using BackendMonitor.share;
-using BackendMonitor.type.singleton;
 using Timer = System.Timers.Timer;
 
 namespace BackendMonitor;

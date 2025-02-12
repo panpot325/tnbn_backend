@@ -71,7 +71,7 @@ public partial class Form1 {
 
             //Debug Send Data
             if (AppConfig.DebugMode) {
-               //G.StreamWriteData("W", cmd);
+                //G.StreamWriteData("W", cmd);
             }
         }
         else {
