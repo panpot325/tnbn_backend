@@ -570,7 +570,7 @@ public partial class Form1 {
                         workData.Lk4 = lk2;
                         workData.Lk5 = lk1;
 
-                        if (wsp1 < types[sp + 1].Hani_Min2
+                        if (wsp < types[sp + 1].Hani_Min2
                             || wsp < types[sp + 2].Hani_Min2
                             || wsp1 - wsp * 3 < types[sp + 3].Hani_Min2) {
                             workData.Sp1 = decimal.Parse(types[sp].Def);
@@ -657,7 +657,7 @@ public partial class Form1 {
                     case 3:
                         workData.Lk1 = byte.Parse(types[lk].Def);
                         workData.Lk2 = byte.Parse(types[lk + 1].Def);
-                        workData.Lk2 = lk1;
+                        workData.Lk3 = lk1;
                         if (wsp < types[sp + 1].Hani_Min2
                             || wsp1 - wsp * (wsu - 1) < types[sp + 2].Hani_Min2) {
                             workData.Sp1 = byte.Parse(types[sp].Def);
@@ -725,7 +725,7 @@ public partial class Form1 {
                         workData.Wl1 = byte.Parse(types[wl].Def);
                         workData.Wl2 = byte.Parse(types[wl + 1].Def);
                         workData.Wl3 = byte.Parse(types[wl + 2].Def);
-                        workData.Wl3 = wl1;
+                        workData.Wl4 = wl1;
                         break;
                     default:
                         workData.Lk1 = byte.Parse(types[lk].Def);
