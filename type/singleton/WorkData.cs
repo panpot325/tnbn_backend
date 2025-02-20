@@ -1,4 +1,4 @@
-using System.Linq;
+using System.Collections.Generic;
 using System.Text;
 using BackendMonitor.share;
 
@@ -122,10 +122,10 @@ public class WorkData {
     public WorkData Fetch(string sno, string blk, string bzi, string pcs) {
         _exist = false;
         var i = 0;
-        var j = 4;
-        var types = WorkDataTypes.List
-            .Select(value => value.Nyu_Tani == 1 ? true : false)
-            .ToList();
+        var units = new Dictionary<string, bool>();
+        foreach (var workDataType in WorkDataTypes.List) {
+            units[workDataType.Ryaku.Trim()] = workDataType.Nyu_Tani == 0.1m;
+        }
 
         var sb = new StringBuilder();
         sb.Append(" SElECT sno, blk, bzi, pcs,");
@@ -154,72 +154,72 @@ public class WorkData {
             BZI = reader.GetString(i++);
             PCS = reader.GetString(i++);
 
-            Gr1 = types[j++] ? reader.GetByte(i++) : (byte)(reader.GetByte(i++) * 10);
-            Gr2 = types[j++] ? reader.GetByte(i++) : (byte)(reader.GetByte(i++) * 10);
-            Gr3 = types[j++] ? reader.GetByte(i++) : (byte)(reader.GetByte(i++) * 10);
-            Gr4 = types[j++] ? reader.GetByte(i++) : (byte)(reader.GetByte(i++) * 10);
-            Gr5 = types[j++] ? reader.GetByte(i++) : (byte)(reader.GetByte(i++) * 10);
+            Gr1 = !units["GR1"] ? reader.GetByte(i++) : (byte)(reader.GetByte(i++) * 10);
+            Gr2 = !units["GR2"] ? reader.GetByte(i++) : (byte)(reader.GetByte(i++) * 10);
+            Gr3 = !units["GR3"] ? reader.GetByte(i++) : (byte)(reader.GetByte(i++) * 10);
+            Gr4 = !units["GR4"] ? reader.GetByte(i++) : (byte)(reader.GetByte(i++) * 10);
+            Gr5 = !units["GR5"] ? reader.GetByte(i++) : (byte)(reader.GetByte(i++) * 10);
 
-            Lk1 = types[j++] ? reader.GetByte(i++) : (byte)(reader.GetByte(i++) * 10);
-            Lk2 = types[j++] ? reader.GetByte(i++) : (byte)(reader.GetByte(i++) * 10);
-            Lk3 = types[j++] ? reader.GetByte(i++) : (byte)(reader.GetByte(i++) * 10);
-            Lk4 = types[j++] ? reader.GetByte(i++) : (byte)(reader.GetByte(i++) * 10);
-            Lk5 = types[j++] ? reader.GetByte(i++) : (byte)(reader.GetByte(i++) * 10);
+            Lk1 = !units["LK1"] ? reader.GetByte(i++) : (byte)(reader.GetByte(i++) * 10);
+            Lk2 = !units["LK2"] ? reader.GetByte(i++) : (byte)(reader.GetByte(i++) * 10);
+            Lk3 = !units["LK3"] ? reader.GetByte(i++) : (byte)(reader.GetByte(i++) * 10);
+            Lk4 = !units["LK4"] ? reader.GetByte(i++) : (byte)(reader.GetByte(i++) * 10);
+            Lk5 = !units["LK5"] ? reader.GetByte(i++) : (byte)(reader.GetByte(i++) * 10);
 
-            L = types[j++] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
-            B = types[j++] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
-            Tmax = types[j++] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
+            L = !units["L"] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
+            B = !units["B"] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
+            Tmax = !units["TMAX"] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
 
-            T1 = types[j++] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
-            T2 = types[j++] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
-            T3 = types[j++] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
-            T4 = types[j++] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
-            T5 = types[j++] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
+            T1 = !units["T1"] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
+            T2 = !units["T2"] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
+            T3 = !units["T3"] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
+            T4 = !units["T4"] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
+            T5 = !units["T5"] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
 
-            It1 = types[j++] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
-            It2 = types[j++] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
-            It3 = types[j++] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
-            It4 = types[j++] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
+            It1 = !units["IT1"] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
+            It2 = !units["IT2"] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
+            It3 = !units["IT3"] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
+            It4 = !units["IT4"] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
 
-            Sp1 = types[j++] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
-            Sp2 = types[j++] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
-            Sp3 = types[j++] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
-            Sp4 = types[j++] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
-            Sp5 = types[j++] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
+            Sp1 = !units["SP1"] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
+            Sp2 = !units["SP2"] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
+            Sp3 = !units["SP3"] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
+            Sp4 = !units["SP4"] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
+            Sp5 = !units["SP5"] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
 
-            Lh1 = types[j++] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
-            Lh2 = types[j++] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
-            Lh3 = types[j++] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
-            Lh4 = types[j++] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
-            Lh5 = types[j++] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
+            Lh1 = !units["LH1"] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
+            Lh2 = !units["LH2"] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
+            Lh3 = !units["LH3"] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
+            Lh4 = !units["LH4"] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
+            Lh5 = !units["LH5"] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
 
-            Lt1 = types[j++] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
-            Lt2 = types[j++] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
-            Lt3 = types[j++] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
-            Lt4 = types[j++] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
-            Lt5 = types[j++] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
+            Lt1 = !units["LT1"] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
+            Lt2 = !units["LT2"] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
+            Lt3 = !units["LT3"] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
+            Lt4 = !units["LT4"] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
+            Lt5 = !units["LT5"] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
 
-            Ll1 = types[j++] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
-            Ll2 = types[j++] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
-            Ll3 = types[j++] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
-            Ll4 = types[j++] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
-            Ll5 = types[j++] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
+            Ll1 = !units["LL1"] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
+            Ll2 = !units["LL2"] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
+            Ll3 = !units["LL3"] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
+            Ll4 = !units["LL4"] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
+            Ll5 = !units["LL5"] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
 
-            Wl1 = types[j++] ? reader.GetByte(i++) : (byte)(reader.GetByte(i++) * 10);
-            Wl2 = types[j++] ? reader.GetByte(i++) : (byte)(reader.GetByte(i++) * 10);
-            Wl3 = types[j++] ? reader.GetByte(i++) : (byte)(reader.GetByte(i++) * 10);
-            Wl4 = types[j++] ? reader.GetByte(i++) : (byte)(reader.GetByte(i++) * 10);
-            Wl5 = types[j++] ? reader.GetByte(i++) : (byte)(reader.GetByte(i++) * 10);
+            Wl1 = !units["WL1"] ? reader.GetByte(i++) : (byte)(reader.GetByte(i++) * 10);
+            Wl2 = !units["WL2"] ? reader.GetByte(i++) : (byte)(reader.GetByte(i++) * 10);
+            Wl3 = !units["WL3"] ? reader.GetByte(i++) : (byte)(reader.GetByte(i++) * 10);
+            Wl4 = !units["WL4"] ? reader.GetByte(i++) : (byte)(reader.GetByte(i++) * 10);
+            Wl5 = !units["WL5"] ? reader.GetByte(i++) : (byte)(reader.GetByte(i++) * 10);
 
-            Is1 = types[j++] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
+            Is1 = !units["IS1"] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
 
-            Stp1 = types[j++] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
-            Stp2 = types[j++] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
-            Stp3 = types[j++] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
-            Stp4 = types[j++] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
-            Stp5 = types[j++] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
+            Stp1 = !units["STP1"] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
+            Stp2 = !units["STP2"] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
+            Stp3 = !units["STP3"] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
+            Stp4 = !units["STP4"] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
+            Stp5 = !units["STP5"] ? reader.GetDecimal(i++) : reader.GetDecimal(i++) * 10;
 
-            Org = types[j++] ? reader.GetByte(i++) : (byte)(reader.GetByte(i++) * 10);
+            Org = !units["ORG"] ? reader.GetByte(i++) : (byte)(reader.GetByte(i++) * 10);
             _exist = true;
         }
 

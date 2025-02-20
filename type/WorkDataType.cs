@@ -91,6 +91,7 @@ public class WorkDataType {
     public string WriteData {
         get {
             var workData = GetWorkData();
+            //G.DebugWrite(@$"{Ryaku} : {Keishiki.Trim()} : {workData}");
             return Keishiki.Trim() switch {
                 C.KEISHIKI_ASC => FormatAsc(workData),
                 C.KEISHIKI_M16 => FormatM16BitB(workData),
