@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 
 // ReSharper disable FunctionRecursiveOnAllPaths
 // ReSharper disable UnusedMember.Global
@@ -132,7 +133,7 @@ public partial class Log {
             "停止時間"
         };
 
-        using var writer = new StreamWriter(filePath, false);
+        using var writer = new StreamWriter(filePath, false, Encoding.GetEncoding("iso-2022-jp"));
         writer.WriteLine(string.Join(",", csvList));
         foreach (var log in List) {
             writer.WriteLine(string.Join(",", [
