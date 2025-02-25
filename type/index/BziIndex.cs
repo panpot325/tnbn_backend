@@ -21,7 +21,7 @@ public class BziIndex {
     private const int DATA_MAX = C.BZI_MAX;
 
     private const string SQL = " SELECT bzi, pcs FROM tnbn_kakowk_data" +
-                               " WHERE sno NOT IN (SELECT sno FROM tnbn_kakowk_data_haita)" +
+                               " WHERE sno NOT IN (SELECT sno FROM tnbn_fin_ship_mst)" +
                                " AND sno = '{0}'" +
                                " AND blk = '{1}'" +
                                " GROUP BY bzi, pcs" +
