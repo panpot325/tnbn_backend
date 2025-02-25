@@ -3,7 +3,7 @@
 DROP TABLE IF EXISTS tnbn_kadojisseki_wk;
 CREATE TABLE tnbn_kadojisseki_wk
 (
-    taisyo    VARCHAR(2),    -- '2'(仮付)／'3'(本付)／'5'（矯正）
+    taisyo    VARCHAR(2) NOT NULL ,    -- '2'(仮付)／'3'(本付)／'5'（矯正）
     sno       CHAR(6),       -- 船番6桁を設定
     blk       CHAR(8),       -- ブロック名8桁を設定
     bzi       char(16),      -- 部材名16桁を設定　板継有りの場合は基準点側の部材名を設定
@@ -19,7 +19,8 @@ CREATE TABLE tnbn_kadojisseki_wk
     ttl_time  INTEGER,       -- STR_TIME～END_TIMEの経過時間(秒)
     kad_time  INTEGER,       -- STR_TIME2～END_TIMEの経過時間(秒)(※２)
     stp_time  INTEGER,       -- TTL_TIME－KAD_TIME
-    cnt       SMALLINT       -- 運転開始ビット=0の時(運転終了の時)、カウントアップ
+    cnt       SMALLINT,      -- 運転開始ビット=0の時(運転終了の時)、カウントアップ
+    CONSTRAINT pk_tnbn_kadojisseki_wk PRIMARY KEY (taisyo)
 );
 
 INSERT INTO tnbn_kadojisseki_wk (taisyo, sno, blk, bzi, pcs, l, b, tmax, honsu, ymd, str_time, str_time2, end_time, ttl_time, kad_time, stp_time, cnt)

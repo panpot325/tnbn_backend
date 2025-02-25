@@ -8,7 +8,8 @@ CREATE TABLE tnbn_kanshi_settei
     w_remoteport INTEGER,     -- Winsock1.RemotePortを設定　　8192  (2000H)
     w_localport  INTEGER,     -- Winsock1.LocalPortを設定　　　　0　(Passiveｵｰﾌﾟﾝ)
     c_interval   INTEGER,     -- 監視PGｽﾀｰﾄ時、単板ラインとの接続状況を監視する時間を設定
-    t_interval2  INTEGER      -- Timer2(再接続処理用)のintervalを設定(単位:msec)
+    t_interval2  INTEGER,     -- Timer2(再接続処理用)のintervalを設定(単位:msec)
+    CONSTRAINT   pk_tnbn_kanshi_settei PRIMARY KEY (w_remotehost)
 );
 
 INSERT INTO tnbn_kanshi_settei (t_interval, w_protocol, w_remotehost, w_remoteport, w_localport, c_interval, t_interval2)

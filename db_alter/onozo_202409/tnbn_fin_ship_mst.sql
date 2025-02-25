@@ -3,7 +3,8 @@ CREATE TABLE tnbn_fin_ship_mst
 (
     sno          CHAR(6) NOT NULL, -- 船番6桁を設定
     create_date  INTEGER,          -- 
-    create_syain INTEGER           --
+    create_syain INTEGER,          --
+    CONSTRAINT   pk_tnbn_fin_ship_mst PRIMARY KEY (sno)
 );
 
 INSERT INTO tnbn_fin_ship_mst (sno, create_date, create_syain)

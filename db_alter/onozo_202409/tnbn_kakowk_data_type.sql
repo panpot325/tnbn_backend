@@ -17,10 +17,11 @@ CREATE TABLE tnbn_kakowk_data_type
     karitsuke  VARCHAR(2),       -- ○：使用／△：どちらでも／－：不使用
     yosetu     VARCHAR(2),       -- 同上
     kyosei     VARCHAR(2),       -- 同上
-    def        VARCHAR(32)       --新規入力時のデフォルト値を設定
+    def        VARCHAR(32),      --新規入力時のデフォルト値を設定
+    CONSTRAINT pk_tnbn_kakowk_data_type PRIMARY KEY (dm)
 );
 
-CREATE UNIQUE INDEX UNQ_tnbn_kakowk_data_type_dm ON tnbn_kakowk_data_type (dm);
+CREATE UNIQUE INDEX UNQ_tnbn_kakowk_data_type_ryaku ON tnbn_kakowk_data_type (ryaku);
 
 INSERT INTO tnbn_kakowk_data_type (dm, ryaku, meisyo, nyu_mode, nyu_tani, tani, dev_tensu, hani_min, hani_max, zero_entry, keishiki, biko, karitsuke, yosetu, kyosei, def)
 VALUES ('W700', 'SNO   ', '船番', 'ANUM', 0.00, '-', 3, 0.00, 6.00, 'OK', 'ASCII   ', '船番６桁を設定', '△', '△', '△', '-'),
