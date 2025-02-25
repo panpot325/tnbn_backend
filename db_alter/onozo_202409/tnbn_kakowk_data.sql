@@ -95,7 +95,7 @@ WHERE sno NOT IN (SELECT sno FROM tnbn_fin_ship_mst) AND sno = :sno GROUP BY blk
 
 -- 部材名一覧取得
 SELECT bzi, pcs FROM tnbn_kakowk_data
-                WHERE sno NOT IN (SELECT sno FROM tnbn_kakowk_data_haita) AND sno = :sno AND blk = :blk  
+                WHERE sno NOT IN (SELECT sno FROM tnbn_fin_ship_mst) AND sno = :sno AND blk = :blk  
                 GROUP BY bzi, pcs ORDER BY bzi, pcs;
 
 -- ワークデータ取得
