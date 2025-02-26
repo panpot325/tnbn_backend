@@ -133,7 +133,7 @@ public partial class Log {
             "停止時間"
         };
 
-        using var writer = new StreamWriter(filePath, false, Encoding.GetEncoding("iso-2022-jp"));
+        using var writer = new StreamWriter(filePath, false, Encoding.GetEncoding("Shift_JIS"));
         writer.WriteLine(string.Join(",", csvList));
         foreach (var log in List) {
             writer.WriteLine(string.Join(",", [

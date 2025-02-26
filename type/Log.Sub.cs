@@ -17,7 +17,7 @@ public partial class Log {
     public static void Sub_LogWrite(string message) {
         if (Settings.Default.Log_Write != 1) return;
         using var sw = new StreamWriter($"{Settings.Default.Log_Path}/{Settings.Default.Log_File}", true,
-            Encoding.UTF8);
+            Encoding.GetEncoding("Shift_JIS"));
         sw.WriteLine($"{DateTime.Now:yyyy/MM/dd HH:mm:ss}\t{message}");
     }
 
