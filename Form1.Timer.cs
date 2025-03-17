@@ -23,7 +23,7 @@ public partial class Form1 {
             Close();
         }
 
-        _unit = C.UNIT_2;
+        _unit = C.UNIT_1;
         Timer1.Enabled = false;
         Timer2.Enabled = false;
 
