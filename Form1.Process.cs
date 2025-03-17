@@ -17,6 +17,8 @@ public partial class Form1 {
     private void DataArrival(string buff) {
         if (buff.Length <= 1) {
             ResponseMessage.Init();
+            Timer1.Enabled = true;
+            Command1.Enabled = true;
             return;
         }
 
