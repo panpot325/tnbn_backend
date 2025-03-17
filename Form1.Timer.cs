@@ -51,7 +51,7 @@ public partial class Form1 {
 
         string cmd;
         if (_clrFinish) {
-            SetText($@"{Settings.Default.Prg_Ver} 単板ライン 監視中...", $@"単板ライン 監視中...  装置No:{_unit}");
+            //SetText($@"{Settings.Default.Prg_Ver} 単板ライン 監視中...", $@"単板ライン 監視中...  装置No:{_unit}");
             Log.Sub_LogWrite("【Timer1 単板ライン 監視中...】");
             Command1.Enabled = true;
 
@@ -61,6 +61,7 @@ public partial class Form1 {
                 C.UNIT_5 => C.UNIT_2,
                 _ => C.UNIT_2
             };
+            SetText($@"{Settings.Default.Prg_Ver} 単板ライン 監視中...", $@"単板ライン 監視中...  装置No:{_unit}");
             cmd = RecvBitCmd(_unit);
             Log.WriteLine(@$"【読出ビットコマンド】:{_unit}】 :{cmd}");
         }
